@@ -4,9 +4,10 @@ import 'package:provider/provider.dart';
 
 import 'core/dependetcy/provider.dart';
 import 'core/navigation/router.dart';
-final navigatorKey=GlobalKey<NavigatorState>();
 
-void main() async{
+final navigatorKey = GlobalKey<NavigatorState>();
+
+void main() async {
   runApp(const MyApp());
 }
 
@@ -16,10 +17,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        // theme: AppThemes.darkTheme,
-        routerConfig: router,
-      );
+    return ScreenUtilInit(
+      designSize: const Size(430, 932),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          // theme: AppThemes.darkTheme,
+          routerConfig: router,
+        );
+      },
+    );
   }
 }
