@@ -9,4 +9,5 @@ class AppColors {
   static const Color green = Color(0xff0C9409);
   static const Color chiziq = Color(0xff333333);
   static const Color white = Color(0xffFFFFFF);
+  static const Color buttonBorder = Color(0xffCCCCCC);
 }
