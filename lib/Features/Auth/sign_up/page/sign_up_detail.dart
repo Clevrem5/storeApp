@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:store_app/core/utils/app_colors.dart';
+import '../../../../core/navigation/routes.dart';
 
 class SignUpDetail extends StatefulWidget {
   const SignUpDetail({super.key});
@@ -123,10 +125,6 @@ class _SignUpDetailState extends State<SignUpDetail> {
                     child: ElevatedButton(
                       onPressed: _isEmailValid ? () {} : null,
 
-                      // Button active only if email is valid
-                      child: Text('Create an Account',
-                          style: TextStyle(color: Colors.white)),
-
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 10),
                         shape: RoundedRectangleBorder(
@@ -136,6 +134,10 @@ class _SignUpDetailState extends State<SignUpDetail> {
                         backgroundColor:
                             _isEmailValid ? Colors.black : Colors.grey,
                       ),
+
+                      // Button active only if email is valid
+                      child: Text('Create an Account',
+                          style: TextStyle(color: Colors.white)),
                     ),
                   ),
                   SizedBox(height: 16.h),
@@ -181,7 +183,9 @@ class _SignUpDetailState extends State<SignUpDetail> {
                       Text("Already have an account? ",
                           style: TextStyle(color: Colors.grey[700])),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.push(Routes.login);
+                        },
                         child: Text('Log In',
                             style: TextStyle(color: Colors.black)),
                       ),
