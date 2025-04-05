@@ -4,9 +4,10 @@ import 'package:provider/provider.dart';
 
 import 'core/dependetcy/provider.dart';
 import 'core/navigation/router.dart';
-final navigatorKey=GlobalKey<NavigatorState>();
 
-void main() async{
+final navigatorKey = GlobalKey<NavigatorState>();
+
+void main() async {
   runApp(const MyApp());
 }
 
