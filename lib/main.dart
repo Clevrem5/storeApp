@@ -19,15 +19,12 @@ class StoreApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(390, 844),
       builder: (context, child) {
-        return MultiProvider(
-          providers: providers,
-          child: MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              fontFamily: "Sans",
-            ),
-            routerConfig: router,
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            fontFamily: "GeneralSans",
           ),
+          routerConfig: router,
         );
       },
     );
