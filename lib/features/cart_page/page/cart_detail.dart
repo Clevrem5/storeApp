@@ -12,9 +12,11 @@ class CartDetail extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       backgroundColor: AppColors.white,
-      body: Text(
-        "cart",
-        style: TextStyle(color: AppColors.black, fontSize: 50),
+      body: Center(
+        child: Text(
+          "Cart",
+          style: TextStyle(color: AppColors.black, fontSize: 50),
+        ),
       ),
       bottomNavigationBar: StoreBottomNavigationBar(
         selectedIndex: 3, // Dynamically set index

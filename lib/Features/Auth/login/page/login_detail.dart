@@ -195,7 +195,7 @@ class LoginDetail extends StatelessWidget {
                   ),
                   SizedBox(height: 150.h,),
                   Padding(
-                    padding: EdgeInsets.only(right: 90.w, left: 90.w),
+                    padding: EdgeInsets.only(right: 50.w, left: 90.w,bottom: 20),
                     child: Row(
                       children: [
                         Text(
@@ -204,7 +204,6 @@ class LoginDetail extends StatelessWidget {
                               color: AppColors.black.withValues(alpha: 1),
                               fontSize: 15.sp),
                         ),
-        
                         Text(
                           "Join",
                           style: TextStyle(
