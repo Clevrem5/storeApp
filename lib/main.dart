@@ -17,17 +17,14 @@ class StoreApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(390, 844),
+      designSize:  Size(390, 844),
       builder: (context, child) {
-        return MultiProvider(
-          providers: providers,
-          child: MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              fontFamily: "Sans",
-            ),
-            routerConfig: router,
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            fontFamily: "Sans",
           ),
+          routerConfig: router,
         );
       },
     );

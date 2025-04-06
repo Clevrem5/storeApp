@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:store_app/Features/Reset_password/page/email_detail.dart';
 import 'package:store_app/core/navigation/routes.dart';
 import 'package:store_app/features/account_page/page/account_detail.dart';
 import 'package:store_app/features/cart_page/page/cart_detail.dart';
@@ -12,7 +13,7 @@ import '../../Features/Auth/store_onboarding/page/onboarding_started.dart';
 import '../../Features/Auth/store_onboarding/page/state_oboarding_detail.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.login,
+  initialLocation: Routes.resetEmailPage,
   routes: [
     GoRoute(
       path: Routes.onboarding,
@@ -53,6 +54,10 @@ final router = GoRouter(
     GoRoute(
       path: Routes.signUp,
       builder: (context, state) => SignUpDetail(),
+    ),
+    GoRoute(
+      path: Routes.resetEmailPage,
+      builder: (context, state) => ResetEmailPage(),
     ),
   ],
 );

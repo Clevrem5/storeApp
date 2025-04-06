@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:store_app/core/utils/app_colors.dart';
-import 'package:store_app/features/common/store_icons.dart';
-import 'package:store_app/features/common/store_tex.dart';
+import '../../Common_Widgets/store_icons.dart';
+import '../../Common_Widgets/store_tex.dart';
 
 class StoreNotificationDailyNews extends StatelessWidget {
   const StoreNotificationDailyNews({
@@ -48,7 +47,7 @@ class StoreNotificationDailyNews extends StatelessWidget {
               text: type,
               color: typeColor,
               fontSize: typeFontSize.sp,
-              fontWeight:typeWeight,
+              fontWeight: typeWeight,
             ),
             StoreText(
               text: meaning,

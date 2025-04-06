@@ -68,30 +68,6 @@ flutter:
     - assets/icons/
     - assets/images/
 
-  fonts:
-    - family: GeneralSans
-      fonts:
-        - asset: assets/fonts/GeneralSans-Regular.otf
-          weight: 400
-
-        - asset: assets/fonts/GeneralSans-Italic.otf
-          style: italic
-
-        - asset: assets/fonts/GeneralSans-Bold.otf
-          weight: 700
-
-        - asset: assets/fonts/GeneralSans-Extra.otf
-          weight: 900
-
-        - asset: assets/fonts/GeneralSans-Light.otf
-          weight: 300
-
-        - asset: assets/fonts/GeneralSans-Medium.otf
-          weight: 500
-
-        - asset: assets/fonts/GeneralSans-Semibold.otf
-          weight: 600
-
 
 
 
