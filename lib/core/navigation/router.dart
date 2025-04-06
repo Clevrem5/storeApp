@@ -4,6 +4,7 @@ import 'package:store_app/features/account_page/page/account_detail.dart';
 import 'package:store_app/features/cart_page/page/cart_detail.dart';
 import 'package:store_app/features/home_page/page/home_page_detail.dart';
 import 'package:store_app/features/login/page/login_detail.dart';
+import 'package:store_app/features/notification_page/page/notification_detail.dart';
 import 'package:store_app/features/saved_page/page/saved_detail.dart';
 import 'package:store_app/features/search_page/page/search_detai.dart';
 import 'package:store_app/features/store_onboarding/page/onboarding_started.dart';
@@ -23,6 +24,7 @@ final router = GoRouter(
     GoRoute(path: Routes.saved,builder: (context, state) => SavedDetail(),),
     GoRoute(path: Routes.cart,builder: (context, state) => CartDetail(),),
     GoRoute(path: Routes.account,builder: (context, state) => AccountDetail(),),
+    GoRoute(path: Routes.notification,builder: (context, state) => NotificationDetail(),),
   ]
 );
 =======
