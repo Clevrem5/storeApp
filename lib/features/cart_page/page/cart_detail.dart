@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:store_app/core/utils/app_colors.dart';
 
 import '../../../core/navigation/routes.dart';
-import '../../home_page/page/store_bottom_navigation_bar.dart';
+import '../../common/store_bottom_navigation_bar.dart';
 class CartDetail extends StatelessWidget {
   const CartDetail({super.key});
 

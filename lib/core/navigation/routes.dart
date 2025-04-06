@@ -7,4 +7,5 @@ class Routes{
   static const String saved = '/saved-page';
   static const String cart = '/cart-page';
   static const String account = '/account-page';
+  static const String notification = '/notification-page';
 }

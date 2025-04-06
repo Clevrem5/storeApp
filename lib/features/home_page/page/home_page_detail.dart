@@ -3,10 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/core/utils/app_colors.dart';
-import 'package:store_app/features/home_page/page/store_bottom_navigation_bar.dart';
+import 'package:store_app/features/home_page/page/home_page_text_form_field.dart';
+import 'package:store_app/features/common/store_bottom_navigation_bar.dart';
+import 'package:store_app/features/common/store_icons.dart';
 
 import '../../../core/navigation/routes.dart';
-import '../../login/widget/icon_button_like.dart';
+import '../../common/icon_button_like.dart';
 
 class HomePageDetail extends StatelessWidget {
   HomePageDetail({super.key});
@@ -42,12 +44,10 @@ class HomePageDetail extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 25),
-            child: SvgPicture.asset(
-              "assets/icons/notification.svg",
+            child: StoreIcons(
+              icons: "assets/icons/notification.svg",
               color: AppColors.black,
-              width: 24.w,
-              height: 24.h,
-              fit: BoxFit.cover,
+              callback: () => context.push(Routes.notification),
             ),
           ),
         ],
@@ -58,53 +58,7 @@ class HomePageDetail extends StatelessWidget {
           children: [
             Row(
               children: [
-                Expanded(
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 52.h,
-                    child: TextFormField(
-                      style: TextStyle(
-                        color: AppColors.black,
-                        fontSize: 18,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: "Search for clothes...",
-                        hintStyle:
-                        TextStyle(color: AppColors.hintText, fontSize: 16),
-                        filled: true,
-                        fillColor: AppColors.white,
-                        suffixIcon: Padding(
-                          padding: EdgeInsets.all(12),
-                          child: SvgPicture.asset(
-                            "assets/icons/microphone.svg",
-                            color: AppColors.hintText,
-                          ),
-                        ),
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(12),
-                          child: SvgPicture.asset(
-                            "assets/icons/search.svg",
-                            color: AppColors.hintText,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(
-                            color: AppColors.buttonBorder,
-                            width: 2,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: AppColors.buttonBorder,
-                            width: 2,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                HomePageTextFormField(),
                 SizedBox(width: 8.h),
                 Container(
                   width: 52.w,
@@ -274,5 +228,3 @@ class HomePageDetail extends StatelessWidget {
     );
   }
 }
-
-
