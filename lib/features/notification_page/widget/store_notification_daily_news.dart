@@ -4,6 +4,9 @@ import 'package:store_app/core/utils/app_colors.dart';
 import 'package:store_app/features/common/store_icons.dart';
 import 'package:store_app/features/common/store_tex.dart';
 
+import '../../Common_Widgets/store_icons.dart';
+import '../../Common_Widgets/store_tex.dart';
+
 class StoreNotificationDailyNews extends StatelessWidget {
   const StoreNotificationDailyNews({
     super.key,
