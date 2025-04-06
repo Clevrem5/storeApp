@@ -10,7 +10,10 @@ import 'package:store_app/features/search_page/page/search_detai.dart';
 import 'package:store_app/features/store_onboarding/page/onboarding_started.dart';
 import 'package:store_app/features/store_onboarding/page/state_oboarding_detail.dart';
 
+import '../../Features/Auth/sign_up/page/sign_up_detail.dart';
+
 final router = GoRouter(
+
   initialLocation: Routes.home,
   routes: [
     GoRoute(path: Routes.onboarding,builder: (context, state) => StoreOnboardingDetail(),),
@@ -24,3 +27,24 @@ final router = GoRouter(
     GoRoute(path: Routes.notification,builder: (context, state) => NotificationDetail(),),
   ]
 );
+=======
+  initialLocation: Routes.onboarding,
+  routes: [
+    GoRoute(
+      path: Routes.onboarding,
+      builder: (context, state) => StoreOnboardingDetail(),
+    ),
+    GoRoute(
+      path: Routes.onboardingStarted,
+      builder: (context, state) => OnboardingStarted(),
+    ),
+    GoRoute(
+      path: Routes.login,
+      builder: (context, state) => LoginDetail(),
+    ),
+    GoRoute(
+      path: Routes.signUp,
+      builder: (context, state) => SignUpDetail(),
+    ),
+  ],
+);r
