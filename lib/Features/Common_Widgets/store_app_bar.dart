@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
+import 'package:store_app/Features/Common_Widgets/store_icons.dart';
 import 'package:store_app/core/utils/app_colors.dart';
-import 'package:store_app/features/common/store_icons.dart';
-
-import '../../core/navigation/routes.dart';
 
 class StoreAppBar extends StatelessWidget implements PreferredSizeWidget {
   const StoreAppBar({

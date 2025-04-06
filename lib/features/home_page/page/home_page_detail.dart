@@ -4,11 +4,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/core/utils/app_colors.dart';
 import 'package:store_app/features/home_page/page/home_page_text_form_field.dart';
-import 'package:store_app/features/common/store_bottom_navigation_bar.dart';
-import 'package:store_app/features/common/store_icons.dart';
-
 import '../../../core/navigation/routes.dart';
-import '../../common/icon_button_like.dart';
+import '../../Common_Widgets/icon_button_like.dart';
+import '../../Common_Widgets/store_bottom_navigation_bar.dart';
+import '../../Common_Widgets/store_icons.dart';
 
 class HomePageDetail extends StatelessWidget {
   HomePageDetail({super.key});

@@ -71,7 +71,7 @@ class _StoreOnboardingDetailState extends State<StoreOnboardingDetail> {
       body: Stack(
         children: [
           Image.asset(
-            "assets/element.png",
+            "assets/icons/element.png",
             width: double.infinity,
             height: 627,
             color: AppColors.chiziq,
@@ -86,7 +86,7 @@ class _StoreOnboardingDetailState extends State<StoreOnboardingDetail> {
                 GestureDetector(
                   onTap:()=>context.push(Routes.signUp) ,
                   child: Image.asset(
-                    "assets/store_logo.png",
+                    "assets/icons/store_logo.png",
                     width: 120,
                     height: 120,
                     color: Colors.white,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/core/utils/app_colors.dart';
-
 import '../../../core/navigation/routes.dart';
-import '../../common/store_bottom_navigation_bar.dart';
+import '../../Common_Widgets/store_bottom_navigation_bar.dart';
+
 class CartDetail extends StatelessWidget {
   const CartDetail({super.key});
 
@@ -13,7 +13,9 @@ class CartDetail extends StatelessWidget {
       extendBody: true,
       backgroundColor: AppColors.white,
       body: Text(
-        "cart", style: TextStyle(color: AppColors.black, fontSize: 50),),
+        "cart",
+        style: TextStyle(color: AppColors.black, fontSize: 50),
+      ),
       bottomNavigationBar: StoreBottomNavigationBar(
         selectedIndex: 3, // Dynamically set index
         onTap: (index) {

@@ -3,11 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/core/utils/app_colors.dart';
 import 'package:store_app/features/notification_page/widget/store_notification_daily_news.dart';
-import 'package:store_app/features/common/store_app_bar.dart';
-import 'package:store_app/features/common/store_tex.dart';
-
 import '../../../core/navigation/routes.dart';
-import '../../common/store_bottom_navigation_bar.dart';
+import '../../Common_Widgets/store_app_bar.dart';
+import '../../Common_Widgets/store_bottom_navigation_bar.dart';
+import '../../Common_Widgets/store_tex.dart';
 
 class NotificationDetail extends StatelessWidget {
   const NotificationDetail({super.key});

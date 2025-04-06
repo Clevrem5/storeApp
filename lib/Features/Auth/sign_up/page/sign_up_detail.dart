@@ -153,7 +153,7 @@ class _SignUpDetailState extends State<SignUpDetail> {
                     height: 56.h,
                     child: ElevatedButton.icon(
                       onPressed: () {},
-                      icon: SvgPicture.asset("assets/google.svg"),
+                      icon: SvgPicture.asset("assets/icons/google.svg"),
                       label: Text('Sign Up with Google',
                           style: TextStyle(color: Colors.black)),
                       style: ElevatedButton.styleFrom(
