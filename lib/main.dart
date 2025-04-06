@@ -8,24 +8,26 @@ import 'core/navigation/router.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
-  runApp(const MyApp());
+  runApp(const StoreApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class StoreApp extends StatelessWidget {
+  const StoreApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(430, 932),
-      minTextAdapt: true,
-      splitScreenMode: true,
+      designSize: const Size(390, 844),
       builder: (context, child) {
-        return MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          // theme: AppThemes.darkTheme,
-          routerConfig: router,
+        return MultiProvider(
+          providers: providers,
+          child: MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              fontFamily: "Sans",
+            ),
+            routerConfig: router,
+          ),
         );
       },
     );
