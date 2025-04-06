@@ -16,7 +16,7 @@ final router = GoRouter(
 
   initialLocation: Routes.home,
   routes: [
-    GoRoute(path: Routes.onboarding,builder: (context, state) => StoreOnboardingDetail(),),
+    GoRoute(path: Routes.login,builder: (context, state) => StoreOnboardingDetail(),),
     GoRoute(path: Routes.onboardingStarted,builder: (context, state) => OnboardingStarted(),),
     GoRoute(path: Routes.login,builder: (context, state) => LoginDetail(),),
     GoRoute(path: Routes.home,builder: (context, state) => HomePageDetail(),),
@@ -25,26 +25,26 @@ final router = GoRouter(
     GoRoute(path: Routes.cart,builder: (context, state) => CartDetail(),),
     GoRoute(path: Routes.account,builder: (context, state) => AccountDetail(),),
     GoRoute(path: Routes.notification,builder: (context, state) => NotificationDetail(),),
+    GoRoute(path: Routes.signUp,builder: (context, state) => SignUpDetail(),),
   ]
 );
-=======
-  initialLocation: Routes.onboarding,
-  routes: [
-    GoRoute(
-      path: Routes.onboarding,
-      builder: (context, state) => StoreOnboardingDetail(),
-    ),
-    GoRoute(
-      path: Routes.onboardingStarted,
-      builder: (context, state) => OnboardingStarted(),
-    ),
-    GoRoute(
-      path: Routes.login,
-      builder: (context, state) => LoginDetail(),
-    ),
-    GoRoute(
-      path: Routes.signUp,
-      builder: (context, state) => SignUpDetail(),
-    ),
-  ],
-);r
+//   initialLocation: Routes.onboarding,
+//   routes: [
+//     GoRoute(
+//       path: Routes.onboarding,
+//       builder: (context, state) => StoreOnboardingDetail(),
+//     ),
+//     GoRoute(
+//       path: Routes.onboardingStarted,
+//       builder: (context, state) => OnboardingStarted(),
+//     ),
+//     GoRoute(
+//       path: Routes.login,
+//       builder: (context, state) => LoginDetail(),
+//     ),
+//     GoRoute(
+//       path: Routes.signUp,
+//       builder: (context, state) => SignUpDetail(),
+//     ),
+//   ],
+// );
