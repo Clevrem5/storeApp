@@ -42,6 +42,12 @@ dependencies:
   flutter_svg: ^2.0.17
   permission_handler: ^11.4.0
   speech_to_text: ^7.0.0
+  flutter_secure_storage: ^9.2.4
+  image_picker: ^1.1.2
+  bloc: ^9.0.0
+  flutter_bloc: ^9.1.0
+  dio: ^5.8.0+1
+  equatable: ^2.0.7
 
 dev_dependencies:
   flutter_test:
@@ -71,25 +77,17 @@ flutter:
   fonts:
     - family: GeneralSans
       fonts:
-        - asset: assets/fonts/GeneralSans-Regular.otf
+        - asset: fonts/GeneralSans/GeneralSans-Regular.otf
           weight: 400
-
-        - asset: assets/fonts/GeneralSans-Italic.otf
-          style: italic
-
-        - asset: assets/fonts/GeneralSans-Bold.otf
+        - asset: fonts/GeneralSans/GeneralSans-Bold.otf
           weight: 700
-
-        - asset: assets/fonts/GeneralSans-Extra.otf
-          weight: 900
-
-        - asset: assets/fonts/GeneralSans-Light.otf
+        - asset: fonts/GeneralSans/GeneralSans-Extralight.otf
+          weight: 200
+        - asset: fonts/GeneralSans/GeneralSans-Light.otf
           weight: 300
-
-        - asset: assets/fonts/GeneralSans-Medium.otf
+        - asset: fonts/GeneralSans/GeneralSans-Medium.otf
           weight: 500
-
-        - asset: assets/fonts/GeneralSans-Semibold.otf
+        - asset: fonts/GeneralSans/GeneralSans-Semibold.otf
           weight: 600
 
 
