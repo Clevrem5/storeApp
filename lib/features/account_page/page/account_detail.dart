@@ -12,9 +12,11 @@ class AccountDetail extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       backgroundColor: AppColors.white,
-      body: Text(
-        "account",
-        style: TextStyle(color: AppColors.black, fontSize: 50),
+      body: Center(
+        child: Text(
+          "Account",
+          style: TextStyle(color: AppColors.black, fontSize: 50),
+        ),
       ),
       bottomNavigationBar: StoreBottomNavigationBar(
         selectedIndex: 4, // Dynamically set index
