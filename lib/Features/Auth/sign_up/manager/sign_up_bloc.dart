@@ -15,15 +15,15 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       : _repo = repo,
         super(SignUpState.initial()) {
     on<SignUpLoad>(_load);
-    add(SignUpLoad());
+    // add(SignUpLoad());
   }
 
   Future<void> _load(SignUpLoad event, Emitter<SignUpState> emit) async {
     emit(state.copyWith(status: SignUpStatus.loading));
     final store = await _repo.signUp(
-      fullName: fullNameController.text,
-      email: emailController.text,
-      password: passwordController.text,
+      fullName: fullNameController.text.trim(),
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
     );
     if (store) {
       emit(state.copyWith(status: SignUpStatus.submitted));

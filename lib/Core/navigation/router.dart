@@ -16,7 +16,7 @@ import '../../Features/Auth/store_onboarding/page/onboarding_started.dart';
 import '../../Features/Auth/store_onboarding/page/state_oboarding_detail.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.login,
+  initialLocation: Routes.onboardingStarted,
   routes: [
     GoRoute(
       path: Routes.onboarding,

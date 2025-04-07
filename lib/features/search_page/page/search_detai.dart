@@ -12,9 +12,11 @@ class SearchDetail extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       backgroundColor: AppColors.white,
-      body: Text(
-        "search",
-        style: TextStyle(color: AppColors.black, fontSize: 50),
+      body: Center(
+        child: Text(
+          "Search",
+          style: TextStyle(color: AppColors.black, fontSize: 50),
+        ),
       ),
       bottomNavigationBar: StoreBottomNavigationBar(
         selectedIndex: 1, // Dynamically set index

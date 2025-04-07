@@ -12,9 +12,11 @@ class SavedDetail extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       backgroundColor: AppColors.white,
-      body: Text(
-        "saved",
-        style: TextStyle(color: AppColors.black, fontSize: 50),
+      body: Center(
+        child: Text(
+          "Saved",
+          style: TextStyle(color: AppColors.black, fontSize: 50),
+        ),
       ),
       bottomNavigationBar: StoreBottomNavigationBar(
         selectedIndex: 2, // Dynamically set index

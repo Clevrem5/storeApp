@@ -28,6 +28,7 @@ class HomePageDetail extends StatelessWidget {
       extendBody: true,
       backgroundColor: AppColors.white,
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.white,
         leadingWidth: 150,
         leading: Center(
