@@ -5,11 +5,6 @@ import 'package:store_app/Data/models/Auth_model.dart';
 enum SignUpStatus { idle, loading, error, submitted}
 
 class SignUpState extends Equatable {
-  // final formKey = GlobalKey<FormState>();
-  // final fullNameController = TextEditingController();
-  // final emailController = TextEditingController();
-  // final passwordController = TextEditingController();
-  // final AuthModel? authModel;
   final SignUpStatus? status;
 
   const SignUpState({required this.status});

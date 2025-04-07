@@ -14,4 +14,17 @@ class ApiClient {
     print("malumot bor ${response.data}");
     return response.statusCode == 201 ? true : false;
   }
+
+  Future<String> login(String login, String password) async {
+    var response = await dio.post(
+      "/auth/login",
+      data: {"login": login, "password": password},
+    );
+    if (response.statusCode == 200) {
+      var data = Map<String, String>.from(response.data);
+      return data['accessToken']!;
+    } else {
+      throw Exception("Nimadir xato ketdi");
+    }
+  }
 }

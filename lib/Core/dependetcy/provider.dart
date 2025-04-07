@@ -8,8 +8,8 @@ final List<SingleChildWidget> providers = [
   Provider<ApiClient>(
     create: (context) => ApiClient(),
   ),
-  Provider<SignUpRepository>(
-    create: (context) => SignUpRepository(
+  Provider<AuthRepository>(
+    create: (context) => AuthRepository(
       client: context.read<ApiClient>(),
     ),
   ),
