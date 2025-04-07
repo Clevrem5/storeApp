@@ -1,25 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:store_app/Features/search_page/page/store_app_bar.dart';
 import 'package:store_app/core/utils/app_colors.dart';
+import 'package:store_app/features/home_page/page/home_page_text_form_field.dart';
 import '../../../core/navigation/routes.dart';
+import '../../Common_Widgets/store_app_bar.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
 
-class SearchDetail extends StatelessWidget {
+class SearchDetail extends StatefulWidget {
   const SearchDetail({super.key});
 
   @override
+  State<SearchDetail> createState() => _SearchDetailState();
+}
+
+class _SearchDetailState extends State<SearchDetail> {
+  final TextEditingController _controller = TextEditingController();
+  String query = '';
+  List<String> recent = ["Jeans", "Casual clothes", "Hoodie", "Nike shoes black", "V-neck tshirt", "Winter clothes"];
+  List<String> products = [
+    "Regular Fit Slogan",
+    "Regular Fit Polo",
+    "Regular Fit Black",
+    "Regular Fit V-Neck",
+  ];
+
+  @override
   Widget build(BuildContext context) {
+    final results = products.where((item) => item.toLowerCase().contains(query.toLowerCase())).toList();
+
     return Scaffold(
-      extendBody: true,
       backgroundColor: AppColors.white,
-      body: Center(
-        child: Text(
-          "Search",
-          style: TextStyle(color: AppColors.black, fontSize: 50),
+      extendBody: true,
+      appBar: StoreAppBar(text: "Search"),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          children: [
+            const SizedBox(height: 12),
+            HomePageTextFormField(
+              width: double.infinity,
+              controller: _controller,
+              onChanged: (val) => setState(() => query = val),
+            ),
+            if (query.isEmpty) _buildRecentSearches() else Expanded(child: _buildSearchResults(results)),
+          ],
         ),
       ),
       bottomNavigationBar: StoreBottomNavigationBar(
-        selectedIndex: 1, // Dynamically set index
+        selectedIndex: 1,
         onTap: (index) {
           switch (index) {
             case 0:
@@ -37,11 +66,69 @@ class SearchDetail extends StatelessWidget {
             case 4:
               context.push(Routes.account);
               break;
-            default:
-              break;
           }
         },
       ),
+    );
+  }
+
+  Widget _buildRecentSearches() {
+    return Expanded(
+      child: ListView(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Recent Searches', style: TextStyle(fontWeight: FontWeight.bold)),
+              TextButton(
+                onPressed: () => setState(() => recent.clear()),
+                child: const Text(
+                  'Clear all',
+                  style: TextStyle(color: Colors.black),
+                ),
+              )
+            ],
+          ),
+          const SizedBox(height: 10),
+          ...recent.map(
+                (item) => ListTile(
+              title: Text(item),
+              trailing: IconButton(
+                icon: const Icon(Icons.delete_forever_outlined, size: 16),
+                onPressed: () {
+                  setState(() => recent.remove(item));
+                },
+              ),
+              onTap: () {
+                _controller.text = item;
+                setState(() => query = item);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+
+  }
+
+  Widget _buildSearchResults(List<String> results) {
+    if (results.isEmpty) {
+      return const Center(child: Text('No results found.'));
+    }
+    return ListView.builder(
+      itemCount: results.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: Container(
+            width: 60,
+            height: 60,
+            color: Colors.black,
+            child: const Icon(Icons.image_not_supported_sharp),
+          ),
+          title: Text(results[index]),
+          subtitle: Text('\$${index + 2}${index + 3}.00 - 6${index + 4}%'),
+        );
+      },
     );
   }
 }
