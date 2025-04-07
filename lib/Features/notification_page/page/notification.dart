@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../Core/navigation/routes.dart';
-import '../../../Core/utils/app_colors.dart';
 import '../../Common_Widgets/store_app_bar.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
 
-class SavedDetail extends StatelessWidget {
-  const SavedDetail({super.key});
+class NotificationScreen extends StatelessWidget {
+  const NotificationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
-      backgroundColor: AppColors.white,
       appBar: StoreAppBar(
         actionsCallBack: () {},
         leadingCallBack: () => context.pop(Routes.home),
         leading: "assets/icons/back.svg",
-        actions: "assets/icons/notification.svg",
-        title: "Saved",
+        actions: "",
+        title: "Notifications",
       ),
       body: Center(
         child: Column(
@@ -32,22 +28,23 @@ class SavedDetail extends StatelessWidget {
                 color: Colors.grey.shade200,
               ),
               child: Icon(
-                Icons.favorite_border,
+                Icons.notifications_none,
                 size: 50,
                 color: Colors.grey,
               ),
             ),
             SizedBox(height: 20),
             Text(
-              "No Saved Items!",
+              "You haven’t gotten any\nnotifications yet!",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
+              textAlign: TextAlign.center,
             ),
             SizedBox(height: 10),
             Text(
-              "You don’t have any saved items.\nGo to home and add some.",
+              "We’ll alert you when something\ncool happens.",
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: 14,
@@ -58,7 +55,7 @@ class SavedDetail extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: StoreBottomNavigationBar(
-        selectedIndex: 2, // Dynamically set index
+        selectedIndex: 0, // Dynamically set index
         onTap: (index) {
           switch (index) {
             case 0:

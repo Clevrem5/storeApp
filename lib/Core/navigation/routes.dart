@@ -8,6 +8,6 @@ class Routes {
   static const String cart = '/cart-page';
   static const String account = '/account-page';
   static const String notification = '/notification-page';
-
   static const String signUp = "/signUp";
+  static const String noNotification = "/notificationNet";
 }
