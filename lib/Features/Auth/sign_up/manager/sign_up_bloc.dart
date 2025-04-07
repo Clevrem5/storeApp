@@ -15,7 +15,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       : _repo = repo,
         super(SignUpState.initial()) {
     on<SignUpLoad>(_load);
-    add(SignUpLoad());
+    // add(SignUpLoad());
   }
 
   Future<void> _load(SignUpLoad event, Emitter<SignUpState> emit) async {
