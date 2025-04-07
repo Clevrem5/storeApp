@@ -5,12 +5,17 @@ import 'package:store_app/Data/repository/sign_up_repository.dart';
 import '../../Data/client.dart';
 
 final List<SingleChildWidget> providers = [
-  Provider<ApiClient>(
+  Provider(
     create: (context) => ApiClient(),
   ),
-  Provider<SignUpRepository>(
+  Provider(
     create: (context) => SignUpRepository(
-      client: context.read<ApiClient>(),
+      client: context.read(),
+    ),
+  ),
+  Provider(
+    create: (context) => SignUpRepository(
+      client: context.read(),
     ),
   ),
 ];

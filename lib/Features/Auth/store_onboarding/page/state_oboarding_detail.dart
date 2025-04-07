@@ -36,7 +36,7 @@ class _StoreOnboardingDetailState extends State<StoreOnboardingDetail> {
     if (connected) {
       await Future.delayed(const Duration(seconds: 2));
       if (!mounted) return;
-      context.go(Routes.signUp);
+      context.go(Routes.onboardingStarted);
     } else {
       _showRetryDialog();
     }
@@ -71,7 +71,7 @@ class _StoreOnboardingDetailState extends State<StoreOnboardingDetail> {
       body: Stack(
         children: [
           Image.asset(
-            "assets/icons/element.png",
+            "assets/images/element.png",
             width: double.infinity,
             height: 627,
             color: AppColors.chiziq,
@@ -86,7 +86,7 @@ class _StoreOnboardingDetailState extends State<StoreOnboardingDetail> {
                 GestureDetector(
                   onTap:()=>context.push(Routes.signUp) ,
                   child: Image.asset(
-                    "assets/icons/store_logo.png",
+                    "assets/images/store_logo.png",
                     width: 120,
                     height: 120,
                     color: Colors.white,

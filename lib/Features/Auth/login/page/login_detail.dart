@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:store_app/Core/navigation/routes.dart';
 import 'package:store_app/core/utils/app_colors.dart';
 import '../widget/elevated_button_account.dart';
 import '../widget/login_email_text_form_field.dart';
@@ -13,6 +15,7 @@ class LoginDetail extends StatelessWidget {
   final ValueNotifier<String> passwordNotifier = ValueNotifier('');
 
   bool _isEmailValid(String email) => email.endsWith('@gmail.com');
+
   bool _isPasswordValid(String password) => password.length >= 8;
 
   @override
@@ -37,10 +40,7 @@ class LoginDetail extends StatelessWidget {
                 children: [
                   Text(
                     "Login to your account",
-                    style: TextStyle(
-                        color: AppColors.black,
-                        fontSize: 32.sp,
-                        fontWeight: FontWeight.w600),
+                    style: TextStyle(color: AppColors.black, fontSize: 32.sp, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(height: 8.h),
                   Text(
@@ -50,10 +50,7 @@ class LoginDetail extends StatelessWidget {
                   SizedBox(height: 24.h),
                   Text(
                     "Email",
-                    style: TextStyle(
-                        color: AppColors.black,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600),
+                    style: TextStyle(color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(
                     height: 4.h,
@@ -63,10 +60,7 @@ class LoginDetail extends StatelessWidget {
                   ),
                   Text(
                     "Password",
-                    style: TextStyle(
-                        color: AppColors.black,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600),
+                    style: TextStyle(color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(
                     height: 4.h,
@@ -109,16 +103,11 @@ class LoginDetail extends StatelessWidget {
                     children: [
                       Text(
                         "Forgot your password?",
-                        style: TextStyle(
-                            color: AppColors.black.withValues(alpha: 1),
-                            fontSize: 16.sp),
+                        style: TextStyle(color: AppColors.black.withValues(alpha: 1), fontSize: 16.sp),
                       ),
                       Text(
                         "Reset your password",
-                        style: TextStyle(
-                            color: AppColors.black,
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w600),
+                        style: TextStyle(color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -127,8 +116,7 @@ class LoginDetail extends StatelessWidget {
                     first: emailNotifier,
                     second: passwordNotifier,
                     builder: (context, email, password, _) {
-                      final isValid =
-                          _isEmailValid(email) && _isPasswordValid(password);
+                      final isValid = _isEmailValid(email) && _isPasswordValid(password);
                       return SizedBox(
                         width: double.infinity,
                         height: 54,
@@ -188,28 +176,27 @@ class LoginDetail extends StatelessWidget {
                   ElevatedButtonAccount(
                     backgroundColor: AppColors.blue,
                     text: "Login with Google",
-                    button: () {},
+                    button: () {
+                      context.go(Routes.home);
+                    },
                     svg: "assets/icons/facebook.svg",
                     textColor: AppColors.white,
                     sideColor: AppColors.blue,
                   ),
-                  SizedBox(height: 150.h,),
+                  SizedBox(
+                    height: 150.h,
+                  ),
                   Padding(
-                    padding: EdgeInsets.only(right: 50.w, left: 90.w,bottom: 20),
+                    padding: EdgeInsets.only(right: 50.w, left: 90.w, bottom: 20),
                     child: Row(
                       children: [
                         Text(
                           "Don’t have an account?",
-                          style: TextStyle(
-                              color: AppColors.black.withValues(alpha: 1),
-                              fontSize: 15.sp),
+                          style: TextStyle(color: AppColors.black.withValues(alpha: 1), fontSize: 15.sp),
                         ),
                         Text(
                           "Join",
-                          style: TextStyle(
-                              color: AppColors.black,
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w600),
+                          style: TextStyle(color: AppColors.black, fontSize: 15.sp, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
