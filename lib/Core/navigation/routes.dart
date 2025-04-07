@@ -10,4 +10,7 @@ class Routes {
   static const String notification = '/notification-page';
 
   static const String signUp = "/signUp";
+  static const String resetPasswordEmail = "/reset-password-email";
+  static const String resetPasswordCode = "/reset-password-code";
+  static const String resetNewPassword = "/reset-new-password";
 }
