@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
-import 'core/dependetcy/provider.dart';
+import 'package:store_app/Core/dependetcy/provider.dart';
 import 'core/navigation/router.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -19,12 +18,15 @@ class StoreApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(390, 844),
       builder: (context, child) {
-        return MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            fontFamily: "GeneralSans",
+        return MultiProvider(
+          providers: providers,
+          child: MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              fontFamily: "GeneralSans",
+            ),
+            routerConfig: router,
           ),
-          routerConfig: router,
         );
       },
     );
