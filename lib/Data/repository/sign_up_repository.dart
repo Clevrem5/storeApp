@@ -3,10 +3,10 @@ import 'package:store_app/Data/models/Auth_model.dart';
 
 import '../../Core/secure_storage.dart';
 
-class SignUpRepository {
+class AuthRepository {
   final ApiClient client;
 
-  SignUpRepository({required this.client});
+  AuthRepository({required this.client});
 
   String? jwt;
 
@@ -24,15 +24,28 @@ class SignUpRepository {
     );
     return result;
   }
+
+  Future<bool> login(String login, String password) async {
+    jwt = await client.login(login, password);
+    await SecureStorage.deleteCredentials();
+    await SecureStorage.deleteToken();
+    await SecureStorage.saveToken(jwt!);
+    await SecureStorage.saveCredentials(login, password);
+    return true;
+  }
+
   Future<void> logOut() async {
     await SecureStorage.deleteCredentials();
     await SecureStorage.deleteToken();
   }
-  // Future<bool> refreshToken() async {
-  //   var  credentials = await SecureStorage.getCredentials();
-  //   if (credentials['login'] == null || credentials['password'] == null) {
-  //     return false;
-  //   }
-  //   jwt = await client.
-  // }
+  Future<bool> refreshToken() async {
+    var  credentials = await SecureStorage.getCredentials();
+    if (credentials['login'] == null || credentials['password'] == null) {
+      return false;
+    }
+    jwt = await client.login(credentials['login']!, credentials['password']!);
+    await SecureStorage.deleteToken();
+    SecureStorage.saveToken(jwt!);
+    return true;
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:store_app/Features/Auth/login/manger/login_bloc.dart';
 import 'package:store_app/Features/Auth/sign_up/manager/sign_up_bloc.dart';
 import 'package:store_app/core/navigation/routes.dart';
 import 'package:store_app/features/account_page/page/account_detail.dart';
@@ -27,7 +28,12 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.login,
-      builder: (context, state) => LoginDetail(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => LoginBloc(
+          repo: context.read<AuthRepository>(),
+        ),
+        child: LoginDetail(),
+      ),
     ),
     GoRoute(
       path: Routes.home,
@@ -57,11 +63,10 @@ final router = GoRouter(
       path: Routes.signUp,
       builder: (context, state) => BlocProvider(
         create: (context) => SignUpBloc(
-          repo: context.read<SignUpRepository>(),
+          repo: context.read<AuthRepository>(),
         ),
         child: SignUpDetail(),
       ),
     ),
-
   ],
 );

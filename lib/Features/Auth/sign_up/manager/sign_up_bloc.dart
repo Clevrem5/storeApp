@@ -5,13 +5,13 @@ import 'package:store_app/Features/Auth/sign_up/manager/sign_up_event.dart';
 import 'package:store_app/Features/Auth/sign_up/manager/sign_up_state.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
-  final SignUpRepository _repo;
+  final AuthRepository _repo;
   // final formKey = GlobalKey<FormState>();
   final fullNameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  SignUpBloc({required SignUpRepository repo})
+  SignUpBloc({required AuthRepository repo})
       : _repo = repo,
         super(SignUpState.initial()) {
     on<SignUpLoad>(_load);
