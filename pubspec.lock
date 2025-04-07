@@ -16,8 +16,7 @@ packages:
       sha256: "947bfcf187f74dbc5e146c9eb9c0f10c9f8b30743e341481c1e2ed3ecc18c20c"
       url: "https://pub.dev"
     source: hosted
-
-    version: "2.12.0"
+    version: "2.11.0"
   bloc:
     dependency: "direct main"
     description:
@@ -26,8 +25,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "9.0.0"
-
-    version: "2.11.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -450,8 +447,7 @@ packages:
       sha256: bdb68674043280c3428e9ec998512fb681678676b3c54e773629ffe74419f8c7
       url: "https://pub.dev"
     source: hosted
-
-    version: "1.16.0"
+    version: "1.15.0"
   mime:
     dependency: transitive
     description:
@@ -460,9 +456,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
-
-    version: "1.15.0"
-
   nested:
     dependency: transitive
     description:
@@ -760,10 +753,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: dc6ecaa00a7c708e5b4d10ee7bec8c270e9276dfcab1783f57e9962d7884305f
+      sha256: daf97c9d80197ed7b619040e86c8ab9a9dad285e7671ee7390f9180cc828a51e
       url: "https://pub.dev"
     source: hosted
-    version: "5.12.0"
+    version: "5.10.1"
   xdg_directories:
     dependency: transitive
     description:
@@ -781,10 +774,5 @@ packages:
     source: hosted
     version: "6.5.0"
 sdks:
-
-  dart: ">=3.7.0 <4.0.0"
-  flutter: ">=3.27.0"
-
   dart: ">=3.6.1 <4.0.0"
-  flutter: ">=3.24.0"
-
+  flutter: ">=3.27.0"

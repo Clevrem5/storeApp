@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../Common_Widgets/store_icons.dart';
 import '../../Common_Widgets/store_tex.dart';
 
+import '../../Common_Widgets/store_icons.dart';
+import '../../Common_Widgets/store_tex.dart';
+
 class StoreNotificationDailyNews extends StatelessWidget {
   const StoreNotificationDailyNews({
     super.key,
