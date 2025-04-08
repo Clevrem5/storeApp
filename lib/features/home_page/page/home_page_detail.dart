@@ -93,8 +93,7 @@ class HomePageDetail extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final isSelected = selectedIndex == index;
                       return Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 6),
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                         decoration: BoxDecoration(
                           color: isSelected ? AppColors.black : AppColors.white,
                           borderRadius: BorderRadius.circular(10),
@@ -112,9 +111,7 @@ class HomePageDetail extends StatelessWidget {
                           child: Text(
                             texlar[index],
                             style: TextStyle(
-                              color: isSelected
-                                  ? AppColors.white
-                                  : AppColors.black,
+                              color: isSelected ? AppColors.white : AppColors.black,
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w600,
                             ),
@@ -135,10 +132,7 @@ class HomePageDetail extends StatelessWidget {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 19,
-                        mainAxisSpacing: 20),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 19, mainAxisSpacing: 20),
                     itemBuilder: (context, index) => Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,9 +156,7 @@ class HomePageDetail extends StatelessWidget {
                                 child: Container(
                                   width: 34.w,
                                   height: 34.h,
-                                  decoration: BoxDecoration(
-                                      color: AppColors.white,
-                                      borderRadius: BorderRadius.circular(8)),
+                                  decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(8)),
                                   child: Center(
                                     child: LikeButton(),
                                   ),

@@ -10,4 +10,6 @@ class Routes {
   static const String notification = '/notification-page';
   static const String signUp = "/signUp";
   static const String noNotification = "/notificationNet";
+  static const String checkout = "/checkout";
+  static const String details = "/details";
 }

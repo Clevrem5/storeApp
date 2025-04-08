@@ -14,14 +14,24 @@ import '../../Features/Auth/login/page/login_detail.dart';
 import '../../Features/Auth/sign_up/page/sign_up_detail.dart';
 import '../../Features/Auth/store_onboarding/page/onboarding_started.dart';
 import '../../Features/Auth/store_onboarding/page/state_oboarding_detail.dart';
+import '../../Features/checkout/page/checkout.dart';
+import '../../Features/details/page/details.dart';
 import '../../Features/notification_page/page/notification.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.saved,
+  initialLocation: Routes.details,
   routes: [
     GoRoute(
       path: Routes.onboarding,
       builder: (context, state) => StoreOnboardingDetail(),
+    ),
+    GoRoute(
+      path: Routes.details,
+      builder: (context, state) => ProductDetailPage(),
+    ),
+    GoRoute(
+      path: Routes.checkout,
+      builder: (context, state) => CheckoutPage(),
     ),
     GoRoute(
       path: Routes.noNotification,
