@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import '../../../Core/navigation/routes.dart';
 import '../../Common_Widgets/store_app_bar.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
-import '../../search_page/page/store_app_bar.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -12,8 +11,11 @@ class NotificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: StoreAppBar(
-        text: "Notifications",
-        actions: [],
+        actionsCallBack: () {},
+        leadingCallBack: () => context.pop(Routes.home),
+        leading: "assets/icons/back.svg",
+        actions: "",
+        title: "Notifications",
       ),
       body: Center(
         child: Column(

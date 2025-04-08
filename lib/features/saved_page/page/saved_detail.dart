@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:store_app/Features/search_page/page/store_app_bar.dart';
 
 import '../../../Core/navigation/routes.dart';
 import '../../../Core/utils/app_colors.dart';
@@ -15,7 +14,15 @@ class SavedDetail extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       backgroundColor: AppColors.white,
-      appBar: StoreAppBar(text: 'Saved'),
+      appBar: StoreAppBar(
+        actionsCallBack: () {
+          Routes.notification;
+        },
+        leadingCallBack: () => context.pop(),
+        leading: "assets/icons/back.svg",
+        actions: "assets/icons/notification.svg",
+        title: "Saved",
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
