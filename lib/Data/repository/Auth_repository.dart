@@ -38,8 +38,9 @@ class AuthRepository {
     await SecureStorage.deleteCredentials();
     await SecureStorage.deleteToken();
   }
+
   Future<bool> refreshToken() async {
-    var  credentials = await SecureStorage.getCredentials();
+    var credentials = await SecureStorage.getCredentials();
     if (credentials['login'] == null || credentials['password'] == null) {
       return false;
     }
@@ -48,4 +49,16 @@ class AuthRepository {
     SecureStorage.saveToken(jwt!);
     return true;
   }
+
+  Future<String> resetPassword(String email) async {
+    return await client.postResetEmail(email);
+  }
+  Future<ResetData>postResetEmailCode(String email,String code)async{
+    return await client.postResetEmailCode(email, code);
+  }
+  Future<void>postResetEmailCodeReset(String email,String code,String password)async{
+    return await client.postResetEmailCodeReset(email, code, password);
+  }//
 }
+
+

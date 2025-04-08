@@ -17,3 +17,15 @@ class AuthModel {
     };
   }
 }
+
+
+class ResetData {
+
+  final String email;
+  final String code;
+
+  ResetData({
+    required this.email,
+    required this.code,
+  });
+}

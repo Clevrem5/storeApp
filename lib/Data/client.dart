@@ -27,4 +27,54 @@ class ApiClient {
       throw Exception("Nimadir xato ketdi");
     }
   }
+
+  Future<String> postResetEmail(String email) async {
+    var response = await dio.post(
+      "/auth/reset-password/email",
+      data: {
+        'email': email,
+      },
+    );
+    if (response.statusCode == 200) {
+      final data = Map<String, String>.from(response.data);
+      return data['email']!;
+    } else {
+      throw Exception("xato ketdi reset email");
+    }
+  }
+
+  Future<ResetData> postResetEmailCode(String email, String code) async {
+    var response = await dio.post(
+      "/auth/reset-password/verify",
+      data: {
+        'email': email,
+        'code': code,
+      },
+    );
+    if (response.statusCode == 200) {
+      return ResetData(email: email, code: code);
+    } else {
+      throw Exception("xato ketdi reset emailCode");
+    }
+  }
+
+  Future<void> postResetEmailCodeReset(
+    String email,
+    String code,
+    String password,
+  ) async {
+    var response = await dio.post(
+      "/auth/reset-password/reset",
+      data: {
+        'email': email,
+        'password': password,
+        'code': code,
+      },
+    );
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      throw Exception("xato ketdi reset emailCode");
+    }
+  }
 }
