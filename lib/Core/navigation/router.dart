@@ -14,13 +14,22 @@ import '../../Features/Auth/login/page/login_detail.dart';
 import '../../Features/Auth/sign_up/page/sign_up_detail.dart';
 import '../../Features/Auth/store_onboarding/page/onboarding_started.dart';
 import '../../Features/Auth/store_onboarding/page/state_oboarding_detail.dart';
+import '../../Features/notification_page/page/notification.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.search,
+
+  initialLocation: Routes.saved,
+
+  
+
   routes: [
     GoRoute(
       path: Routes.onboarding,
       builder: (context, state) => StoreOnboardingDetail(),
+    ),
+    GoRoute(
+      path: Routes.noNotification,
+      builder: (context, state) => NotificationScreen(),
     ),
     GoRoute(
       path: Routes.onboardingStarted,
