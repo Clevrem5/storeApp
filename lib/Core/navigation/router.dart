@@ -20,22 +20,13 @@ import '../../Features/Auth/store_onboarding/page/state_oboarding_detail.dart';
 import '../../Features/notification_page/page/notification.dart';
 
 final router = GoRouter(
-
   initialLocation: Routes.home,
-
-
-  
-
-  
-
-
   routes: [
     GoRoute(
       path: Routes.onboarding,
       builder: (context, state) => StoreOnboardingDetail(),
     ),
     GoRoute(
-
       path: Routes.resetPasswordEmail,
       builder: (context, state) => ResetPasswordEmailDetail(),
     ),
@@ -50,13 +41,14 @@ final router = GoRouter(
     GoRoute(
       path: Routes.onboarding,
       builder: (context, state) => StoreOnboardingDetail(),
-    ),   GoRoute(
+    ),
+    GoRoute(
       path: Routes.onboarding,
       builder: (context, state) => StoreOnboardingDetail(),
-
+    ),
+    GoRoute(
       path: Routes.noNotification,
       builder: (context, state) => NotificationScreen(),
-
     ),
     GoRoute(
       path: Routes.onboardingStarted,

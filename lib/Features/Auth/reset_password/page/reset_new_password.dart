@@ -4,6 +4,8 @@ import 'package:store_app/Core/navigation/routes.dart';
 import 'package:store_app/Core/utils/app_colors.dart';
 import 'package:store_app/Features/Common_Widgets/store_app_bar.dart';
 
+import '../../../search_page/page/store_app_bar.dart';
+
 class ResetNewPassword extends StatelessWidget {
   const ResetNewPassword({super.key});
 
@@ -12,15 +14,10 @@ class ResetNewPassword extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.white,
       extendBody: true,
-      appBar: StoreAppBar(
-        title: "",
-        actions: "",
-        leading: "assets/icons/back.svg",
-        leadingCallBack: () {
-          context.pop(Routes.resetPasswordCode);
-        },
-        actionsCallBack: () {},
-      ),
+      appBar:  StoreAppBar(
+      text: "",
+      actions: [],
+    ),
     );
   }
 }

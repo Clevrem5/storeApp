@@ -58,7 +58,7 @@ class AuthRepository {
   }
   Future<void>postResetEmailCodeReset(String email,String code,String password)async{
     return await client.postResetEmailCodeReset(email, code, password);
-  }//
+  }
 }
 
 

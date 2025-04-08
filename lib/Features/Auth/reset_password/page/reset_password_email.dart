@@ -5,6 +5,7 @@ import 'package:store_app/Core/utils/app_colors.dart';
 import 'package:store_app/Features/Auth/reset_password/widget/store_elevated_button.dart';
 import 'package:store_app/Features/Common_Widgets/store_app_bar.dart';
 import 'package:store_app/Features/Common_Widgets/store_tex.dart';
+import 'package:store_app/Features/search_page/page/store_app_bar.dart';
 
 import '../../../../Core/navigation/routes.dart';
 import '../widget/reset_password_value_listenable_builder.dart';
@@ -23,13 +24,8 @@ class ResetPasswordEmailDetail extends StatelessWidget {
       backgroundColor: AppColors.white,
       extendBody: true,
       appBar: StoreAppBar(
-        title: "",
-        actions: "",
-        leading: "assets/icons/back.svg",
-        leadingCallBack: () {
-          context.pop();
-        },
-        actionsCallBack: () {},
+        text: "",
+        actions: [],
       ),
       body: Padding(
         padding: const EdgeInsets.only(
