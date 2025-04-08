@@ -19,7 +19,7 @@ class HomePageDetail extends StatelessWidget {
     "Shoes",
     "Hoodie",
   ];
-
+  final TextEditingController cont = TextEditingController();
   final ValueNotifier<int> selectedIndexNotifier = ValueNotifier(0);
 
   @override
@@ -30,7 +30,7 @@ class HomePageDetail extends StatelessWidget {
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.white,
-        leadingWidth: 150,
+        leadingWidth: 200,
         leading: Center(
           child: Text(
             "Discover",
@@ -43,7 +43,7 @@ class HomePageDetail extends StatelessWidget {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 25),
+            padding: const EdgeInsets.symmetric(horizontal: 25),
             child: StoreIcons(
               icons: "assets/icons/notification.svg",
               color: AppColors.black,
@@ -58,7 +58,9 @@ class HomePageDetail extends StatelessWidget {
           children: [
             Row(
               children: [
-                HomePageTextFormField(),
+                HomePageTextFormField(
+                  controller: cont,
+                ),
                 SizedBox(width: 8.h),
                 Container(
                   width: 52.w,
@@ -93,8 +95,7 @@ class HomePageDetail extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final isSelected = selectedIndex == index;
                       return Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 6),
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                         decoration: BoxDecoration(
                           color: isSelected ? AppColors.black : AppColors.white,
                           borderRadius: BorderRadius.circular(10),
@@ -112,9 +113,7 @@ class HomePageDetail extends StatelessWidget {
                           child: Text(
                             texlar[index],
                             style: TextStyle(
-                              color: isSelected
-                                  ? AppColors.white
-                                  : AppColors.black,
+                              color: isSelected ? AppColors.white : AppColors.black,
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w600,
                             ),
@@ -135,10 +134,7 @@ class HomePageDetail extends StatelessWidget {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 19,
-                        mainAxisSpacing: 20),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 19, mainAxisSpacing: 20),
                     itemBuilder: (context, index) => Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,9 +158,7 @@ class HomePageDetail extends StatelessWidget {
                                 child: Container(
                                   width: 34.w,
                                   height: 34.h,
-                                  decoration: BoxDecoration(
-                                      color: AppColors.white,
-                                      borderRadius: BorderRadius.circular(8)),
+                                  decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(8)),
                                   child: Center(
                                     child: LikeButton(),
                                   ),

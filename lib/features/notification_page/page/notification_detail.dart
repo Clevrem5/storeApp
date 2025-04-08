@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:store_app/Features/search_page/page/store_app_bar.dart';
 import 'package:store_app/core/utils/app_colors.dart';
 import 'package:store_app/features/notification_page/widget/store_notification_daily_news.dart';
 import '../../../core/navigation/routes.dart';
@@ -16,13 +17,7 @@ class NotificationDetail extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       backgroundColor: AppColors.white,
-      appBar: StoreAppBar(
-        actionsCallBack: () {},
-        leadingCallBack: () => context.pop(Routes.home),
-        leading: "assets/icons/back.svg",
-        actions: "",
-        title: "Notifications",
-      ),
+      appBar: StoreAppBar(text: "Notifications",actions: [],),
       body: Padding(
         padding: EdgeInsets.only(left: 24, right: 24),
         child: Column(
