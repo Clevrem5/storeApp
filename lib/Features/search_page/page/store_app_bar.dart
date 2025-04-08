@@ -5,8 +5,8 @@ import 'package:store_app/core/utils/app_colors.dart';
 
 import '../../../core/navigation/routes.dart';
 
-class StoreAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const StoreAppBar({super.key, required this.text, this.actions});
+class StoreAppBarTwo extends StatelessWidget implements PreferredSizeWidget {
+  const StoreAppBarTwo({super.key, required this.text, this.actions});
 
   final String text;
   final List<Widget>? actions;
