@@ -4,7 +4,6 @@ import 'package:store_app/Features/search_page/page/store_app_bar.dart';
 import 'package:store_app/core/utils/app_colors.dart';
 import 'package:store_app/features/home_page/page/home_page_text_form_field.dart';
 import '../../../core/navigation/routes.dart';
-import '../../Common_Widgets/store_app_bar.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
 
 class SearchDetail extends StatefulWidget {
@@ -91,7 +90,7 @@ class _SearchDetailState extends State<SearchDetail> {
           ),
           const SizedBox(height: 10),
           ...recent.map(
-                (item) => ListTile(
+            (item) => ListTile(
               title: Text(item),
               trailing: IconButton(
                 icon: const Icon(Icons.delete_forever_outlined, size: 16),
@@ -108,7 +107,6 @@ class _SearchDetailState extends State<SearchDetail> {
         ],
       ),
     );
-
   }
 
   Widget _buildSearchResults(List<String> results) {

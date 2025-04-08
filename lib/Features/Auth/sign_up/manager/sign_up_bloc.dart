@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:store_app/Data/repository/sign_up_repository.dart';
+import 'package:store_app/Data/repository/Auth_repository.dart';
 import 'package:store_app/Features/Auth/sign_up/manager/sign_up_event.dart';
 import 'package:store_app/Features/Auth/sign_up/manager/sign_up_state.dart';
 
