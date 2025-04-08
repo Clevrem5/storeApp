@@ -17,9 +17,15 @@ class NotificationDetail extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       backgroundColor: AppColors.white,
-      appBar: StoreAppBar(text: "Notifications",actions: [],),
+      appBar: StoreAppBar(
+        actionsCallBack: () {},
+        leadingCallBack: () => context.pop(Routes.home),
+        leading: "assets/icons/back.svg",
+        actions: "",
+        title: "Notifications",
+      ),
       body: Padding(
-        padding: EdgeInsets.only(left: 24, right: 24),
+        padding: EdgeInsets.only(left: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

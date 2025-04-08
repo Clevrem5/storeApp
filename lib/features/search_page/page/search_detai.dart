@@ -31,7 +31,7 @@ class _SearchDetailState extends State<SearchDetail> {
     return Scaffold(
       backgroundColor: AppColors.white,
       extendBody: true,
-      appBar: StoreAppBar(text: "Search"),
+      appBar: StoreAppBarTwo(text: "Search"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
