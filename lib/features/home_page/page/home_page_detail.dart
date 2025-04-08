@@ -20,7 +20,7 @@ class HomePageDetail extends StatelessWidget {
     "Shoes",
     "Hoodie",
   ];
-
+  final TextEditingController cont = TextEditingController();
   final ValueNotifier<int> selectedIndexNotifier = ValueNotifier(0);
 
   @override
@@ -31,7 +31,7 @@ class HomePageDetail extends StatelessWidget {
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.white,
-        leadingWidth: 150,
+        leadingWidth: 200,
         leading: Center(
           child: Text(
             "Discover",
@@ -44,7 +44,7 @@ class HomePageDetail extends StatelessWidget {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 25),
+            padding: const EdgeInsets.symmetric(horizontal: 25),
             child: StoreIcons(
               icons: "assets/icons/notification.svg",
               color: AppColors.black,
@@ -59,7 +59,9 @@ class HomePageDetail extends StatelessWidget {
           children: [
             Row(
               children: [
-                HomePageTextFormField(),
+                HomePageTextFormField(
+                  controller: cont,
+                ),
                 SizedBox(width: 8.h),
                 SizedBox(
                   width: 52.w,
