@@ -36,7 +36,7 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.resetNewPassword,
-      builder: (context, state) => ResetNewPassword(),
+      builder: (context, state) => ResetPasswordPage(),
     ),
     GoRoute(
       path: Routes.onboarding,
