@@ -28,12 +28,12 @@ class LoginDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      // extendBody: true,
+      extendBody: true,
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) async {
           if (state.status == LoginStatus.success) {
             context.push(Routes.home);
-          } else {
+          } else if (state.status == LoginStatus.error) {
             showDialog(
               context: context,
               barrierDismissible: true,
@@ -54,9 +54,7 @@ class LoginDetail extends StatelessWidget {
                             height: 78.h,
                             fit: BoxFit.cover,
                           ),
-                          SizedBox(
-                            height: 12.h,
-                          ),
+                          SizedBox(height: 12.h),
                           Text(
                             "Ro'yxatdan O'tib Bo'lmadi",
                             textAlign: TextAlign.center,
@@ -66,12 +64,14 @@ class LoginDetail extends StatelessWidget {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
+                          SizedBox(height: 30.h),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.black,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                )),
+                              backgroundColor: AppColors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                            ),
                             onPressed: () {
                               Navigator.pop(context);
                             },
@@ -81,7 +81,7 @@ class LoginDetail extends StatelessWidget {
                                 style: TextStyle(fontSize: 15.sp, color: AppColors.white),
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -91,6 +91,7 @@ class LoginDetail extends StatelessWidget {
             );
           }
         },
+
         child: SafeArea(
           child: ListView(
             children: [
@@ -132,7 +133,7 @@ class LoginDetail extends StatelessWidget {
                           label: "",
                           hint: "Enter your email address",
                           validator: (value) => null,
-                          controller: context.read<LoginBloc>().loginContr,
+                          controller: context.read<LoginBloc>().loginController,
                         );
                       },
                     ),
@@ -155,7 +156,7 @@ class LoginDetail extends StatelessWidget {
                           label: "",
                           hint: "Enter your password",
                           validator: (value) => null,
-                          controller: context.read<LoginBloc>().passwordContr,
+                          controller: context.read<LoginBloc>().passwordController,
                         );
                       },
                     ),
