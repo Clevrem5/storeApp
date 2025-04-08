@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:store_app/Features/Common_Widgets/store_tex.dart';
 import 'package:store_app/core/utils/app_colors.dart';
 import 'package:store_app/features/home_page/page/home_page_text_form_field.dart';
 import '../../../core/navigation/routes.dart';
@@ -62,20 +63,129 @@ class HomePageDetail extends StatelessWidget {
                   controller: cont,
                 ),
                 SizedBox(width: 8.h),
-                Container(
+                SizedBox(
                   width: 52.w,
-                  height: 56.h,
-                  decoration: BoxDecoration(
-                    color: AppColors.black,
-                    borderRadius: BorderRadius.circular(11),
-                  ),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      "assets/icons/filters.svg",
-                      color: AppColors.white,
-                      width: 24.w,
-                      height: 24.h,
-                      fit: BoxFit.cover,
+                  height: 52.h,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        )),
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) => Container(
+                          width: double.infinity.w,
+                          height: 389.h,
+                          decoration: BoxDecoration(
+                            color: AppColors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 30, right: 24, left: 24),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: StoreText(
+                                        text: "Filters",
+                                        color: AppColors.black,
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    StoreIcons(
+                                      icons: "assets/icons/cancel.svg",
+                                      color: AppColors.black,
+                                      callback: () {
+                                        context.pop();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 14.h),
+                                Divider(
+                                  color: AppColors.buttonBorder,
+                                  height: 1.3,
+                                ),
+                                SizedBox(height: 14.h),
+                                StoreText(
+                                  text: "Sort By",
+                                  color: AppColors.black,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                SizedBox(height: 12.h,),
+                                SizedBox(
+                                  height: 36,
+                                  width: double.infinity,
+                                  child: ValueListenableBuilder<int>(
+                                    valueListenable: selectedIndexNotifier,
+                                    builder: (context, selectedIndex, _) {
+                                      return ListView.separated(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: texlar.length,
+                                        separatorBuilder: (context, index) => SizedBox(width: 8),
+                                        itemBuilder: (context, index) {
+                                          final isSelected = selectedIndex == index;
+                                          return Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                                            decoration: BoxDecoration(
+                                              color: isSelected ? AppColors.black : AppColors.white,
+                                              borderRadius: BorderRadius.circular(10),
+                                              border: Border.all(color: AppColors.buttonBorder),
+                                            ),
+                                            child: TextButton(
+                                              onPressed: () {
+                                                selectedIndexNotifier.value = index;
+                                              },
+                                              style: TextButton.styleFrom(
+                                                padding: EdgeInsets.zero,
+                                                minimumSize: Size(0, 0),
+                                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                              ),
+                                              child: Text(
+                                                texlar[index],
+                                                style: TextStyle(
+                                                  color: isSelected ? AppColors.white : AppColors.black,
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                                SizedBox(height: 20.h,),
+                                Divider(
+                                  color: AppColors.buttonBorder,
+                                  height: 1.3,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    child: Center(
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 25,
+                        child: SvgPicture.asset(
+                          // alignment: Alignment.center,
+                          "assets/icons/back.svg",
+                          color: AppColors.white,
+                          width: 24.w,
+                          height: 24.h,
+                          fit: BoxFit.fitHeight,
+                        ),
+                      ),
                     ),
                   ),
                 ),

@@ -1,6 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/Features/Auth/login/manger/login_bloc.dart';
+import 'package:store_app/Features/Auth/reset_password/page/reset_new_password.dart';
+import 'package:store_app/Features/Auth/reset_password/page/reset_password_code.dart';
+import 'package:store_app/Features/Auth/reset_password/page/reset_password_email.dart';
 import 'package:store_app/Features/Auth/sign_up/manager/sign_up_bloc.dart';
 import 'package:store_app/core/navigation/routes.dart';
 import 'package:store_app/features/account_page/page/account_detail.dart';
@@ -18,9 +21,13 @@ import '../../Features/notification_page/page/notification.dart';
 
 final router = GoRouter(
 
-  initialLocation: Routes.saved,
+  initialLocation: Routes.home,
+
 
   
+
+  
+
 
   routes: [
     GoRoute(
@@ -28,8 +35,28 @@ final router = GoRouter(
       builder: (context, state) => StoreOnboardingDetail(),
     ),
     GoRoute(
+
+      path: Routes.resetPasswordEmail,
+      builder: (context, state) => ResetPasswordEmailDetail(),
+    ),
+    GoRoute(
+      path: Routes.resetPasswordCode,
+      builder: (context, state) => ResetPasswordCode(),
+    ),
+    GoRoute(
+      path: Routes.resetNewPassword,
+      builder: (context, state) => ResetNewPassword(),
+    ),
+    GoRoute(
+      path: Routes.onboarding,
+      builder: (context, state) => StoreOnboardingDetail(),
+    ),   GoRoute(
+      path: Routes.onboarding,
+      builder: (context, state) => StoreOnboardingDetail(),
+
       path: Routes.noNotification,
       builder: (context, state) => NotificationScreen(),
+
     ),
     GoRoute(
       path: Routes.onboardingStarted,

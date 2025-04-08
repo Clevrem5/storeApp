@@ -20,9 +20,9 @@ class LoginDetail extends StatelessWidget {
   final ValueNotifier<String> emailNotifier = ValueNotifier('');
   final ValueNotifier<String> passwordNotifier = ValueNotifier('');
 
-  bool _isEmailValid(String email) => email.endsWith('@gmail.com');
+  bool isEmailValid(String email) => email.endsWith('@gmail.com');
 
-  bool _isPasswordValid(String password) => password.length >= 8;
+  bool isPasswordValid(String password) => password.length >= 8;
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +124,7 @@ class LoginDetail extends StatelessWidget {
                     ValueListenableBuilder<String>(
                       valueListenable: emailNotifier,
                       builder: (context, email, _) {
-                        final isValid = _isPasswordValid(email);
+                        final isValid = isEmailValid(email);
                         return LoginEmailTextForm(
                           email: email,
                           emailNotifier: emailNotifier,
@@ -147,7 +147,7 @@ class LoginDetail extends StatelessWidget {
                     ValueListenableBuilder<String>(
                       valueListenable: passwordNotifier,
                       builder: (context, password, _) {
-                        final isValid = _isPasswordValid(password);
+                        final isValid = isPasswordValid(password);
                         return LoginPasswordTextForm(
                           password: password,
                           isValid: isValid,
@@ -168,9 +168,14 @@ class LoginDetail extends StatelessWidget {
                           "Forgot your password?",
                           style: TextStyle(color: AppColors.black.withValues(alpha: 1), fontSize: 16.sp),
                         ),
-                        Text(
-                          "Reset your password",
-                          style: TextStyle(color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w600),
+                        GestureDetector(
+                          onTap: () {
+                            context.push(Routes.resetPasswordEmail);
+                          },
+                          child: Text(
+                            "Reset your password",
+                            style: TextStyle(color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w600),
+                          ),
                         ),
                       ],
                     ),
@@ -179,7 +184,7 @@ class LoginDetail extends StatelessWidget {
                       first: emailNotifier,
                       second: passwordNotifier,
                       builder: (context, email, password, _) {
-                        final isValid = _isEmailValid(email) && _isPasswordValid(password);
+                        final isValid = isEmailValid(email) && isPasswordValid(password);
                         return SizedBox(
                           width: double.infinity,
                           height: 54,
