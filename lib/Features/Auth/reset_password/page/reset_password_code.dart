@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:store_app/Core/navigation/routes.dart';
 import 'package:store_app/Features/Auth/reset_password/widget/store_elevated_button.dart';
+import 'package:store_app/Features/search_page/page/store_app_bar.dart';
 import '../../../../Core/utils/app_colors.dart';
 import '../../../Common_Widgets/store_app_bar.dart';
 import '../../../Common_Widgets/store_tex.dart';
@@ -20,15 +21,7 @@ class ResetPasswordCode extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.white,
       extendBody: true,
-      appBar: StoreAppBar(
-        title: "",
-        actions: "",
-        leading: "assets/icons/back.svg",
-        leadingCallBack: () {
-          context.pop();
-        },
-        actionsCallBack: () {},
-      ),
+      appBar: StoreAppBar(text: "Recet"),
       body: Padding(
         padding: const EdgeInsets.only(
           top: 15,
