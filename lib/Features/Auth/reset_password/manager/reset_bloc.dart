@@ -14,7 +14,7 @@ class ResetPasswordBloc extends Bloc<ResetEvent, ResetState> {
       : _authRepository = authRepository,
         super(ResetState.initial()) {
     on<SendEmailEvent>(_sendEmail);
-    on<SendCodeEmail>(_sendCode);
+    on<SendCodeEmailEvent>(_sendCode);
     on<ResetPasswordEvent>(_saveNewPassword);
   }
 
@@ -32,7 +32,7 @@ class ResetPasswordBloc extends Bloc<ResetEvent, ResetState> {
     }
   }
 
-  Future<void> _sendCode(SendCodeEmail event, Emitter<ResetState> emit) async {
+  Future<void> _sendCode(SendCodeEmailEvent event, Emitter<ResetState> emit) async {
     final result = await _authRepository.postResetEmailCode(event.email, event.code);
     if (result) {
       emit(state.copyWith(status: ResetStatus.success));

@@ -26,6 +26,7 @@ final router = GoRouter(
   navigatorKey: navigatorKey,
   initialLocation: Routes.login,
   routes: [
+
     GoRoute(
       path: Routes.onboarding,
       builder: (context, state) => StoreOnboardingDetail(),

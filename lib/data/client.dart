@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:store_app/Core/exceptions/custom_exception.dart';
+import 'package:store_app/Core/inter_septor.dart';
 import 'package:store_app/Data/models/Auth_model.dart';
 
 class ApiClient {
@@ -9,7 +10,7 @@ class ApiClient {
 
    
  
-  );
+  )..interceptors.add(AuthInterceptor());
 
   Future<bool> signUp(AuthModel model) async {
     final response = await dio.post(

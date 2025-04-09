@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:store_app/Core/navigation/routes.dart';
+import 'package:store_app/Features/Auth/store_onboarding/page/store_app_elevated_button.dart';
 import 'package:store_app/Features/Common_Widgets/store_tex.dart';
+
+import '../../../../Core/navigation/routes.dart';
 
 class OnboardingStarted extends StatelessWidget {
   const OnboardingStarted({super.key});
@@ -52,33 +54,8 @@ class OnboardingStarted extends StatelessWidget {
             ),
           ],
         ),
-        bottomNavigationBar: Container(
-          width: double.infinity,
-          height: 107.h,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: Colors.white,
-          ),
-          child: ElevatedButton(
-            onPressed: () {
-              context.go(Routes.signUp);
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.black,
-              minimumSize: Size(341.w, 54.h),
-              shape: BeveledRectangleBorder(
-                borderRadius: BorderRadius.circular(0),
-              ),
-            ),
-            child: Text(
-              "Get Started ➡️",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
+        bottomNavigationBar: StoreAppElevatedButton(
+          text: "get started",callback: ()=>context.go(Routes.signUp),
         ),
       ),
     );
