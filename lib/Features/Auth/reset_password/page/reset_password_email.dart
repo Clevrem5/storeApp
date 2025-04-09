@@ -90,7 +90,7 @@ class _ResetPasswordEmailDetailState extends State<ResetPasswordEmailDetail> {
                         }
                       },
                       child: TextFormField(
-                        controller: controller,
+                        controller: context.read<ResetPasswordBloc>().emailController,
                         onChanged: (value) => emailNotifier.value = value,
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -142,7 +142,7 @@ class _ResetPasswordEmailDetailState extends State<ResetPasswordEmailDetail> {
                   onTap: () {
                     context.read<ResetPasswordBloc>().add(
                           SendEmailEvent(
-                            email: controller.text.trim(),
+                            email: context.read<ResetPasswordBloc>().emailController.text.trim(),
                           ),
                         );
                   },

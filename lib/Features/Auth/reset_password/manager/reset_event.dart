@@ -9,24 +9,18 @@ final class SendEmailEvent extends ResetEvent {
 }
 
 final class SendCodeEmailEvent extends ResetEvent {
-  final String email;
   final String code;
 
   SendCodeEmailEvent({
-    required this.email,
     required this.code,
   });
 }
 
 final class ResetPasswordEvent extends ResetEvent {
   final String password;
-  final String email;
-  final String code;
 
   ResetPasswordEvent({
-    required this.email,
     required this.password,
-    required this.code,
   });
 }
 
