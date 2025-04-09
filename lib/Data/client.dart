@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:store_app/Core/exceptions/cutom_exception.dart';
+import 'package:store_app/Core/exceptions/custom_exception.dart';
 import 'package:store_app/Data/models/Auth_model.dart';
 
 class ApiClient {
@@ -47,8 +47,7 @@ class ApiClient {
         return false;
       }
     }catch(e){
-      print(e.toString());
-      throw Exception();
+      throw CustomException(message: e.toString());
     }
   }
 
