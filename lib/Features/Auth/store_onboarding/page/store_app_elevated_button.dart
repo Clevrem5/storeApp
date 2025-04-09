@@ -8,10 +8,12 @@ class StoreAppElevatedButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.callback,
+    this.radius=0,
   });
 
   final String text;
   final VoidCallback callback;
+  final double radius;
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +29,8 @@ class StoreAppElevatedButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.black,
           minimumSize: Size(341.w, 54.h),
-          shape: BeveledRectangleBorder(
-            borderRadius: BorderRadius.circular(0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(radius),
           ),
         ),
         child: Text(

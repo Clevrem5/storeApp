@@ -26,7 +26,6 @@ final router = GoRouter(
   navigatorKey: navigatorKey,
   initialLocation: Routes.login,
   routes: [
-
     GoRoute(
       path: Routes.onboarding,
       builder: (context, state) => StoreOnboardingDetail(),
@@ -42,11 +41,17 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.resetPasswordCode,
-      builder: (context, state) => ResetPasswordCode(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => ResetPasswordBloc(authRepository: context.read()),
+        child: ResetPasswordCode(),
+      ),
     ),
     GoRoute(
       path: Routes.resetNewPassword,
-      builder: (context, state) => ResetPasswordPage(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => ResetPasswordBloc(authRepository: context.read()),
+        child: ResetPasswordPage(),
+      ),
     ),
     GoRoute(
       path: Routes.onboarding,
