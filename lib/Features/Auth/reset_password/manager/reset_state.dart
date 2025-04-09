@@ -1,4 +1,5 @@
-import 'package:equatable/equatable.dart';
+part of 'reset_bloc.dart';
+
 
 enum ResetStatus { loading, success, error }
 

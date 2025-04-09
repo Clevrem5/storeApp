@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:store_app/Core/exceptions/cutom_exception.dart';
 import 'package:store_app/Data/models/Auth_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
-    BaseOptions(baseUrl: "http://192.168.9.155:8888/api/v1"),
+    BaseOptions(baseUrl: "http://192.168.9.137:8888/api/v1"),
   );
 
   Future<bool> signUp(AuthModel model) async {
@@ -28,52 +29,64 @@ class ApiClient {
     }
   }
 
-  Future<String> postResetEmail(String email) async {
-    var response = await dio.post(
-      "/auth/reset-password/email",
-      data: {
-        'email': email,
-      },
-    );
-    if (response.statusCode == 200) {
-      final data = Map<String, String>.from(response.data);
-      return data['email']!;
-    } else {
-      throw Exception("xato ketdi reset email");
+  Future<bool> postResetEmail(String email) async {
+    try{
+      var response = await dio.post(
+        "/auth/reset-password/email",
+        data: {
+          'email': email,
+        },
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    }catch(e){
+      print(e.toString());
+      throw Exception();
     }
   }
 
-  Future<ResetData> postResetEmailCode(String email, String code) async {
-    var response = await dio.post(
-      "/auth/reset-password/verify",
-      data: {
-        'email': email,
-        'code': code,
-      },
-    );
-    if (response.statusCode == 200) {
-      return ResetData(email: email, code: code);
-    } else {
+  Future<bool> postResetEmailCode(String email, String code) async {
+    try {
+      var response = await dio.post(
+        "/auth/reset-password/verify",
+        data: {
+          'email': email,
+          'code': code,
+        },
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
       throw Exception("xato ketdi reset emailCode");
     }
   }
 
-  Future<void> postResetEmailCodeReset(
+  Future<bool> postResetEmailCodeReset(
     String email,
     String code,
     String password,
   ) async {
-    var response = await dio.post(
-      "/auth/reset-password/reset",
-      data: {
-        'email': email,
-        'password': password,
-        'code': code,
-      },
-    );
-    if (response.statusCode == 200) {
-      return response.data;
-    } else {
+    try {
+      var response = await dio.post(
+        "/auth/reset-password/reset",
+        data: {
+          'email': email,
+          'password': password,
+          'code': code,
+        },
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
       throw Exception("xato ketdi reset emailCode");
     }
   }

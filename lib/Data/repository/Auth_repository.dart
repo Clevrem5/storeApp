@@ -50,13 +50,13 @@ class AuthRepository {
     return true;
   }
 
-  Future<String> resetPassword(String email) async {
+  Future<bool> resetPassword(String email) async {
     return await client.postResetEmail(email);
   }
-  Future<ResetData>postResetEmailCode(String email,String code)async{
+  Future<bool>postResetEmailCode(String email,String code)async{
     return await client.postResetEmailCode(email, code);
   }
-  Future<void>postResetEmailCodeReset(String email,String code,String password)async{
+  Future<bool>postResetEmailCodeReset(String email,String code,String password)async{
     return await client.postResetEmailCodeReset(email, code, password);
   }
 }

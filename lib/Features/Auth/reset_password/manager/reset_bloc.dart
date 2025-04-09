@@ -1,29 +1,31 @@
-sealed class ResetEvent {}
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:store_app/Data/repository/Auth_repository.dart';
 
-final class SendEmailEvent extends ResetEvent {
-  final String email;
+part 'reset_event.dart';
 
-  SendEmailEvent({required this.email});
-}
+part 'reset_state.dart';
 
-final class SendCodeEmail extends ResetEvent {
-  final String email;
-  final String code;
+class ResetPasswordBloc extends Bloc<ResetEvent, ResetState> {
+  final AuthRepository _authRepository;
 
-  SendCodeEmail({
-    required this.email,
-    required this.code,
-  });
-}
-
-final class ResetPasswordEvent extends ResetEvent {
-  final String password;
-  final String email;
-  final String code;
-
-  ResetPasswordEvent({
-    required this.email,
-    required this.password,
-    required this.code,
-  });
+  ResetPasswordBloc({required AuthRepository authRepository})
+      : _authRepository = authRepository,
+        super(ResetState.initial()) {
+    on<SendEmailEvent>(
+      (event, emit) async {
+        final result = await _authRepository.resetPassword(event.email);
+        if (result) {
+          emit(state.copyWith(status: ResetStatus.success));
+        } else {
+          emit(
+            state.copyWith(
+              status: ResetStatus.error,
+              message: "password reset qilishda Emailda xato sodir boldi ",
+            ),
+          );
+        }
+      },
+    );
+  }
 }
