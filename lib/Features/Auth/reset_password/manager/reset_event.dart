@@ -8,11 +8,11 @@ final class SendEmailEvent extends ResetEvent {
   SendEmailEvent({required this.email});
 }
 
-final class SendCodeEmail extends ResetEvent {
+final class SendCodeEmailEvent extends ResetEvent {
   final String email;
   final String code;
 
-  SendCodeEmail({
+  SendCodeEmailEvent({
     required this.email,
     required this.code,
   });

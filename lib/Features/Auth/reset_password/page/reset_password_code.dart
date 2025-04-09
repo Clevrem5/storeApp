@@ -2,18 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:store_app/Core/navigation/routes.dart';
-import 'package:store_app/Features/Auth/reset_password/widget/store_elevated_button.dart';
+
+import '../../../../Core/navigation/routes.dart';
 import '../../../../Core/utils/app_colors.dart';
 import '../../../Common_Widgets/store_app_bar.dart';
 import '../../../Common_Widgets/store_tex.dart';
 import '../widget/reset_password_value_listenable_builder.dart';
+import '../widget/store_elevated_button.dart';
 
 class ResetPasswordCode extends StatelessWidget {
   ResetPasswordCode({super.key});
 
   final ValueNotifier<String> passwordNotifier = ValueNotifier('');
+  final TextEditingController pinController = TextEditingController(); // ✅ controller qo‘shildi
+
   bool isPasswordValid(String password) => password.length == 4;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,11 +34,7 @@ class ResetPasswordCode extends StatelessWidget {
         actionsCallBack: () {},
       ),
       body: Padding(
-        padding: const EdgeInsets.only(
-          top: 15,
-          left: 24,
-          right: 24,
-        ),
+        padding: const EdgeInsets.only(top: 15, left: 24, right: 24),
         child: SafeArea(
           child: SingleChildScrollView(
             reverse: true,
@@ -67,7 +67,9 @@ class ResetPasswordCode extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 15, left: 15),
                   child: ValueListenableBuilder(
                     valueListenable: passwordNotifier,
-                    builder: (context, password, _) =>  PinCodeTextField(
+                    builder: (context, password, _) => PinCodeTextField(
+                      controller: pinController,
+                      // ✅ controller kiritildi
                       appContext: context,
                       length: 4,
                       obscureText: false,
@@ -85,13 +87,13 @@ class ResetPasswordCode extends StatelessWidget {
                         activeColor: Colors.green,
                         inactiveColor: Colors.red,
                       ),
-                      onSubmitted: (value) => passwordNotifier.value = value,
                       animationDuration: Duration(microseconds: 300),
                       enableActiveFill: true,
                       onChanged: (value) {
                         passwordNotifier.value = value;
                       },
                       onCompleted: (value) {
+                        print("Entered code (onCompleted): ${pinController.text}");
                         context.push(Routes.resetNewPassword);
                       },
                     ),
@@ -110,24 +112,33 @@ class ResetPasswordCode extends StatelessWidget {
           bottom: MediaQuery.of(context).viewInsets.bottom + 16,
         ),
         child: ValueListenableBuilder1<String>(
-            first: passwordNotifier,
-            builder: (context, email, _) {
-              final isValid = isPasswordValid(email);
-              return SizedBox(
-                width: double.infinity,
-                height: 54.h,
-                child: StoreElevatedButton(
-                  onTap: () {
+          first: passwordNotifier,
+          builder: (context, email, _) {
+            final isValid = isPasswordValid(email);
+            return SizedBox(
+              width: double.infinity,
+              height: 54.h,
+              child: StoreElevatedButton(
+                onTap: () {
+                  final enteredCode = pinController.text; // ✅ Kod shu yerda olinadi
+                  print("Submitted PIN: $enteredCode");
+
+                  if (isValid) {
                     context.push(Routes.resetNewPassword);
-                  },
-                  text: "Yuborish",
-                  textColor: AppColors.white,
-                  colorIncorrect: AppColors.hintText,
-                  colorCorrect: AppColors.black,
-                  isValid: isValid,
-                ),
-              );
-            }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Kod 4 xonali bo'lishi kerak")),
+                    );
+                  }
+                },
+                text: "Yuborish",
+                textColor: AppColors.white,
+                colorIncorrect: AppColors.hintText,
+                colorCorrect: AppColors.black,
+                isValid: isValid,
+              ),
+            );
+          },
         ),
       ),
     );
