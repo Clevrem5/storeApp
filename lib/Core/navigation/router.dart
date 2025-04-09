@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/Features/Auth/login/manger/login_bloc.dart';
+import 'package:store_app/Features/Auth/reset_password/manager/reset_bloc.dart';
 import 'package:store_app/Features/Auth/reset_password/page/reset_new_password.dart';
 import 'package:store_app/Features/Auth/reset_password/page/reset_password_code.dart';
 import 'package:store_app/Features/Auth/reset_password/page/reset_password_email.dart';
@@ -20,7 +21,10 @@ import '../../Features/Auth/store_onboarding/page/state_oboarding_detail.dart';
 import '../../Features/notification_page/page/notification.dart';
 
 final router = GoRouter(
+
+
   initialLocation: Routes.login,
+ 
   routes: [
     GoRoute(
       path: Routes.onboarding,
@@ -28,7 +32,12 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.resetPasswordEmail,
-      builder: (context, state) => ResetPasswordEmailDetail(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => ResetPasswordBloc(
+          authRepository: context.read(),
+        ),
+        child: ResetPasswordEmailDetail(),
+      ),
     ),
     GoRoute(
       path: Routes.resetPasswordCode,

@@ -1,3 +1,6 @@
+part of 'reset_bloc.dart';
+
+
 // import 'package:equatable/equatable.dart';
 //
 // enum ResetEmailStatus { loading, success, error }
@@ -28,4 +31,5 @@
 //   @override
 //   List<Object?> get props => [status, message];
 // }
+ 
 
