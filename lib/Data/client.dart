@@ -78,10 +78,10 @@ class ApiClient {
     }
   }
   
-  Future<List<dynamic>> fetchHomePage(int categoryId, String searchTitle) async {
-    var response = await dio.get('/products/list$searchTitle$categoryId');
+  Future<List<dynamic>> fetchHomePage(int categoryId, String? searchTitle) async {
+    var response = await dio.get('/products/list?Title=$searchTitle&CategoryId=2');
     if (response.statusCode == 200) {
-      return List.from(response.data);
+      return List<dynamic>.from(response.data);
     } else {
       throw Exception('malumot kelmadi qanday chunding');
     }

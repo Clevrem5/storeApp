@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/Features/Common_Widgets/store_tex.dart';
+import 'package:store_app/Features/home_page/manager/home_page_bloc.dart';
+import 'package:store_app/Features/home_page/manager/home_page_state.dart';
+import 'package:store_app/Features/home_page/page/home_page_grid_detail.dart';
 import 'package:store_app/core/utils/app_colors.dart';
 import 'package:store_app/features/home_page/page/home_page_text_form_field.dart';
+
 import '../../../core/navigation/routes.dart';
-import '../../Common_Widgets/icon_button_like.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
 import '../../Common_Widgets/store_icons.dart';
 
@@ -118,7 +122,9 @@ class HomePageDetail extends StatelessWidget {
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w600,
                                 ),
-                                SizedBox(height: 12.h,),
+                                SizedBox(
+                                  height: 12.h,
+                                ),
                                 SizedBox(
                                   height: 36,
                                   width: double.infinity,
@@ -162,7 +168,9 @@ class HomePageDetail extends StatelessWidget {
                                     },
                                   ),
                                 ),
-                                SizedBox(height: 20.h,),
+                                SizedBox(
+                                  height: 20.h,
+                                ),
                                 Divider(
                                   color: AppColors.buttonBorder,
                                   height: 1.3,
@@ -178,7 +186,6 @@ class HomePageDetail extends StatelessWidget {
                         width: double.infinity,
                         height: 25,
                         child: SvgPicture.asset(
-                          // alignment: Alignment.center,
                           "assets/icons/back.svg",
                           color: AppColors.white,
                           width: 24.w,
@@ -237,71 +244,40 @@ class HomePageDetail extends StatelessWidget {
             ),
             SizedBox(height: 24.h),
             Expanded(
-              child: ListView(
-                children: [
-                  GridView.builder(
-                    itemCount: 8,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 19, mainAxisSpacing: 20),
-                    itemBuilder: (context, index) => Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Expanded(
-                          child: Stack(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.asset(
-                                  "assets/images/image.png",
-                                  width: 161,
-                                  height: 174.h,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Positioned(
-                                top: 12,
-                                right: 12,
-                                child: Container(
-                                  width: 34.w,
-                                  height: 34.h,
-                                  decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(8)),
-                                  child: Center(
-                                    child: LikeButton(),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
+              child: BlocBuilder<HomePageBloc, HomePageState>(
+                builder: (context, state) {
+                  if (state.status == null) {
+                    return Center(child: Text("Status not initialized"));
+                  }
+                  switch (state.status) {
+                    case HomePageStatus.loading:
+                      return Center(child: CircularProgressIndicator());
+                    case HomePageStatus.error:
+                      return Center(child: Text("An error occurred"));
+                    case HomePageStatus.idle:
+                      if (state.store == null) {
+                        return Center(child: Text("Store data is null"));
+                      }
+                      return GridView.builder(
+                        itemCount: state.store!.length,
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 19,
+                          mainAxisSpacing: 20,
                         ),
-                        SizedBox(
-                          height: 10.h,
+                        itemBuilder: (context, index) => HomePageGridDetail(
+                          store: state.store![index],
                         ),
-                        Text(
-                          "Regular Fit Slogan",
-                          style: TextStyle(
-                            color: AppColors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          "1,190",
-                          style: TextStyle(
-                            color: AppColors.hintText,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                      );
+                    case HomePageStatus.initial:
+                      return Center(child: Text("Initial state"));
+                    default:
+                      return Center(child: Text("Unknown status"));
+                  }
+                },
               ),
-            )
+            ),
           ],
         ),
       ),
