@@ -47,7 +47,7 @@ class _ResetPasswordEmailDetailState extends State<ResetPasswordEmailDetail> {
         ),
         child: SafeArea(
           child: SingleChildScrollView(
-            reverse: true, // klaviatura chiqsa avtomatik scroll
+            reverse: true,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

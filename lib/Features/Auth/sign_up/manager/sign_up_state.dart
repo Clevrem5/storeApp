@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:store_app/Data/models/Auth_model.dart';
 
 enum SignUpStatus { idle, loading, error, submitted}
 

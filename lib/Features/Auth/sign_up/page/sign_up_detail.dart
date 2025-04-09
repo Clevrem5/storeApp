@@ -94,66 +94,66 @@ class _SignUpDetailState extends State<SignUpDetail> {
               },
             );
           }
-          // if (state.status == SignUpStatus.error) {
-          //   showDialog(
-          //     context: context,
-          //     barrierDismissible: true,
-          //     builder: (context) {
-          //       return Center(
-          //         child: Dialog(
-          //           backgroundColor: Colors.white,
-          //           child: Container(
-          //             width: 341.w,
-          //             height: 292.h,
-          //             padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 36.h),
-          //             child: Column(
-          //               // crossAxisAlignment: CrossAxisAlignment.center,
-          //               // mainAxisAlignment: MainAxisAlignment.center,
-          //               // spacing: 20.h,
-          //               mainAxisSize: MainAxisSize.min,
-          //               children: [
-          //                 SvgPicture.asset(
-          //                   "assets/icons/no_succes.svg",
-          //                   width: 78.w,
-          //                   height: 78.h,
-          //                   fit: BoxFit.cover,
-          //                 ),
-          //                 SizedBox(
-          //                   height: 12.h,
-          //                 ),
-          //                 Text(
-          //                   "Ro'yxatdan O'tib Bo'lmadi",
-          //                   textAlign: TextAlign.center,
-          //                   style: TextStyle(
-          //                     color: AppColors.black,
-          //                     fontSize: 20,
-          //                     fontWeight: FontWeight.w600,
-          //                   ),
-          //                 ),
-          //                 ElevatedButton(
-          //                   style: ElevatedButton.styleFrom(
-          //                       backgroundColor: AppColors.black,
-          //                       shape: RoundedRectangleBorder(
-          //                         borderRadius: BorderRadius.circular(50),
-          //                       )),
-          //                   onPressed: () {
-          //                     Navigator.pop(context);
-          //                   },
-          //                   child: Center(
-          //                     child: Text(
-          //                       "Go Home",
-          //                       style: TextStyle(fontSize: 15.sp, color: AppColors.white),
-          //                     ),
-          //                   ),
-          //                 )
-          //               ],
-          //             ),
-          //           ),
-          //         ),
-          //       );
-          //     },
-          //   );
-          // }
+          if (state.status == SignUpStatus.error) {
+            showDialog(
+              context: context,
+              barrierDismissible: true,
+              builder: (context) {
+                return Center(
+                  child: Dialog(
+                    backgroundColor: Colors.white,
+                    child: Container(
+                      width: 341.w,
+                      height: 292.h,
+                      padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 36.h),
+                      child: Column(
+                        // crossAxisAlignment: CrossAxisAlignment.center,
+                        // mainAxisAlignment: MainAxisAlignment.center,
+                        // spacing: 20.h,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SvgPicture.asset(
+                            "assets/icons/no_succes.svg",
+                            width: 78.w,
+                            height: 78.h,
+                            fit: BoxFit.cover,
+                          ),
+                          SizedBox(
+                            height: 12.h,
+                          ),
+                          Text(
+                            "Ro'yxatdan O'tib Bo'lmadi",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AppColors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.black,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
+                                )),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Center(
+                              child: Text(
+                                "Go Home",
+                                style: TextStyle(fontSize: 15.sp, color: AppColors.white),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+          }
         },
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),

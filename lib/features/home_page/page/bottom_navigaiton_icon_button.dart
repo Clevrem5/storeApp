@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:store_app/core/utils/app_colors.dart';
 
 class BottomNavigaitonIconButton extends StatelessWidget {
   const BottomNavigaitonIconButton({

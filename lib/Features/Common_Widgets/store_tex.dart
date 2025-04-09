@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:store_app/core/utils/app_colors.dart';
 
 class StoreText extends StatelessWidget {
   const StoreText({

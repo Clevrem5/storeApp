@@ -4,7 +4,11 @@ import 'package:store_app/Data/models/Auth_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
+ 
     BaseOptions(baseUrl: "http://192.168.9.137:8888/api/v1"),
+
+   
+ 
   );
 
   Future<bool> signUp(AuthModel model) async {
@@ -88,6 +92,15 @@ class ApiClient {
       }
     } catch (e) {
       throw Exception("xato ketdi reset emailCode");
+    }
+  }
+  
+  Future<List<dynamic>> fetchHomePage(int categoryId, String searchTitle) async {
+    var response = await dio.get('/products/list$searchTitle$categoryId');
+    if (response.statusCode == 200) {
+      return List.from(response.data);
+    } else {
+      throw Exception('malumot kelmadi qanday chunding');
     }
   }
 }
