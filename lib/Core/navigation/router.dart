@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:store_app/Core/inter_septor.dart';
 import 'package:store_app/Features/Auth/login/manger/login_bloc.dart';
 import 'package:store_app/Features/Auth/reset_password/manager/reset_bloc.dart';
 import 'package:store_app/Features/Auth/reset_password/page/reset_new_password.dart';
@@ -19,8 +20,10 @@ import '../../Features/Auth/sign_up/page/sign_up_detail.dart';
 import '../../Features/Auth/store_onboarding/page/onboarding_started.dart';
 import '../../Features/Auth/store_onboarding/page/state_oboarding_detail.dart';
 import '../../Features/notification_page/page/notification.dart';
+import '../../main.dart';
 
 final router = GoRouter(
+  navigatorKey: navigatorKey,
   initialLocation: Routes.login,
   routes: [
     GoRoute(
