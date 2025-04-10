@@ -44,6 +44,8 @@ class ResetPasswordBloc extends Bloc<ResetEvent, ResetState> {
   Future<void> _sendCode(SendCodeEmailEvent event, Emitter<ResetState> emit) async {
     final result = await _authRepository.postResetEmailCode(
       emailController.text,
+
+      
       event.code,
     );
     print("nimadir $result");
