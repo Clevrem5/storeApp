@@ -33,7 +33,7 @@ class StoreBottomNavigationBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            BottomNavigaitonIconButton(
+            BottomNavigationIconButton(
               callback: () => onTap(0),
               svg: "assets/icons/home.svg",
               iconColor: selectedIndex == 0
@@ -44,7 +44,7 @@ class StoreBottomNavigationBar extends StatelessWidget {
                   ? Colors.black
                   : Colors.grey,
             ),
-            BottomNavigaitonIconButton(
+            BottomNavigationIconButton(
               callback: () => onTap(1),
               svg: "assets/icons/search.svg",
               iconColor: selectedIndex == 1
@@ -55,7 +55,7 @@ class StoreBottomNavigationBar extends StatelessWidget {
                   ? Colors.black
                   : Colors.grey,
             ),
-            BottomNavigaitonIconButton(
+            BottomNavigationIconButton(
               callback: () => onTap(2),
               svg: "assets/icons/saved.svg",
               iconColor: selectedIndex == 2
@@ -66,7 +66,7 @@ class StoreBottomNavigationBar extends StatelessWidget {
                   ? Colors.black
                   : Colors.grey,
             ),
-            BottomNavigaitonIconButton(
+            BottomNavigationIconButton(
               callback: () => onTap(3),
               svg: "assets/icons/cart.svg",
               iconColor: selectedIndex == 3
@@ -77,7 +77,7 @@ class StoreBottomNavigationBar extends StatelessWidget {
                   ? Colors.black
                   : Colors.grey,
             ),
-            BottomNavigaitonIconButton(
+            BottomNavigationIconButton(
               callback: () => onTap(4),
               svg: "assets/icons/account.svg",
               iconColor: selectedIndex == 4
