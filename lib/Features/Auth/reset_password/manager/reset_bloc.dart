@@ -28,7 +28,7 @@ class ResetPasswordBloc extends Bloc<ResetEvent, ResetState> {
     );
     if (result) {
       emit(state.copyWith(status: ResetStatus.success));
-      print(emailController.text);
+      await SecureStorage.saveEmail(event.email);
     } else {
       emit(
         state.copyWith(
@@ -41,12 +41,13 @@ class ResetPasswordBloc extends Bloc<ResetEvent, ResetState> {
 
   Future<void> _sendCode(SendCodeEmailEvent event, Emitter<ResetState> emit) async {
     final result = await _authRepository.postResetEmailCode(
-      emailController.text.trim(),
+      ,
       event.code,
     );
     print("nimadir $result");
     if (result) {
       emit(state.copyWith(status: ResetStatus.success));
+
       print(codeController.text);
     } else {
       throw CustomException(message: "xato ketdi code");
@@ -54,6 +55,7 @@ class ResetPasswordBloc extends Bloc<ResetEvent, ResetState> {
   }
 
   Future<void> _saveNewPassword(ResetPasswordEvent event, Emitter<ResetState> emit) async {
+
     final result = await _authRepository.postResetEmailCodeReset(
       emailController.text.trim(),
       codeController.text.trim(),

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/Features/Common_Widgets/store_tex.dart';
+import 'package:store_app/Features/home_page/manager/home_bloc.dart';
+import 'package:store_app/Features/home_page/page/products_item.dart';
 import 'package:store_app/core/utils/app_colors.dart';
 import 'package:store_app/features/home_page/page/home_page_text_form_field.dart';
+
 import '../../../core/navigation/routes.dart';
-import '../../Common_Widgets/icon_button_like.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
 import '../../Common_Widgets/store_icons.dart';
 
@@ -243,70 +246,32 @@ class HomePageDetail extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  GridView.builder(
-                    itemCount: 8,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 19, mainAxisSpacing: 20),
-                    itemBuilder: (context, index) => Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Expanded(
-                          child: Stack(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    context.push(Routes.details);
-                                  },
-                                  child: Image.asset(
-                                    "assets/images/image.png",
-                                    width: 161,
-                                    height: 174.h,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                top: 12,
-                                right: 12,
-                                child: Container(
-                                  width: 34.w,
-                                  height: 34.h,
-                                  decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(8)),
-                                  child: Center(
-                                    child: LikeButton(),
-                                  ),
-                                ),
-                              )
-                            ],
+                  BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
+                      return switch (state.status) {
+                        HomeStatus.loading => Center(
+                            child: CircularProgressIndicator(),
                           ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Text(
-                          "Regular Fit Slogan",
-                          style: TextStyle(
-                            color: AppColors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                        HomeStatus.error => StoreText(
+                            text: "Xato chiqdi",
+                            color: Colors.red,
                           ),
-                        ),
-                        Text(
-                          "1,190",
-                          style: TextStyle(
-                            color: AppColors.hintText,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
+                        HomeStatus.idle => GridView.builder(
+                            itemCount: state.products!.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.zero,
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 19,
+                              mainAxisSpacing: 20,
+                            ),
+                            itemBuilder: (context, index) => ProductsItem(
+                              product: state.products![index],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                      };
+                    },
                   ),
                 ],
               ),

@@ -31,7 +31,7 @@ class ApiClient {
   }
 
   Future<bool> postResetEmail(String email) async {
-    try{
+    try {
       var response = await dio.post(
         "/auth/reset-password/email",
         data: {
@@ -43,7 +43,7 @@ class ApiClient {
       } else {
         return false;
       }
-    }catch(e){
+    } catch (e) {
       print(e.toString());
       throw Exception();
     }
@@ -69,10 +69,10 @@ class ApiClient {
   }
 
   Future<bool> postResetEmailCodeReset(
-      String email,
-      String code,
-      String password,
-      ) async {
+    String email,
+    String code,
+    String password,
+  ) async {
     try {
       var response = await dio.post(
         "/auth/reset-password/reset",
@@ -92,13 +92,22 @@ class ApiClient {
     }
   }
 
+  // Future<List<dynamic>> fetchHomePage(int categoryId, String searchTitle) async {
+  //   var response = await dio.get('/products/list$searchTitle$categoryId');
+  //   if (response.statusCode == 200) {
+  //     return List.from(response.data);
+  //   } else {
+  //     throw Exception('malumot kelmadi qanday chunding');
+  //   }
+  // }
 
-  Future<List<dynamic>> fetchHomePage(int categoryId, String searchTitle) async {
-    var response = await dio.get('/products/list$searchTitle$categoryId');
+  Future<List<dynamic>> fetchHomeProduct() async {
+    final response = await dio.get('/products/list');
     if (response.statusCode == 200) {
-      return List.from(response.data);
+      List<dynamic> data = response.data;
+      return data;
     } else {
-      throw Exception('malumot kelmadi qanday chunding');
+      throw CustomException(message: "xato product kelmadi");
     }
   }
 }

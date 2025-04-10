@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:store_app/Features/Auth/login/manger/login_bloc.dart';
 import 'package:store_app/Features/Auth/reset_password/manager/reset_bloc.dart';
 import 'package:store_app/Features/Auth/sign_up/manager/sign_up_bloc.dart';
+import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/core/navigation/routes.dart';
 import 'package:store_app/features/account_page/page/account_detail.dart';
 import 'package:store_app/features/cart_page/page/cart_detail.dart';
@@ -70,17 +71,47 @@ final router = GoRouter(
       builder: (context, state) => OnboardingStarted(),
     ),
     GoRoute(
-      path: Routes.login,
-      builder: (context, state) => BlocProvider(
-        create: (context) => LoginBloc(
-          repo: context.read<AuthRepository>(),
-        ),
-        child: LoginDetail(),
-      ),
-    ),
+        path: Routes.login,
+        builder: (context, state) => BlocProvider(
+              create: (context) => LoginBloc(
+                repo: context.read<AuthRepository>(),
+              ),
+              child: LoginDetail(),
+            ),
+        routes: [
+          GoRoute(
+            path: Routes.resetPasswordEmail,
+            builder: (context, state) => BlocProvider(
+                create: (context) => ResetPasswordBloc(
+                      authRepository: context.read(),
+                    ),
+                child: ResetPasswordEmailDetail()),
+          ),
+          GoRoute(
+            path: Routes.resetPasswordCode,
+            builder: (context, state) => BlocProvider(
+                create: (context) => ResetPasswordBloc(
+                      authRepository: context.read(),
+                    ),
+                child: ResetPasswordCode()),
+          ),
+          GoRoute(
+            path: Routes.resetNewPassword,
+            builder: (context, state) => BlocProvider(
+                create: (context) => ResetPasswordBloc(
+                      authRepository: context.read(),
+                    ),
+                child: ResetPasswordPage()),
+          ),
+        ]),
     GoRoute(
       path: Routes.home,
-      builder: (context, state) => HomePageDetail(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => HomeBloc(
+          repo: context.read(),
+        ),
+        child: HomePageDetail(),
+      ),
     ),
     GoRoute(
       path: Routes.search,
