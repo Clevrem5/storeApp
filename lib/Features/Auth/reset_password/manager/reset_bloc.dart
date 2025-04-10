@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:store_app/Core/exceptions/custom_exception.dart';
 import 'package:store_app/Data/repository/Auth_repository.dart';
 
+import '../../../../Core/secure_storage.dart';
+
 part 'reset_event.dart';
 
 part 'reset_state.dart';
@@ -41,7 +43,9 @@ class ResetPasswordBloc extends Bloc<ResetEvent, ResetState> {
 
   Future<void> _sendCode(SendCodeEmailEvent event, Emitter<ResetState> emit) async {
     final result = await _authRepository.postResetEmailCode(
-      ,
+      emailController.text,
+
+      
       event.code,
     );
     print("nimadir $result");
