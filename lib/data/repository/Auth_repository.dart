@@ -1,6 +1,5 @@
 import 'package:store_app/Data/client.dart';
 import 'package:store_app/Data/models/Auth_model.dart';
-
 import '../../Core/secure_storage.dart';
 
 class AuthRepository {
@@ -50,14 +49,15 @@ class AuthRepository {
     return true;
   }
 
-  Future<bool>postResetEmail(String email)async{
+  Future<bool> postResetEmail(String email) async {
     return await client.postResetEmail(email);
   }
-  Future<bool>postResetEmailCode(String email,String code)async{
+
+  Future<bool> postResetEmailCode(String email, String code) async {
     return await client.postResetEmailCode(email, code);
   }
-  Future<bool>postResetEmailCodeReset(String email,String code,String password)async{
+
+  Future<bool> postResetEmailCodeReset(String email, String code, String password) async {
     return await client.postResetEmailCodeReset(email, code, password);
   }
-
 }

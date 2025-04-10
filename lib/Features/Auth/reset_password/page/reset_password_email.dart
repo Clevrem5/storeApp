@@ -22,7 +22,6 @@ class _ResetPasswordEmailDetailState extends State<ResetPasswordEmailDetail> {
   final ValueNotifier<String> emailNotifier = ValueNotifier('');
 
   bool isEmailValid(String email) => email.endsWith('gmail.com');
-  final TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
