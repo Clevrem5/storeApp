@@ -1,11 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:store_app/Core/inter_septor.dart';
 import 'package:store_app/Features/Auth/login/manger/login_bloc.dart';
-import 'package:store_app/Features/Auth/reset_password/manager/reset_bloc.dart';
-import 'package:store_app/Features/Auth/reset_password/page/reset_new_password.dart';
-import 'package:store_app/Features/Auth/reset_password/page/reset_password_code.dart';
-import 'package:store_app/Features/Auth/reset_password/page/reset_password_email.dart';
 import 'package:store_app/Features/Auth/sign_up/manager/sign_up_bloc.dart';
 import 'package:store_app/core/navigation/routes.dart';
 import 'package:store_app/features/account_page/page/account_detail.dart';
@@ -14,52 +9,30 @@ import 'package:store_app/features/home_page/page/home_page_detail.dart';
 import 'package:store_app/features/notification_page/page/notification_detail.dart';
 import 'package:store_app/features/saved_page/page/saved_detail.dart';
 import 'package:store_app/features/search_page/page/search_detai.dart';
+
 import '../../Data/repository/Auth_repository.dart';
 import '../../Features/Auth/login/page/login_detail.dart';
 import '../../Features/Auth/sign_up/page/sign_up_detail.dart';
 import '../../Features/Auth/store_onboarding/page/onboarding_started.dart';
 import '../../Features/Auth/store_onboarding/page/state_oboarding_detail.dart';
+import '../../Features/checkout/page/checkout.dart';
+import '../../Features/details/page/details.dart';
 import '../../Features/notification_page/page/notification.dart';
-import '../../main.dart';
 
 final router = GoRouter(
-  navigatorKey: navigatorKey,
-  initialLocation: Routes.login,
+  initialLocation: Routes.details,
   routes: [
     GoRoute(
       path: Routes.onboarding,
       builder: (context, state) => StoreOnboardingDetail(),
     ),
     GoRoute(
-      path: Routes.resetPasswordEmail,
-      builder: (context, state) => BlocProvider(
-        create: (context) => ResetPasswordBloc(
-          authRepository: context.read(),
-        ),
-        child: ResetPasswordEmailDetail(),
-      ),
+      path: Routes.details,
+      builder: (context, state) => ProductDetailPage(),
     ),
     GoRoute(
-      path: Routes.resetPasswordCode,
-      builder: (context, state) => BlocProvider(
-        create: (context) => ResetPasswordBloc(authRepository: context.read()),
-        child: ResetPasswordCode(),
-      ),
-    ),
-    GoRoute(
-      path: Routes.resetNewPassword,
-      builder: (context, state) => BlocProvider(
-        create: (context) => ResetPasswordBloc(authRepository: context.read()),
-        child: ResetPasswordPage(),
-      ),
-    ),
-    GoRoute(
-      path: Routes.onboarding,
-      builder: (context, state) => StoreOnboardingDetail(),
-    ),
-    GoRoute(
-      path: Routes.onboarding,
-      builder: (context, state) => StoreOnboardingDetail(),
+      path: Routes.checkout,
+      builder: (context, state) => CheckoutPage(),
     ),
     GoRoute(
       path: Routes.noNotification,

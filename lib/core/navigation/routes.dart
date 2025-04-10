@@ -16,4 +16,6 @@ class Routes {
   static const String resetNewPassword = "/reset-new-password";
 
   static const String noNotification = "/notificationNet";
+  static const String checkout = "/checkout";
+  static const String details = "/details";
 }
