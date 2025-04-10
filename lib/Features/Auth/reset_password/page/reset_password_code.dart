@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:store_app/Features/Auth/reset_password/manager/reset_bloc.dart';
+import 'package:store_app/Features/Auth/reset_password/manager/email/reset_bloc.dart';
 
 import '../../../../Core/navigation/routes.dart';
 import '../../../../Core/utils/app_colors.dart';
@@ -22,7 +22,7 @@ class ResetPasswordCode extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ResetPasswordBloc, ResetState>(
+    return BlocListener<ResetEmailBloc, ResetState>(
       listener: (context, state) {
         if (state.status == ResetStatus.success) {
           context.push(Routes.resetNewPassword);
@@ -81,7 +81,7 @@ class ResetPasswordCode extends StatelessWidget {
                     child: ValueListenableBuilder(
                       valueListenable: passwordNotifier,
                       builder: (context, password, _) => PinCodeTextField(
-                        controller: context.read<ResetPasswordBloc>().codeController,
+                        // controller: context.read<ResetEmailBloc>().codeController,
                         appContext: context,
                         length: 4,
                         obscureText: false,
@@ -105,11 +105,11 @@ class ResetPasswordCode extends StatelessWidget {
                           passwordNotifier.value = value;
                         },
                         onCompleted: (value) {
-                          context.read<ResetPasswordBloc>().add(
-                                SendEmailEvent(
-                                  email: context.read<ResetPasswordBloc>().codeController.text.trim(),
-                                ),
-                              );
+                          // context.read<ResetEmailBloc>().add(
+                          //       SendEmailEvent(
+                          //         email: context.read<ResetEmailBloc>().codeController.text.trim(),
+                          //       ),
+                          //     );
                         },
                       ),
                     ),
@@ -136,11 +136,11 @@ class ResetPasswordCode extends StatelessWidget {
                 child: StoreElevatedButton(
                   onTap: () {
                     if (isValid) {
-                      context.read<ResetPasswordBloc>().add(
-                            SendCodeEmailEvent(
-                              code: context.read<ResetPasswordBloc>().codeController.text.trim(),
-                            ),
-                          );
+                      // context.read<ResetEmailBloc>().add(
+                      //       SendCodeEmailEvent(
+                      //         code: context.read<ResetEmailBloc>().codeController.text.trim(),
+                      //       ),
+                      //     );
                       context.push(Routes.resetNewPassword);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/Core/utils/app_colors.dart';
-import 'package:store_app/Features/Auth/reset_password/manager/reset_bloc.dart';
+import 'package:store_app/Features/Auth/reset_password/manager/email/reset_bloc.dart';
 import 'package:store_app/Features/Auth/reset_password/widget/store_elevated_button.dart';
 import 'package:store_app/Features/Common_Widgets/store_app_bar.dart';
 import 'package:store_app/Features/Common_Widgets/store_tex.dart';
@@ -76,7 +76,7 @@ class _ResetPasswordEmailDetailState extends State<ResetPasswordEmailDetail> {
                   builder: (context, email, _) => SizedBox(
                     width: double.infinity,
                     height: 52.h,
-                    child: BlocListener<ResetPasswordBloc, ResetState>(
+                    child: BlocListener<ResetEmailBloc, ResetState>(
                       listener: (context, state) {
                         if (state.status == ResetStatus.success) {
                           context.push(Routes.resetPasswordCode);
@@ -89,7 +89,7 @@ class _ResetPasswordEmailDetailState extends State<ResetPasswordEmailDetail> {
                         }
                       },
                       child: TextFormField(
-                        controller: context.read<ResetPasswordBloc>().emailController,
+                        controller: context.read<ResetEmailBloc>().emailController,
                         onChanged: (value) => emailNotifier.value = value,
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -139,9 +139,9 @@ class _ResetPasswordEmailDetailState extends State<ResetPasswordEmailDetail> {
                 child: StoreElevatedButton(
                   isValid: isValid,
                   onTap: () {
-                    context.read<ResetPasswordBloc>().add(
+                    context.read<ResetEmailBloc>().add(
                           SendEmailEvent(
-                            email: context.read<ResetPasswordBloc>().emailController.text.trim(),
+                            email: context.read<ResetEmailBloc>().emailController.text.trim(),
                           ),
                         );
                   },
