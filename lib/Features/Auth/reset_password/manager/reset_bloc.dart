@@ -23,7 +23,7 @@ class ResetPasswordBloc extends Bloc<ResetEvent, ResetState> {
   }
 
   Future<void> _sendEmail(SendEmailEvent event, Emitter<ResetState> emit) async {
-    final result = await _authRepository.resetPassword(
+    final result = await _authRepository.postResetEmail(
       event.email,
     );
     if (result) {

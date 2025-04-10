@@ -119,7 +119,9 @@ class CartDetail extends StatelessWidget {
                 ),
                 StoreAppElevatedButton(
                   text: "Go To CheckOut ➡️",
-                  callback: () {},
+                  callback: () {
+                    context.push(Routes.checkout);
+                  },
                   radius: 10,
                 ),
               ],

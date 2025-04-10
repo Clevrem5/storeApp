@@ -5,7 +5,7 @@ import 'package:store_app/Data/models/Auth_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
-    BaseOptions(baseUrl: "http://192.168.9.137:8888/api/v1"),
+    BaseOptions(baseUrl: "http://192.168.9.229:8888/api/v1"),
   )..interceptors.add(AuthInterceptor());
 
   Future<bool> signUp(AuthModel model) async {
@@ -31,7 +31,7 @@ class ApiClient {
   }
 
   Future<bool> postResetEmail(String email) async {
-    try {
+    try{
       var response = await dio.post(
         "/auth/reset-password/email",
         data: {
@@ -43,8 +43,9 @@ class ApiClient {
       } else {
         return false;
       }
-    } catch (e) {
-      throw CustomException(message: e.toString());
+    }catch(e){
+      print(e.toString());
+      throw Exception();
     }
   }
 
@@ -68,10 +69,10 @@ class ApiClient {
   }
 
   Future<bool> postResetEmailCodeReset(
-    String email,
-    String code,
-    String password,
-  ) async {
+      String email,
+      String code,
+      String password,
+      ) async {
     try {
       var response = await dio.post(
         "/auth/reset-password/reset",
@@ -90,6 +91,7 @@ class ApiClient {
       throw Exception("xato ketdi reset emailCode");
     }
   }
+
 
   Future<List<dynamic>> fetchHomePage(int categoryId, String searchTitle) async {
     var response = await dio.get('/products/list$searchTitle$categoryId');

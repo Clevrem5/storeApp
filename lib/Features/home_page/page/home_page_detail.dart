@@ -118,7 +118,9 @@ class HomePageDetail extends StatelessWidget {
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w600,
                                 ),
-                                SizedBox(height: 12.h,),
+                                SizedBox(
+                                  height: 12.h,
+                                ),
                                 SizedBox(
                                   height: 36,
                                   width: double.infinity,
@@ -162,7 +164,9 @@ class HomePageDetail extends StatelessWidget {
                                     },
                                   ),
                                 ),
-                                SizedBox(height: 20.h,),
+                                SizedBox(
+                                  height: 20.h,
+                                ),
                                 Divider(
                                   color: AppColors.buttonBorder,
                                   height: 1.3,
@@ -255,11 +259,16 @@ class HomePageDetail extends StatelessWidget {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
-                                child: Image.asset(
-                                  "assets/images/image.png",
-                                  width: 161,
-                                  height: 174.h,
-                                  fit: BoxFit.cover,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    context.push(Routes.details);
+                                  },
+                                  child: Image.asset(
+                                    "assets/images/image.png",
+                                    width: 161,
+                                    height: 174.h,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                               Positioned(
