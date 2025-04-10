@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:store_app/Core/exceptions/custom_exception.dart';
 import 'package:store_app/Data/repository/Auth_repository.dart';
 
+import '../../../../Core/secure_storage.dart';
+
 part 'reset_event.dart';
 
 part 'reset_state.dart';
@@ -28,7 +30,7 @@ class ResetPasswordBloc extends Bloc<ResetEvent, ResetState> {
     );
     if (result) {
       emit(state.copyWith(status: ResetStatus.success));
-      print(emailController.text);
+      await SecureStorage.saveEmail(event.email);
     } else {
       emit(
         state.copyWith(
@@ -41,12 +43,13 @@ class ResetPasswordBloc extends Bloc<ResetEvent, ResetState> {
 
   Future<void> _sendCode(SendCodeEmailEvent event, Emitter<ResetState> emit) async {
     final result = await _authRepository.postResetEmailCode(
-      emailController.text.trim(),
+      emailController.text,
       event.code,
     );
     print("nimadir $result");
     if (result) {
       emit(state.copyWith(status: ResetStatus.success));
+
       print(codeController.text);
     } else {
       throw CustomException(message: "xato ketdi code");
@@ -54,6 +57,7 @@ class ResetPasswordBloc extends Bloc<ResetEvent, ResetState> {
   }
 
   Future<void> _saveNewPassword(ResetPasswordEvent event, Emitter<ResetState> emit) async {
+
     final result = await _authRepository.postResetEmailCodeReset(
       emailController.text.trim(),
       codeController.text.trim(),
