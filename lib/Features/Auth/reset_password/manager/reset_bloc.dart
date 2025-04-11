@@ -4,7 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:store_app/Core/secure_storage.dart';
 import 'package:store_app/Data/repository/Auth_repository.dart';
 
-import '../../../../Core/exceptions/custom_exception.dart';
+
+
+import '../../../../Core/secure_storage.dart';
+
+part 'reset_event.dart';
 
 part 'reset_event.dart';
 part 'reset_state.dart';
@@ -43,6 +47,10 @@ class ResetEmailBloc extends Bloc<ResetEmailEvent, ResetState> {
   Future<void> _sendCode(SendCodeEmailEvent event, Emitter<ResetState> emit) async {
     final result = await _authRepository.postResetEmailCode(
       SecureStorage.getEmail() as String,
+
+      emailController.text,
+
+      
       event.code,
     );
     print("nimadir $result");
