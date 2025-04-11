@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../Core/navigation/routes.dart';
-import '../manager/email/reset_bloc.dart';
+import '../manager/reset_bloc.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({super.key});
@@ -148,7 +148,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 //   ScaffoldMessenger.of(context).showSnackBar(
                 //     const SnackBar(content: Text("Parol kamida 6 ta belgidan iborat bo'lishi kerak")),
                 //   );
-              },
+                }
+              ,
               child: const Text(
                 'Continue',
                 style: TextStyle(color: Colors.white),

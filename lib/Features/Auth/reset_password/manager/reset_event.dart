@@ -1,14 +1,14 @@
  
 part of 'reset_bloc.dart';
-sealed class ResetEvent {}
+sealed class ResetEmailEvent {}
 
-final class SendEmailEvent extends ResetEvent {
+final class SendEmailEvent extends ResetEmailEvent {
   final String email;
 
   SendEmailEvent({required this.email});
 }
 
-final class SendCodeEmailEvent extends ResetEvent {
+final class SendCodeEmailEvent extends ResetEmailEvent {
   final String code;
 
   SendCodeEmailEvent({
@@ -16,7 +16,7 @@ final class SendCodeEmailEvent extends ResetEvent {
   });
 }
 
-final class ResetPasswordEvent extends ResetEvent {
+final class ResetPasswordEvent extends ResetEmailEvent {
   final String password;
 
   ResetPasswordEvent({

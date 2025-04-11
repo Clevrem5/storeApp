@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/Features/Auth/login/manger/login_bloc.dart';
-import 'package:store_app/Features/Auth/reset_password/manager/email/reset_bloc.dart';
+import 'package:store_app/Features/Auth/reset_password/manager/reset_bloc.dart';
 import 'package:store_app/Features/Auth/sign_up/manager/sign_up_bloc.dart';
 import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/core/navigation/routes.dart';
