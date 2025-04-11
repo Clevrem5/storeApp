@@ -1,7 +1,7 @@
+// part of 'email/reset_bloc.dart';
+
+
 part of 'reset_bloc.dart';
-
-
-
 
 enum ResetStatus { loading, success, error }
 

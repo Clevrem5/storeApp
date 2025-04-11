@@ -1,22 +1,25 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:store_app/Core/exceptions/custom_exception.dart';
+import 'package:store_app/Core/secure_storage.dart';
 import 'package:store_app/Data/repository/Auth_repository.dart';
+
+
 
 import '../../../../Core/secure_storage.dart';
 
 part 'reset_event.dart';
 
+part 'reset_event.dart';
 part 'reset_state.dart';
 
-class ResetPasswordBloc extends Bloc<ResetEvent, ResetState> {
+class ResetEmailBloc extends Bloc<ResetEmailEvent, ResetState> {
   final AuthRepository _authRepository;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController codeController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  ResetPasswordBloc({required AuthRepository authRepository})
+  ResetEmailBloc({required AuthRepository authRepository})
       : _authRepository = authRepository,
         super(ResetState.initial()) {
     on<SendEmailEvent>(_sendEmail);
@@ -43,6 +46,8 @@ class ResetPasswordBloc extends Bloc<ResetEvent, ResetState> {
 
   Future<void> _sendCode(SendCodeEmailEvent event, Emitter<ResetState> emit) async {
     final result = await _authRepository.postResetEmailCode(
+      SecureStorage.getEmail() as String,
+
       emailController.text,
 
       

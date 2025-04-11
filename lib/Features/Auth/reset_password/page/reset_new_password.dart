@@ -18,7 +18,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ResetPasswordBloc, ResetState>(
+    return BlocListener<ResetEmailBloc, ResetState>(
       listener: (context, state) {
         if (state.status == ResetStatus.success) {
           showDialog(
@@ -77,7 +77,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 const Text('Password'),
                 const SizedBox(height: 9),
                 TextFormField(
-                  controller: context.read<ResetPasswordBloc>().passwordController,
+                  // controller: context.read<ResetEmailBloc>().passwordController,
                   obscureText: !_isPasswordVisible,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -135,21 +135,21 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 backgroundColor: const Color(0xFF1A1A1A),
               ),
               onPressed: () {
-                final password = context.read<ResetPasswordBloc>().passwordController.text.trim();
-                if (password.length >= 6) {
-                  context.read<ResetPasswordBloc>().add(
-                        ResetPasswordEvent(
-                          password: password,
-                        ),
-
-                      );
-                  context.go(Routes.resetNewPassword);
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Parol kamida 6 ta belgidan iborat bo'lishi kerak")),
-                  );
+                // final password = context.read<ResetEmailBloc>().passwordController.text.trim();
+                // if (password.length >= 6) {
+                //   context.read<ResetEmailBloc>().add(
+                //         ResetPasswordEvent(
+                //           password: password,
+                //         ),
+                //
+                //       );
+                //   context.go(Routes.resetNewPassword);
+                // } else {
+                //   ScaffoldMessenger.of(context).showSnackBar(
+                //     const SnackBar(content: Text("Parol kamida 6 ta belgidan iborat bo'lishi kerak")),
+                //   );
                 }
-              },
+              ,
               child: const Text(
                 'Continue',
                 style: TextStyle(color: Colors.white),

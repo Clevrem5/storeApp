@@ -76,7 +76,7 @@ class _ResetPasswordEmailDetailState extends State<ResetPasswordEmailDetail> {
                   builder: (context, email, _) => SizedBox(
                     width: double.infinity,
                     height: 52.h,
-                    child: BlocListener<ResetPasswordBloc, ResetState>(
+                    child: BlocListener<ResetEmailBloc, ResetState>(
                       listener: (context, state) {
                         if (state.status == ResetStatus.success) {
                           context.push(Routes.resetPasswordCode);
@@ -89,7 +89,7 @@ class _ResetPasswordEmailDetailState extends State<ResetPasswordEmailDetail> {
                         }
                       },
                       child: TextFormField(
-                        controller: context.read<ResetPasswordBloc>().emailController,
+                        controller: context.read<ResetEmailBloc>().emailController,
                         onChanged: (value) => emailNotifier.value = value,
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -139,9 +139,9 @@ class _ResetPasswordEmailDetailState extends State<ResetPasswordEmailDetail> {
                 child: StoreElevatedButton(
                   isValid: isValid,
                   onTap: () {
-                    context.read<ResetPasswordBloc>().add(
+                    context.read<ResetEmailBloc>().add(
                           SendEmailEvent(
-                            email: context.read<ResetPasswordBloc>().emailController.text.trim(),
+                            email: context.read<ResetEmailBloc>().emailController.text.trim(),
                           ),
                         );
                   },
