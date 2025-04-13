@@ -18,4 +18,6 @@ class Routes {
   static const String noNotification = "/notificationNet";
   static const String checkout = "/checkout";
   static const String details = "/details";
+  static const String review = "/review";
+  static const String address = "/address";
 }

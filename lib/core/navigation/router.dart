@@ -4,6 +4,7 @@ import 'package:store_app/Features/Auth/login/manger/login_bloc.dart';
 import 'package:store_app/Features/Auth/reset_password/manager/reset_bloc.dart';
 import 'package:store_app/Features/Auth/sign_up/manager/sign_up_bloc.dart';
 import 'package:store_app/Features/home_page/manager/home_bloc.dart';
+import 'package:store_app/Features/map_page/page/new_adress_detail.dart';
 import 'package:store_app/core/navigation/routes.dart';
 import 'package:store_app/features/account_page/page/account_detail.dart';
 import 'package:store_app/features/cart_page/page/cart_detail.dart';
@@ -24,8 +25,12 @@ import '../../Features/details/page/details.dart';
 import '../../Features/notification_page/page/notification.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.login,
+  initialLocation: Routes.address,
   routes: [
+    GoRoute(
+      path: Routes.address,
+      builder: (context, state) => NewAddressDetail(),
+    ),
     GoRoute(
       path: Routes.resetPasswordEmail,
       builder: (context, state) => BlocProvider(

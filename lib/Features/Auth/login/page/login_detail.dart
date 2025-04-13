@@ -33,7 +33,7 @@ class LoginDetail extends StatelessWidget {
         listener: (context, state) async {
           if (state.status == LoginStatus.success) {
             context.push(Routes.home);
-          } else if (state.status == LoginStatus.error) {
+          } else {
             showDialog(
               context: context,
               barrierDismissible: true,
@@ -251,7 +251,7 @@ class LoginDetail extends StatelessWidget {
                       backgroundColor: AppColors.blue,
                       text: "Login with Google",
                       button: () {
-                        context.go(Routes.home);
+                        // context.go(Routes.home);
                       },
                       svg: "assets/icons/facebook.svg",
                       textColor: AppColors.white,
