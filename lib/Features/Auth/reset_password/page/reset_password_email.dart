@@ -84,7 +84,7 @@ class _ResetPasswordEmailDetailState extends State<ResetPasswordEmailDetail> {
                         } else {
                           ScaffoldMessenger(
                             child: SnackBar(
-                              content: Text("XATO BRATISHKA"),
+                              content: Text("XATO BRATISHKA"),//
                             ),
                           );
                         }
