@@ -6,13 +6,23 @@ import '../../../../Core/navigation/routes.dart';
 import '../manager/reset_bloc.dart';
 
 class ResetPasswordPage extends StatefulWidget {
-  const ResetPasswordPage({super.key});
+  final String email;
+  final String code;
+
+  const ResetPasswordPage({
+    super.key,
+    required this.email,
+    required this.code,
+  });
 
   @override
   State<ResetPasswordPage> createState() => _ResetPasswordPageState();
 }
 
 class _ResetPasswordPageState extends State<ResetPasswordPage> {
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
 
@@ -30,7 +40,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(); // dialogni yopish
-                    context.go(Routes.login); // yoki context.pushReplacement(Routes.login)
+                    context.go(Routes.login); // login sahifaga o'tish
                   },
                   child: const Text("OK"),
                 ),
@@ -48,9 +58,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+            onPressed: () => Navigator.pop(context),
           ),
           elevation: 0,
           backgroundColor: Colors.transparent,
@@ -77,7 +85,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 const Text('Password'),
                 const SizedBox(height: 9),
                 TextFormField(
-                  controller: context.read<ResetPasswordBloc>().passwordController,
+                  controller: _passwordController,
                   obscureText: !_isPasswordVisible,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -99,6 +107,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 const Text('Confirm Password'),
                 const SizedBox(height: 9),
                 TextFormField(
+                  controller: _confirmPasswordController,
                   obscureText: !_isConfirmPasswordVisible,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -135,20 +144,31 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 backgroundColor: const Color(0xFF1A1A1A),
               ),
               onPressed: () {
-                final password = context.read<ResetPasswordBloc>().passwordController.text.trim();
-                if (password.length >= 6) {
-                  context.read<ResetPasswordBloc>().add(
-                        ResetPasswordEvent(
-                          password: password,
-                        ),
+                final password = _passwordController.text.trim();
+                final confirmPassword = _confirmPasswordController.text.trim();
 
-                      );
-                  context.go(Routes.resetNewPassword);
-                } else {
+                if (password.length < 6) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Parol kamida 6 ta belgidan iborat bo'lishi kerak")),
                   );
+                  return;
                 }
+
+                if (password != confirmPassword) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Parollar mos emas")),
+                  );
+                  return;
+                }
+
+                // Blocga to‘g‘ridan-to‘g‘ri event uzatyapmiz
+                context.read<ResetPasswordBloc>().add(
+                  ResetPasswordEvent(
+                    email: widget.email,
+                    code: widget.code,
+                    password: password,
+                  ),
+                );
               },
               child: const Text(
                 'Continue',

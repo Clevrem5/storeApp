@@ -33,28 +33,39 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.resetPasswordEmail,
+      name: Routes.resetPasswordEmail,
       builder: (context, state) => BlocProvider(
-          create: (context) => ResetPasswordBloc(
-                authRepository: context.read(),
-              ),
-          child: ResetPasswordEmailDetail()),
+        create: (context) => ResetPasswordBloc(authRepository: context.read()),
+        child:  ResetPasswordEmailDetail(),
+      ),
     ),
+
     GoRoute(
       path: Routes.resetPasswordCode,
-      builder: (context, state) => BlocProvider(
-          create: (context) => ResetPasswordBloc(
-                authRepository: context.read(),
-              ),
-          child: ResetPasswordCode()),
+      name: Routes.resetPasswordCode,
+      builder: (context, state) {
+        final email = state.extra as String;
+        return BlocProvider(
+          create: (context) => ResetPasswordBloc(authRepository: context.read()),
+          child: ResetPasswordCode(email: email),
+        );
+      },
     ),
+
     GoRoute(
       path: Routes.resetNewPassword,
-      builder: (context, state) => BlocProvider(
-          create: (context) => ResetPasswordBloc(
-                authRepository: context.read(),
-              ),
-          child: ResetPasswordPage()),
+      name: Routes.resetNewPassword,
+      builder: (context, state) {
+        final extra = state.extra as Map<String, String>;
+        final email = extra['email']!;
+        final code = extra['code']!;
+        return BlocProvider(
+          create: (context) => ResetPasswordBloc(authRepository: context.read()),
+          child: ResetPasswordPage(email: email, code: code),
+        );
+      },
     ),
+
     GoRoute(
       path: Routes.onboarding,
       builder: (context, state) => StoreOnboardingDetail(),
@@ -76,39 +87,14 @@ final router = GoRouter(
       builder: (context, state) => OnboardingStarted(),
     ),
     GoRoute(
-        path: Routes.login,
-        builder: (context, state) => BlocProvider(
-              create: (context) => LoginBloc(
-                repo: context.read<AuthRepository>(),
-              ),
-              child: LoginDetail(),
-            ),
-        routes: [
-          GoRoute(
-            path: Routes.resetPasswordEmail,
-            builder: (context, state) => BlocProvider(
-                create: (context) => ResetPasswordBloc(
-                      authRepository: context.read(),
-                    ),
-                child: ResetPasswordEmailDetail()),
-          ),
-          GoRoute(
-            path: Routes.resetPasswordCode,
-            builder: (context, state) => BlocProvider(
-                create: (context) => ResetPasswordBloc(
-                      authRepository: context.read(),
-                    ),
-                child: ResetPasswordCode()),
-          ),
-          GoRoute(
-            path: Routes.resetNewPassword,
-            builder: (context, state) => BlocProvider(
-                create: (context) => ResetPasswordBloc(
-                      authRepository: context.read(),
-                    ),
-                child: ResetPasswordPage()),
-          ),
-        ]),
+      path: Routes.login,
+      builder: (context, state) => BlocProvider(
+        create: (context) => LoginBloc(
+          repo: context.read<AuthRepository>(),
+        ),
+        child: LoginDetail(),
+      ),
+    ),
     GoRoute(
       path: Routes.home,
       builder: (context, state) => BlocProvider(

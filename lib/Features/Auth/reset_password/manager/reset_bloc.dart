@@ -1,75 +1,81 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:store_app/Core/exceptions/custom_exception.dart';
-import 'package:store_app/Data/repository/Auth_repository.dart';
-
-import '../../../../Core/secure_storage.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_app/Core/secure_storage.dart';
+import '../../../../Data/repository/Auth_repository.dart';
 
 part 'reset_event.dart';
-
 part 'reset_state.dart';
 
 class ResetPasswordBloc extends Bloc<ResetEvent, ResetState> {
   final AuthRepository _authRepository;
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController codeController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
 
   ResetPasswordBloc({required AuthRepository authRepository})
       : _authRepository = authRepository,
         super(ResetState.initial()) {
-    on<SendEmailEvent>(_sendEmail);
-    on<SendCodeEmailEvent>(_sendCode);
-    on<ResetPasswordEvent>(_saveNewPassword);
-  }
+    // 1. Email yuborish bosqichi
+    on<SendEmailEvent>(
+          (event, emit) async {
+        final result = await _authRepository.postResetEmail(event.email);
+        await SecureStorage.saveEmail(event.email);
 
-  Future<void> _sendEmail(SendEmailEvent event, Emitter<ResetState> emit) async {
-    final result = await _authRepository.postResetEmail(
-      event.email,
+        if (result) {
+          emit(state.copyWith(status: ResetStatus.success));
+        } else {
+          emit(state.copyWith(
+            status: ResetStatus.error,
+            message: "Password reset qilishda emailda xato yuz berdi",
+          ));
+        }
+      },
     );
-    if (result) {
-      emit(state.copyWith(status: ResetStatus.success));
-      await SecureStorage.saveEmail(event.email);
-    } else {
-      emit(
-        state.copyWith(
-          status: ResetStatus.error,
-          message: "password reset qilishda Emailda xato sodir boldi ",
-        ),
-      );
-    }
-  }
 
-  Future<void> _sendCode(SendCodeEmailEvent event, Emitter<ResetState> emit) async {
-    final result = await _authRepository.postResetEmailCode(
-      emailController.text,
+    // 2. Kodni tekshirish bosqichi
+    on<SendCodeEmail>(
+          (event, emit) async {
+        emit(state.copyWith(status: ResetStatus.loading));
+        final email = await SecureStorage.getEmail();
 
-      
-      event.code,
+        final result = await _authRepository.postResetEmailCode(
+          email["email"]!,
+          event.code,
+        );
+
+        await SecureStorage.saveCode(event.code);
+
+        if (result) {
+          emit(state.copyWith(status: ResetStatus.success));
+        } else {
+          emit(state.copyWith(
+            status: ResetStatus.error,
+            message: "Kodni tekshirishda xatolik yuz berdi.",
+          ));
+        }
+      },
     );
-    print("nimadir $result");
-    if (result) {
-      emit(state.copyWith(status: ResetStatus.success));
 
-      print(codeController.text);
-    } else {
-      throw CustomException(message: "xato ketdi code");
-    }
-  }
+    // 3. Yangi parolni saqlash bosqichi
+    on<ResetPasswordEvent>(
+          (event, emit) async {
+        emit(state.copyWith(status: ResetStatus.loading));
 
-  Future<void> _saveNewPassword(ResetPasswordEvent event, Emitter<ResetState> emit) async {
+        final code = await SecureStorage.getCode();
+        final email = await SecureStorage.getEmail();
 
-    final result = await _authRepository.postResetEmailCodeReset(
-      emailController.text.trim(),
-      codeController.text.trim(),
-      event.password,
+        final result = await _authRepository.postResetEmailCodeReset(
+          email["email"]!,
+          code["code"]!,
+          event.password,
+        );
+
+        if (result) {
+          emit(state.copyWith(status: ResetStatus.success));
+        } else {
+          emit(state.copyWith(
+            status: ResetStatus.error,
+            message: "Parolni tiklashda xatolik yuz berdi.",
+          ));
+        }
+      },
     );
-    if (result) {
-      emit(state.copyWith(status: ResetStatus.success));
-      print(passwordController.text);
-    } else {
-      emit(state.copyWith(status: ResetStatus.error));
-    }
   }
-}
+}///

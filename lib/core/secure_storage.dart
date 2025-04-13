@@ -5,6 +5,7 @@ class SecureStorage {
   static const String _loginKey = "login";
   static const String _passwordKey = "password";
   static const String _emailKey = "email";
+  static const String _codeKey = "code";
   static const _storage = FlutterSecureStorage();
 
   static Future<void> saveToken(String token) async {
@@ -37,6 +38,7 @@ class SecureStorage {
     await _storage.delete(key: _tokenKey);
   }
 
+//email
   static Future<void> saveEmail(String email) async {
     await _storage.write(key: _emailKey, value: email);
   }
@@ -50,5 +52,21 @@ class SecureStorage {
       "email": await _storage.read(key: _emailKey),
     };
     return email;
+  }
+
+  //Code
+  static Future<void> saveCode(String code) async {
+    await _storage.write(key: _codeKey, value: code);
+  }
+
+  Future<void> deleteCode() async {
+    await _storage.delete(key: _codeKey);
+  }
+
+  static Future<Map<String, String?>> getCode() async {
+    var code = {
+      "code": await _storage.read(key: _codeKey),
+    };
+    return code;
   }
 }
