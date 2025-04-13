@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:store_app/Features/search_page/page/store_app_bar.dart';
+import 'package:store_app/Features/Common_Widgets/store_app_bar.dart';
 
 import '../../../Core/navigation/routes.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';

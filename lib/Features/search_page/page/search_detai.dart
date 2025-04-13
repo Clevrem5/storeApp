@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:store_app/Features/search_page/page/store_app_bar.dart';
+import 'package:store_app/Features/Common_Widgets/store_app_bar.dart';
 import 'package:store_app/core/utils/app_colors.dart';
 import 'package:store_app/features/home_page/page/home_page_text_form_field.dart';
 import '../../../core/navigation/routes.dart';

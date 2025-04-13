@@ -5,10 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'package:store_app/Core/utils/app_colors.dart';
 import 'package:store_app/Features/Auth/reset_password/manager/reset_bloc.dart';
 import 'package:store_app/Features/Auth/reset_password/widget/store_elevated_button.dart';
-import 'package:store_app/Features/Common_Widgets/store_app_bar.dart';
 import 'package:store_app/Features/Common_Widgets/store_tex.dart';
 
 import '../../../../Core/navigation/routes.dart';
+import '../../../Common_Widgets/storeAppBar.dart';
 import '../widget/reset_password_value_listenable_builder.dart';
 
 class ResetPasswordEmailDetail extends StatefulWidget {
@@ -20,6 +20,7 @@ class ResetPasswordEmailDetail extends StatefulWidget {
 
 class _ResetPasswordEmailDetailState extends State<ResetPasswordEmailDetail> {
   final ValueNotifier<String> emailNotifier = ValueNotifier('');
+  final TextEditingController controller = TextEditingController();
 
   bool isEmailValid(String email) => email.endsWith('gmail.com');
 
@@ -76,20 +77,20 @@ class _ResetPasswordEmailDetailState extends State<ResetPasswordEmailDetail> {
                   builder: (context, email, _) => SizedBox(
                     width: double.infinity,
                     height: 52.h,
-                    child: BlocListener<ResetEmailBloc, ResetState>(
+                    child: BlocListener<ResetPasswordBloc, ResetState>(
                       listener: (context, state) {
                         if (state.status == ResetStatus.success) {
-                          context.push(Routes.resetPasswordCode);
+                          context.push(Routes.resetPasswordCode ,extra: email,);
                         } else {
                           ScaffoldMessenger(
                             child: SnackBar(
-                              content: Text("XATO BRATISHKA"),
+                              content: Text("XATO BRATISHKA"),//
                             ),
                           );
                         }
                       },
                       child: TextFormField(
-                        controller: context.read<ResetEmailBloc>().emailController,
+                        controller: controller,
                         onChanged: (value) => emailNotifier.value = value,
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -139,9 +140,9 @@ class _ResetPasswordEmailDetailState extends State<ResetPasswordEmailDetail> {
                 child: StoreElevatedButton(
                   isValid: isValid,
                   onTap: () {
-                    context.read<ResetEmailBloc>().add(
+                    context.read<ResetPasswordBloc>().add(
                           SendEmailEvent(
-                            email: context.read<ResetEmailBloc>().emailController.text.trim(),
+                            email: controller.text.trim(),
                           ),
                         );
                   },
