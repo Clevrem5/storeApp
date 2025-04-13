@@ -7,25 +7,29 @@ import 'package:store_app/Features/Auth/reset_password/manager/reset_bloc.dart';
 
 import '../../../../Core/navigation/routes.dart';
 import '../../../../Core/utils/app_colors.dart';
-import '../../../Common_Widgets/store_app_bar.dart';
+import '../../../Common_Widgets/storeAppBar.dart';
 import '../../../Common_Widgets/store_tex.dart';
 import '../widget/reset_password_value_listenable_builder.dart';
 import '../widget/store_elevated_button.dart';
 
 class ResetPasswordCode extends StatelessWidget {
-  ResetPasswordCode({super.key});
+  ResetPasswordCode({super.key, required this.email});
 
   final ValueNotifier<String> passwordNotifier = ValueNotifier('');
+  final String email;
 
   bool isPasswordValid(String password) => password.length == 4;
 
   @override
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ResetEmailBloc, ResetState>(
+    return BlocListener<ResetPasswordBloc, ResetState>(
       listener: (context, state) {
         if (state.status == ResetStatus.success) {
-          context.push(Routes.resetNewPassword);
+          context.push(Routes.resetNewPassword, extra: {
+            "email": email,
+            'code': passwordNotifier.value,
+          });
         }
 
         if (state.status == ResetStatus.error) {
@@ -104,13 +108,7 @@ class ResetPasswordCode extends StatelessWidget {
                         onChanged: (value) {
                           passwordNotifier.value = value;
                         },
-                        onCompleted: (value) {
-                          // context.read<ResetEmailBloc>().add(
-                          //       SendEmailEvent(
-                          //         email: context.read<ResetEmailBloc>().codeController.text.trim(),
-                          //       ),
-                          //     );
-                        },
+                        onCompleted: (value) {},
                       ),
                     ),
                   ),
@@ -136,12 +134,12 @@ class ResetPasswordCode extends StatelessWidget {
                 child: StoreElevatedButton(
                   onTap: () {
                     if (isValid) {
-                      // context.read<ResetEmailBloc>().add(
-                      //       SendCodeEmailEvent(
-                      //         code: context.read<ResetEmailBloc>().codeController.text.trim(),
-                      //       ),
-                      //     );
-                      context.push(Routes.resetNewPassword);
+                      context.read<ResetPasswordBloc>().add(
+                            SendCodeEmail(
+                              code: code,
+                              email: email,
+                            ),
+                          );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text("Kod 4 xonali bo'lishi kerak")),
