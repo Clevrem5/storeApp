@@ -2,11 +2,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:store_app/Core/utils/app_colors.dart';
+import 'package:store_app/Features/Common_Widgets/storeAppBar.dart';
 import 'package:store_app/Features/Common_Widgets/store_tex.dart';
 
 import '../../Common_Widgets/store_icons.dart';
@@ -78,7 +80,10 @@ class _NewAddressDetailState extends State<NewAddressDetail> {
             point: location,
             width: 60,
             height: 60,
-            child: const Icon(Icons.location_on, color: Colors.red, size: 40),
+            child: SvgPicture.asset(
+              "assets/icons/map_pin.svg",
+              color: AppColors.black,
+            ),
           ),
         ];
       });
@@ -92,39 +97,50 @@ class _NewAddressDetailState extends State<NewAddressDetail> {
       _markers = [
         Marker(
           point: latLng,
-          width: 60,
-          height: 60,
-          child: const Icon(Icons.place, color: Colors.green, size: 40),
+          width: 64,
+          height: 64,
+          child: SvgPicture.asset(
+            "assets/icons/pin.svg",
+            color: AppColors.black,
+          ),
         ),
       ];
+      _showBottomSheet = true;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
+      appBar: StoreAppBar(
+        title: "NewAddress",
+        actions: "assets/icons/notification.svg",
+        leading: "assets/icons/back.svg",
+        leadingCallBack: () {
+          context.pop();
+        },
+        actionsCallBack: () {},
+      ),
       body: Stack(
         children: [
-          Listener(
-            onPointerDown: (_) => setState(() => _showBottomSheet = false),
-            onPointerUp: (_) => setState(() => _showBottomSheet = true),
-            child: FlutterMap(
-              mapController: mapController,
-              options: MapOptions(
-                initialCenter: _center,
-                initialZoom: 13,
-                onTap: _handleTap,
-              ),
-              children: [
-                TileLayer(
-                  urlTemplate: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-                  subdomains: ['a', 'b', 'c'],
-                  tileProvider: NetworkTileProvider(), // Retry bilan ishlaydi
-                  userAgentPackageName: 'com.example.store_app',
-                ),
-                MarkerLayer(markers: _markers),
-              ],
+          FlutterMap(
+            mapController: mapController,
+            options: MapOptions(
+              initialCenter: _center,
+              initialZoom: 13,
+              onTap: _handleTap,
             ),
+            children: [
+              TileLayer(
+                urlTemplate: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                subdomains: ['a', 'b', 'c'],
+                tileProvider: NetworkTileProvider(),
+                userAgentPackageName: 'com.example.store_app',
+              ),
+              MarkerLayer(markers: _markers),
+            ],
           ),
           Positioned(
             top: 40,
@@ -136,13 +152,13 @@ class _NewAddressDetailState extends State<NewAddressDetail> {
                   onPressed: () => mapController.move(_center, mapController.camera.zoom + 1),
                   child: const Icon(Icons.add),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 FloatingActionButton(
                   mini: true,
                   onPressed: () => mapController.move(_center, mapController.camera.zoom - 1),
                   child: const Icon(Icons.remove),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 FloatingActionButton(
                   mini: true,
                   onPressed: _goToMyLocation,
@@ -172,19 +188,27 @@ class _NewAddressDetailState extends State<NewAddressDetail> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       // mainAxisSize: MainAxisSize.min,
                       children: [
-                        StoreText(
-                          text: "Address",
-                          color: AppColors.black,
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w600,
+                        Row(
+                          children: [
+                            Expanded(
+                              child: StoreText(
+                                text: "Address",
+                                color: AppColors.black,
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            StoreIcons(
+                              icons: "assets/icons/cancel.svg",
+                              color: AppColors.black,
+                              callback: () {
+                                setState(() {
+                                  _showBottomSheet = false;
+                                });
+                              },
+                            ),
+                          ],
                         ),
-                        // StoreIcons(
-                        //   icons: "assets/icons/cancel.svg",
-                        //   color: AppColors.black,
-                        //   callback: () {
-                        //     context.pop();
-                        //   },
-                        // ),
                         SizedBox(
                           height: 20.h,
                         ),
@@ -209,14 +233,13 @@ class _NewAddressDetailState extends State<NewAddressDetail> {
                           child: TextField(
                             controller: viloyatController,
                             decoration: InputDecoration(
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                                 hintText: "Choose one",
                                 hintStyle: TextStyle(
                                   color: AppColors.hintText,
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w500,
-                                )
-                            ),
+                                )),
                           ),
                         ),
                         SizedBox(
@@ -256,13 +279,17 @@ class _NewAddressDetailState extends State<NewAddressDetail> {
                           height: 54.h,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.black,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              )
-                            ),
+                                backgroundColor: AppColors.black,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                )),
                             onPressed: _searchAndNavigate,
-                            child: const Text("Qidirish"),
+                            child: StoreText(
+                              text: "Qidirish",
+                              color: AppColors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                       ],
