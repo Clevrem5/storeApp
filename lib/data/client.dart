@@ -71,15 +71,17 @@ class ApiClient {
   Future<bool> postResetEmailCodeReset(
     String email,
     String code,
-    String password,
-  ) async {
+      String password,
+
+      ) async {
     try {
       var response = await dio.post(
         "/auth/reset-password/reset",
         data: {
           'email': email,
-          'password': password,
           'code': code,
+          'password': password,
+
         },
       );
       if (response.statusCode == 200) {
@@ -103,6 +105,24 @@ class ApiClient {
       }
     } catch (e) {
       throw CustomException(message: "API xatosi: ${e.toString()}");
+    }
+  }
+  Future<int>fetchSaveLike(int id)async{
+    final response=await dio.post('/auth/save/$id');
+    if (response.statusCode==200){
+      return response.data as int;
+    }else{
+      return int.parse(response.data);
+      // throw CustomException(message: "Id saqlanmadi bratim");
+
+    }
+  }
+  Future<int>fetchUnSave(int id)async{
+    final response=await dio.post('/auth/unsave/$id');
+    if (response.statusCode==200){
+      return response.data as int;
+    }else{
+      return int.parse(response.data);
     }
   }
 }
