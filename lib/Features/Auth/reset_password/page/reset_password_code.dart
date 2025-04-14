@@ -44,12 +44,7 @@ class ResetPasswordCode extends StatelessWidget {
         extendBody: true,
         appBar: StoreAppBar(
           title: "",
-          actions: "",
-          leading: "assets/icons/back.svg",
-          leadingCallBack: () {
-            context.pop();
-          },
-          actionsCallBack: () {},
+          actions: [],
         ),
         body: Padding(
           padding: const EdgeInsets.only(top: 15, left: 24, right: 24),

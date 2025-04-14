@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
 class StoreSvgButton extends StatelessWidget {
   const StoreSvgButton({
     super.key,
     required this.svg,
-     this.width=19,
-     this.height=20,
+    this.width = 19,
+    this.height = 20,
     required this.callback,
-     this.color=Colors.black,
+    this.color = Colors.black,
   });
 
   final String svg;

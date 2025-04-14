@@ -7,7 +7,8 @@ class StoreIcons extends StatelessWidget {
     required this.icons,
     required this.color,
     this.width = 24.0,
-    this.height = 24.0, required this.callback,
+    this.height = 24.0,
+    required this.callback,
   });
 
   final String icons;
@@ -15,6 +16,7 @@ class StoreIcons extends StatelessWidget {
   final double width;
   final double height;
   final VoidCallback callback;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

@@ -33,7 +33,7 @@ class LoginDetail extends StatelessWidget {
         listener: (context, state) async {
           if (state.status == LoginStatus.success) {
             context.push(Routes.home);
-          } else {
+          } else if (state.status==LoginStatus.error){
             showDialog(
               context: context,
               barrierDismissible: true,
@@ -88,6 +88,12 @@ class LoginDetail extends StatelessWidget {
                   ),
                 );
               },
+            );
+          }else{
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) => const Center(child: CircularProgressIndicator()),
             );
           }
         },

@@ -1,56 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:store_app/Features/Common_Widgets/store_icons.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:store_app/Features/Common_Widgets/store_svg_button.dart';
 
+import '../../Core/navigation/routes.dart';
 import '../../Core/utils/app_colors.dart';
 
 class StoreAppBar extends StatelessWidget implements PreferredSizeWidget {
   const StoreAppBar({
     super.key,
     required this.title,
-    required this.actions,
-    required this.leading,
-    required this.leadingCallBack,
-    required this.actionsCallBack,
+    this.actions,
   });
 
-  final String title, actions, leading;
-  final VoidCallback leadingCallBack, actionsCallBack;
+  final String title;
+  final List<Widget>? actions;
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(60);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 12, left: 24, right: 24),
+      padding: const EdgeInsets.only(top: 12, left: 25, right: 25),
       child: AppBar(
-        toolbarHeight: 29,
-        leadingWidth: 28,
+        surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.white,
-        leading: StoreIcons(
-          icons: leading,
-          color: AppColors.black,
-          callback: leadingCallBack,
-        ),
-        title: Center(
-          child: Text(
-            title,
-            style: TextStyle(
-              color: AppColors.black,
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-            ),
+        leading: IconButton(
+          onPressed: () {
+            context.pop();
+          },
+          padding: EdgeInsets.zero,
+          icon: Icon(
+            Icons.arrow_back,
+            size: 25,
           ),
         ),
-        actions: [
-          StoreIcons(
-            callback: actionsCallBack,
-            icons: actions,
+        centerTitle: true,
+        title: Text(
+          title,
+          style: TextStyle(
             color: AppColors.black,
-            width: 28,
-            height: 28,
+            fontSize: 24.sp,
+            fontWeight: FontWeight.w600,
           ),
-        ],
+        ),
+        actions: actions ??
+            [
+              StoreSvgButton(
+                svg: "assets/icons/notification.svg",
+                callback: () => context.push(Routes.notification),
+              )
+            ],
       ),
     );
   }

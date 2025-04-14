@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:store_app/Features/Common_Widgets/store_app_bar.dart';
+import 'package:store_app/Features/myCart/presentation/page/cart_detail_empty.dart';
 import 'package:store_app/core/utils/app_colors.dart';
 import 'package:store_app/features/home_page/page/home_page_text_form_field.dart';
 import '../../../core/navigation/routes.dart';
+import '../../Common_Widgets/storeAppBar.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
 
 class SearchDetail extends StatefulWidget {
@@ -31,7 +32,7 @@ class _SearchDetailState extends State<SearchDetail> {
     return Scaffold(
       backgroundColor: AppColors.white,
       extendBody: true,
-      appBar: StoreAppBarTwo(text: "Search"),
+      appBar: StoreAppBar(title: "Search"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
@@ -111,7 +112,12 @@ class _SearchDetailState extends State<SearchDetail> {
 
   Widget _buildSearchResults(List<String> results) {
     if (results.isEmpty) {
-      return const Center(child: Text('No results found.'));
+      return StoreAppPageEmpty(
+        text: 'No Results Found!',
+        bio: "Try similar word or Something\n"
+            "more general.",
+        icon: Icons.search,
+      );
     }
     return ListView.builder(
       itemCount: results.length,

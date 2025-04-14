@@ -5,7 +5,7 @@ import 'package:store_app/Data/models/Auth_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
-    BaseOptions(baseUrl: "http://192.168.9.139:8888/api/v1"),
+    BaseOptions(baseUrl: "http://192.168.9.229:8888/api/v1"),
   )..interceptors.add(AuthInterceptor());
 
   Future<bool> signUp(AuthModel model) async {
@@ -92,22 +92,17 @@ class ApiClient {
     }
   }
 
-  // Future<List<dynamic>> fetchHomePage(int categoryId, String searchTitle) async {
-  //   var response = await dio.get('/products/list$searchTitle$categoryId');
-  //   if (response.statusCode == 200) {
-  //     return List.from(response.data);
-  //   } else {
-  //     throw Exception('malumot kelmadi qanday chunding');
-  //   }
-  // }
-
-  Future<List<dynamic>> fetchHomeProduct() async {
-    final response = await dio.get('/products/list');
-    if (response.statusCode == 200) {
-      List<dynamic> data = response.data;
-      return data;
-    } else {
-      throw CustomException(message: "xato product kelmadi");
+  Future<List<dynamic>> fetchHomeProduct(int? categoryId) async {
+    try {
+      final response = await dio.get('/products/list?categoryId=2');
+      if (response.statusCode == 200) {
+        final List data = response.data as List;
+        return data;
+      } else {
+        throw CustomException(message: "Xato: ${response.statusMessage ?? 'product kelmadi'}");
+      }
+    } catch (e) {
+      throw CustomException(message: "API xatosi: ${e.toString()}");
     }
   }
 }
