@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:store_app/Features/Auth/store_onboarding/page/store_app_elevated_button.dart';
 import 'package:store_app/Features/Common_Widgets/store_app_bar.dart';
 import 'package:store_app/Features/Common_Widgets/store_tex.dart';
 
+import '../../../../Core/navigation/routes.dart';
 import '../../../../data/models/adress_model.dart';
 
 class AddressView extends StatefulWidget {
@@ -142,24 +144,25 @@ class _AddressViewState extends State<AddressView> {
       bottomNavigationBar: StoreAppElevatedButton(
         text: "Apply",
         callback: () {
-          if (isSelected != null) {
-            setState(() {
-              address.removeAt(isSelected!);
-              isSelected = null; // tanlangan holatni tiklash
-            });
-
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text("Manzil o'chirildi"),
-              ),
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text("Iltimos, manzildan birini tanlang"),
-              ),
-            );
-          }
+          context.push(Routes.newAddress);
+          // if (isSelected != null) {
+          //   setState(() {
+          //     address.removeAt(isSelected!);
+          //     isSelected = null; // tanlangan holatni tiklash
+          //   });
+          //
+          //   ScaffoldMessenger.of(context).showSnackBar(
+          //     SnackBar(
+          //       content: Text("Manzil o'chirildi"),
+          //     ),
+          //   );
+          // } else {
+          //   ScaffoldMessenger.of(context).showSnackBar(
+          //     SnackBar(
+          //       content: Text("Iltimos, manzildan birini tanlang"),
+          //     ),
+          //   );
+          // }
         },
         radius: 10,
       ),

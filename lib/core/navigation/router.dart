@@ -7,7 +7,6 @@ import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/Features/map_page/page/new_adress_detail.dart';
 import 'package:store_app/core/navigation/routes.dart';
 import 'package:store_app/features/account_page/page/account_detail.dart';
-import 'package:store_app/features/cart_page/page/cart_detail.dart';
 import 'package:store_app/features/home_page/page/home_page_detail.dart';
 import 'package:store_app/features/notification_page/page/notification_detail.dart';
 import 'package:store_app/features/saved_page/page/saved_detail.dart';
@@ -23,6 +22,7 @@ import '../../Features/Auth/store_onboarding/page/state_oboarding_detail.dart';
 import '../../Features/checkout/presentation/page/adress_view.dart';
 import '../../Features/checkout/presentation/page/checkout.dart';
 import '../../Features/details/page/details.dart';
+import '../../Features/myCart/presentation/page/cart_detail.dart';
 import '../../Features/notification_page/page/notification.dart';
 
 final router = GoRouter(
@@ -30,7 +30,7 @@ final router = GoRouter(
  
   routes: [
     GoRoute(
-      path: Routes.address,
+      path: Routes.newAddress,
       builder: (context, state) => NewAddressDetail(),
     ),
     GoRoute(
