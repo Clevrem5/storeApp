@@ -191,9 +191,6 @@ class LoginDetail extends StatelessWidget {
                           height: 54,
                           child: ElevatedButton(
                             onPressed: () {
-                              // if (){
-                              //
-                              // }
                               context.read<LoginBloc>().add(LoginLoad());
                             },
                             style: ElevatedButton.styleFrom(

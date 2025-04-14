@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:store_app/Core/navigation/routes.dart';
 
 class StoreAppElevatedButton extends StatelessWidget {
   const StoreAppElevatedButton({
     super.key,
     required this.text,
     required this.callback,
-    this.radius=0,
+    this.radius = 0,
+    this.backRoundColor = Colors.black,
   });
 
   final String text;
   final VoidCallback callback;
   final double radius;
+  final Color backRoundColor;
+  // final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +28,17 @@ class StoreAppElevatedButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: callback,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.black,
+          backgroundColor: backRoundColor,
           minimumSize: Size(341.w, 54.h),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radius),
           ),
+          elevation: 5,
         ),
         child: Text(
           text,
           style: TextStyle(
-            color: Colors.white,
+            color: backRoundColor == Colors.black ? Colors.white : Colors.black,
             fontSize: 16.sp,
             fontWeight: FontWeight.w500,
           ),

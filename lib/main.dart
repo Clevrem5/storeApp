@@ -23,6 +23,7 @@ class StoreApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               fontFamily: "GeneralSans",
+              colorSchemeSeed: Colors.white
             ),
             routerConfig: router,
           ),

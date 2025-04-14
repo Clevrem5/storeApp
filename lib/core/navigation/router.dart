@@ -20,12 +20,14 @@ import '../../Features/Auth/reset_password/page/reset_password_email.dart';
 import '../../Features/Auth/sign_up/page/sign_up_detail.dart';
 import '../../Features/Auth/store_onboarding/page/onboarding_started.dart';
 import '../../Features/Auth/store_onboarding/page/state_oboarding_detail.dart';
-import '../../Features/checkout/page/checkout.dart';
+import '../../Features/checkout/presentation/page/adress_view.dart';
+import '../../Features/checkout/presentation/page/checkout.dart';
 import '../../Features/details/page/details.dart';
 import '../../Features/notification_page/page/notification.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.address,
+  initialLocation: Routes.home,
+ 
   routes: [
     GoRoute(
       path: Routes.address,
@@ -123,6 +125,10 @@ final router = GoRouter(
     GoRoute(
       path: Routes.notification,
       builder: (context, state) => NotificationDetail(),
+    ),
+    GoRoute(
+      path: Routes.address,
+      builder: (context, state) => AddressView(),
     ),
     GoRoute(
       path: Routes.signUp,

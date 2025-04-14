@@ -8,7 +8,7 @@ class ProductRepository {
 
   List<ProductsModel> products = [];
 
-  Future<List<ProductsModel>> fetchProducts() async {
+  Future<List<ProductsModel>> fetchProducts(int? categoryId ) async {
     var rawProducts = await client.fetchHomeProduct();
     products = rawProducts.map((e) => ProductsModel.fromJson(e)).toList();
     return products;

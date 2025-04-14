@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:store_app/Core/utils/app_colors.dart';
+import 'package:store_app/core/navigation/routes.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key});
@@ -16,10 +18,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   final TextEditingController cvvController = TextEditingController();
 
   void _goToAddressSelection() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const AddressSelectionPage()),
-    );
+    context.push(Routes.address);
   }
 
   @override
