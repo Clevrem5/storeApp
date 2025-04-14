@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 //
 // class AnimatedLikeButton extends StatefulWidget {
 //   const AnimatedLikeButton({super.key});
@@ -108,19 +109,18 @@ class _LikeButtonState extends State<LikeButton> {
         transitionBuilder: (child, animation) => ScaleTransition(scale: animation, child: child),
         child: isLiked
             ? SvgPicture.asset(
-          "assets/icons/heart_filled.svg",
-          key: ValueKey('liked'),
-          width: 18,
-          height: 18,
-        )
+                "assets/icons/heart_filled.svg",
+                key: ValueKey('liked'),
+                width: 18,
+                height: 18,
+              )
             : SvgPicture.asset(
-          "assets/icons/heart.svg",
-          key: ValueKey('unliked'),
-          width: 18,
-          height: 18,
-        ),
+                "assets/icons/heart.svg",
+                key: ValueKey('unliked'),
+                width: 18,
+                height: 18,
+              ),
       ),
     );
   }
 }
-

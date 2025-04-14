@@ -32,12 +32,7 @@ class _ResetPasswordEmailDetailState extends State<ResetPasswordEmailDetail> {
       extendBody: true,
       appBar: StoreAppBar(
         title: "",
-        actions: "",
-        leading: "assets/icons/back.svg",
-        leadingCallBack: () {
-          context.pop();
-        },
-        actionsCallBack: () {},
+        actions: [],
       ),
       body: Padding(
         padding: const EdgeInsets.only(
@@ -80,11 +75,14 @@ class _ResetPasswordEmailDetailState extends State<ResetPasswordEmailDetail> {
                     child: BlocListener<ResetPasswordBloc, ResetState>(
                       listener: (context, state) {
                         if (state.status == ResetStatus.success) {
-                          context.push(Routes.resetPasswordCode ,extra: email,);
+                          context.push(
+                            Routes.resetPasswordCode,
+                            extra: email,
+                          );
                         } else {
                           ScaffoldMessenger(
                             child: SnackBar(
-                              content: Text("XATO BRATISHKA"),//
+                              content: Text("XATO BRATISHKA"), //
                             ),
                           );
                         }

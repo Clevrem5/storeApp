@@ -7,13 +7,13 @@ class StoreText extends StatelessWidget {
     required this.color,
     this.fontSize = 16.0,
     this.fontWeight = FontWeight.w500,
-    this.height=1,
-    this.line=4,
+    this.height = 1,
+    this.line = 4,
   });
 
   final String text;
   final Color color;
-  final double fontSize,height;
+  final double fontSize, height;
   final int line;
   final FontWeight fontWeight;
 

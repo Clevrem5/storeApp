@@ -14,18 +14,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       : _repository = repo,
         super(HomeState.initial()) {
     on<HomeLoad>(_load);
-    // add(HomeLoad());
+    add(HomeLoad());
   }
 
   Future<void> _load(HomeLoad event, Emitter<HomeState> emit) async {
     emit(state.copyWith(status: HomeStatus.loading));
     try {
-      final product = await _repository.fetchProducts(event.selectedId);
+      final product = await _repository.fetchProducts(null);
       emit(
         state.copyWith(
           product: product,
           status: HomeStatus.idle,
-          select: event.selectedId,
+          // select: event.selectedId,
         ),
       );
     } catch (e) {
