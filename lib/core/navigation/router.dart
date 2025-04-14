@@ -33,7 +33,6 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.resetPasswordEmail,
-      name: Routes.resetPasswordEmail,
       builder: (context, state) => BlocProvider(
         create: (context) => ResetPasswordBloc(authRepository: context.read()),
         child: ResetPasswordEmailDetail(),
@@ -41,7 +40,6 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.resetPasswordCode,
-      name: Routes.resetPasswordCode,
       builder: (context, state) {
         final email = state.extra as String;
         return BlocProvider(
@@ -52,7 +50,6 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.resetNewPassword,
-      name: Routes.resetNewPassword,
       builder: (context, state) {
         final extra = state.extra as Map<String, String>;
         final email = extra['email']!;

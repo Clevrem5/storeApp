@@ -39,8 +39,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               actions: [
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop(); // dialogni yopish
-                    context.go(Routes.login); // login sahifaga o'tish
+                    Navigator.of(context).pop();
+                    context.go(Routes.login);
                   },
                   child: const Text("OK"),
                 ),
