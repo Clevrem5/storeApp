@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../home_page/page/bottom_navigaiton_icon_button.dart';
+import '../home_page/widgets/bottom_navigaiton_icon_button.dart';
 
 class StoreBottomNavigationBar extends StatelessWidget {
   final int selectedIndex;
