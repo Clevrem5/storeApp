@@ -116,12 +116,6 @@ class _NewAddressDetailState extends State<NewAddressDetail> {
       backgroundColor: AppColors.white,
       appBar: StoreAppBar(
         title: "NewAddress",
-        actions: "assets/icons/notification.svg",
-        leading: "assets/icons/back.svg",
-        leadingCallBack: () {
-          context.pop();
-        },
-        actionsCallBack: () {},
       ),
       body: Stack(
         children: [
