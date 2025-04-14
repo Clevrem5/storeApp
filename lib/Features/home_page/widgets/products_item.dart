@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:store_app/core/utils/app_colors.dart';
 import 'package:store_app/data/models/home_page_model.dart';
 
-import '../../../core/navigation/routes.dart';
+import '../../../Core/navigation/routes.dart';
 import '../../Common_Widgets/icon_button_like.dart';
 
 class ProductsItem extends StatelessWidget {
@@ -27,17 +27,12 @@ class ProductsItem extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: GestureDetector(
-                  onTap: () {
-                    context.push(Routes.details);
-                  },
-                  child: Image.network(
-                    product.image,
-                    // "assets/images/image.png",
-                    width: 161,
-                    height: 174.h,
-                    fit: BoxFit.cover,
-                  ),
+                child: Image.network(
+                  product.image,
+                  // "assets/images/image.png",
+                  width: 161,
+                  height: 174.h,
+                  fit: BoxFit.cover,
                 ),
               ),
               Positioned(
@@ -58,13 +53,18 @@ class ProductsItem extends StatelessWidget {
         SizedBox(
           height: 10.h,
         ),
-        Text(
-          product.title,
-          // "Regular Fit Slogan",
-          style: TextStyle(
-            color: AppColors.black,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
+        InkWell(
+          onTap: (){
+            context.push(Routes.details);
+          },
+          child: Text(
+            product.title,
+            // "Regular Fit Slogan",
+            style: TextStyle(
+              color: AppColors.black,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
         Text(
