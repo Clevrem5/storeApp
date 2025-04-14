@@ -51,7 +51,7 @@ class AccountDetail extends StatelessWidget {
             leading: const Icon(Icons.notifications_none),
             title: const Text('Notifications'),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-            onTap: () => context.push(Routes.notification),
+            onTap: () => context.push(Routes.notificationPermision),
           ),
           const Divider(),
           ListTile(

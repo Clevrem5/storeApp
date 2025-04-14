@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:store_app/Core/exceptions/custom_exception.dart';
 import 'package:store_app/data/models/home_page_model.dart';
 import 'package:store_app/data/repository/products_repository.dart';
 
 part 'home_event.dart';
-
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
@@ -15,6 +15,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         super(HomeState.initial()) {
     on<HomeLoad>(_load);
     add(HomeLoad());
+    on<LikeSaveEvent>(_like);
+    on<LikeUnSaveEvent>(_unlike);
   }
 
   Future<void> _load(HomeLoad event, Emitter<HomeState> emit) async {
@@ -30,8 +32,28 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       );
     } catch (e) {
       emit(
-        state.copyWith(status: HomeStatus.error),
+        state.copyWith(
+          status: HomeStatus.error,
+        ),
       );
+    }
+  }
+
+  Future<void> _like(LikeSaveEvent event, Emitter<HomeState> emit) async {
+    try {
+      final like = await _repository.client.fetchSaveLike(event.likeId);
+      emit(state.copyWith(like: like, status: HomeStatus.idle));
+    } on Exception catch (e) {
+      throw CustomException(message: e.toString());
+    }
+  }
+
+  Future<void> _unlike(LikeUnSaveEvent event, Emitter<HomeState> emit) async {
+    try {
+      final unlike = await _repository.client.fetchUnSave(event.unLikeId);
+      emit(state.copyWith(unlike: unlike, status: HomeStatus.idle));
+    } on Exception catch (e) {
+      throw CustomException(message: e.toString());
     }
   }
 }

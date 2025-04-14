@@ -17,7 +17,6 @@ class ResetPasswordBloc extends Bloc<ResetEvent, ResetState> {
           (event, emit) async {
         final result = await _authRepository.postResetEmail(event.email);
         await SecureStorage.saveEmail(event.email);
-
         if (result) {
           emit(state.copyWith(status: ResetStatus.success));
         } else {

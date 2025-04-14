@@ -11,14 +11,13 @@ class Routes {
   static const String signUp = "/signUp";
   static const String myCart = "/myCart";
   static const String newAddress = "/newAddress";
-
   static const String resetPasswordEmail = "/reset-password-email";
   static const String resetPasswordCode = "/reset-password-code";
   static const String resetNewPassword = "/reset-new-password";
-
-  static const String noNotification = "/notificationNet";
   static const String checkout = "/checkout";
   static const String details = "/details";
   static const String review = "/review";
   static const String address = "/address";
+  static const String myOrders = "/myOrders";
+  static const String notificationPermision = "/notification";
 }

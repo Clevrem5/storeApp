@@ -5,13 +5,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/Features/Common_Widgets/store_tex.dart';
 import 'package:store_app/Features/home_page/manager/home_bloc.dart';
-import 'package:store_app/Features/home_page/page/products_item.dart';
+import 'package:store_app/Features/home_page/widgets/products_item.dart';
 import 'package:store_app/core/utils/app_colors.dart';
-import 'package:store_app/features/home_page/page/home_page_text_form_field.dart';
-
 import '../../../core/navigation/routes.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
 import '../../Common_Widgets/store_icons.dart';
+import '../widgets/home_page_text_form_field.dart';
 
 class HomePageDetail extends StatelessWidget {
   HomePageDetail({super.key});
