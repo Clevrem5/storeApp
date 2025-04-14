@@ -1,15 +1,15 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-// import 'package:flutter_map/flutter_map.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
-// import 'package:store_app/Core/utils/app_colors.dart';
-// import 'package:store_app/Features/Common_Widgets/store_app_bar.dart';
-
-// import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart'; // latlong2 paketiga e'tibor bering
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
+import 'package:geolocator/geolocator.dart';
+import 'package:store_app/Core/utils/app_colors.dart';
+import 'package:store_app/Features/Common_Widgets/store_tex.dart';
+
+import '../../Common_Widgets/store_icons.dart';
 
 class NewAddressDetail extends StatefulWidget {
   const NewAddressDetail({super.key});
@@ -19,12 +19,15 @@ class NewAddressDetail extends StatefulWidget {
 }
 
 class _NewAddressDetailState extends State<NewAddressDetail> {
-  final TextEditingController _searchController = TextEditingController();
   final MapController mapController = MapController();
-  List<Marker> _markers = [];
-  LatLng _center = const LatLng(41.2995, 69.2401); // Default Toshkent markazi
+  final TextEditingController viloyatController = TextEditingController();
+  final TextEditingController tumanController = TextEditingController();
+  final TextEditingController mahallaController = TextEditingController();
 
-  // Qidiruvni amalga oshirish
+  LatLng _center = const LatLng(41.2995, 69.2401);
+  List<Marker> _markers = [];
+  bool _showBottomSheet = true;
+
   Future<LatLng?> searchLocation(String query) async {
     final url = Uri.parse('https://nominatim.openstreetmap.org/search?q=$query&format=json&limit=1');
     final response = await http.get(url, headers: {'User-Agent': 'flutter_map_example_app'});
@@ -40,13 +43,36 @@ class _NewAddressDetailState extends State<NewAddressDetail> {
     return null;
   }
 
-  // Qidiruv va xaritani yangilash
+  void _goToMyLocation() async {
+    final permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+      return;
+    }
+
+    final position = await Geolocator.getCurrentPosition();
+    final LatLng myLocation = LatLng(position.latitude, position.longitude);
+
+    setState(() {
+      _center = myLocation;
+      _markers = [
+        Marker(
+          point: myLocation,
+          width: 60,
+          height: 60,
+          child: const Icon(Icons.my_location, color: Colors.blue, size: 40),
+        )
+      ];
+    });
+
+    mapController.move(myLocation, 15);
+  }
+
   void _searchAndNavigate() async {
-    final query = _searchController.text;
+    final query = '${viloyatController.text}, ${tumanController.text}, ${mahallaController.text}';
     final location = await searchLocation(query);
     if (location != null) {
       setState(() {
-        _center = location; // Markerni va xaritani yangi joyga ko'chirish
+        _center = location;
         _markers = [
           Marker(
             point: location,
@@ -56,67 +82,197 @@ class _NewAddressDetailState extends State<NewAddressDetail> {
           ),
         ];
       });
-      mapController.move(location, 15.0); // Xarita markazini yangilash
+      mapController.move(location, 15.0);
     }
+  }
+
+  void _handleTap(TapPosition tapPosition, LatLng latLng) {
+    setState(() {
+      _center = latLng;
+      _markers = [
+        Marker(
+          point: latLng,
+          width: 60,
+          height: 60,
+          child: const Icon(Icons.place, color: Colors.green, size: 40),
+        ),
+      ];
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("New Address"),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: Column(
+      body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _searchController,
-                    decoration: const InputDecoration(
-                      hintText: 'Manzilni kiriting...',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: _searchAndNavigate,
-                ),
-              ],
-            ),
-          ),
-          Expanded(
+          Listener(
+            onPointerDown: (_) => setState(() => _showBottomSheet = false),
+            onPointerUp: (_) => setState(() => _showBottomSheet = true),
             child: FlutterMap(
               mapController: mapController,
               options: MapOptions(
-                initialCenter: _center, // Xarita markazini o'rnatish
-                initialZoom: 13.0,
+                initialCenter: _center,
+                initialZoom: 13,
+                onTap: _handleTap,
               ),
               children: [
                 TileLayer(
-                  urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                  urlTemplate: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
                   subdomains: ['a', 'b', 'c'],
+                  tileProvider: NetworkTileProvider(), // Retry bilan ishlaydi
+                  userAgentPackageName: 'com.example.store_app',
                 ),
                 MarkerLayer(markers: _markers),
               ],
             ),
           ),
+          Positioned(
+            top: 40,
+            right: 10,
+            child: Column(
+              children: [
+                FloatingActionButton(
+                  mini: true,
+                  onPressed: () => mapController.move(_center, mapController.camera.zoom + 1),
+                  child: const Icon(Icons.add),
+                ),
+                const SizedBox(height: 10),
+                FloatingActionButton(
+                  mini: true,
+                  onPressed: () => mapController.move(_center, mapController.camera.zoom - 1),
+                  child: const Icon(Icons.remove),
+                ),
+                const SizedBox(height: 10),
+                FloatingActionButton(
+                  mini: true,
+                  onPressed: _goToMyLocation,
+                  child: const Icon(Icons.my_location),
+                ),
+              ],
+            ),
+          ),
+          if (_showBottomSheet)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: SizedBox(
+                height: 403.h,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  // padding: const EdgeInsets.all(12),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                    boxShadow: [BoxShadow(blurRadius: 10, color: Colors.black26)],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 30, right: 25, left: 25),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      // mainAxisSize: MainAxisSize.min,
+                      children: [
+                        StoreText(
+                          text: "Address",
+                          color: AppColors.black,
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        // StoreIcons(
+                        //   icons: "assets/icons/cancel.svg",
+                        //   color: AppColors.black,
+                        //   callback: () {
+                        //     context.pop();
+                        //   },
+                        // ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Divider(
+                          color: AppColors.buttonBorder,
+                          height: 1.5,
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        StoreText(
+                          text: "Address Nickname",
+                          color: AppColors.black,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        SizedBox(
+                          height: 4.h,
+                        ),
+                        SizedBox(
+                          height: 52.h,
+                          child: TextField(
+                            controller: viloyatController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                                hintText: "Choose one",
+                                hintStyle: TextStyle(
+                                  color: AppColors.hintText,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w500,
+                                )
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 16.h,
+                        ),
+                        StoreText(
+                          text: "Full Address",
+                          color: AppColors.black,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        SizedBox(
+                          height: 4.h,
+                        ),
+                        SizedBox(
+                          height: 52.h,
+                          child: TextField(
+                            controller: tumanController,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: AppColors.hintText, width: 1.5)),
+                                hintText: "Enter your full address...",
+                                hintStyle: TextStyle(
+                                  color: AppColors.hintText,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                          ),
+                        ),
+                        // TextField(
+                        //   controller: mahallaController,
+                        //   decoration: const InputDecoration(labelText: "Mahalla"),
+                        // ),
+                        SizedBox(height: 80.h),
+                        SizedBox(
+                          width: double.infinity.w,
+                          height: 54.h,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              )
+                            ),
+                            onPressed: _searchAndNavigate,
+                            child: const Text("Qidirish"),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );
   }
 }
-
