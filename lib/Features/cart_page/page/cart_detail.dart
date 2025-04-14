@@ -13,11 +13,6 @@ import '../../Common_Widgets/store_tex.dart';
 class CartDetail extends StatelessWidget {
   const CartDetail({super.key});
 
-  // final List list = List.generate(
-  //   5,
-  //   (index) => CartDetailContainer(),
-  // );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
