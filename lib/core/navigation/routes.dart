@@ -6,7 +6,7 @@ class Routes {
   static const String search = '/search-page';
   static const String saved = '/saved-page';
   static const String cart = '/cart-page';
-  static const String account = '/account-page';
+  static const String account = '/account';
   static const String notification = '/notification-page';
   static const String signUp = "/signUp";
   static const String myCart = "/myCart";

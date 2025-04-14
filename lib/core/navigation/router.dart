@@ -6,7 +6,6 @@ import 'package:store_app/Features/Auth/sign_up/manager/sign_up_bloc.dart';
 import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/Features/map_page/page/new_adress_detail.dart';
 import 'package:store_app/core/navigation/routes.dart';
-import 'package:store_app/features/account_page/page/account_detail.dart';
 import 'package:store_app/features/home_page/page/home_page_detail.dart';
 import 'package:store_app/features/notification_page/page/notification_detail.dart';
 import 'package:store_app/features/saved_page/page/saved_detail.dart';
@@ -19,13 +18,14 @@ import '../../Features/Auth/reset_password/page/reset_password_email.dart';
 import '../../Features/Auth/sign_up/page/sign_up_detail.dart';
 import '../../Features/Auth/store_onboarding/page/onboarding_started.dart';
 import '../../Features/Auth/store_onboarding/page/state_oboarding_detail.dart';
+import '../../Features/account_page/page/account_detail.dart';
 import '../../Features/checkout/presentation/page/adress_view.dart';
 import '../../Features/checkout/presentation/page/checkout.dart';
 import '../../Features/details/page/details.dart';
 import '../../Features/myCart/presentation/page/cart_detail.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.login,
+  initialLocation: Routes.account,
   routes: [
     GoRoute(
       path: Routes.newAddress,
