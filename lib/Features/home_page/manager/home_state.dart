@@ -5,14 +5,13 @@ enum HomeStatus { idle, loading, error }
 class HomeState extends Equatable {
   final List<ProductsModel>? products;
   final HomeStatus status;
-  final int likedId;
-  final int unlikedId;
+  final bool? isSuccess;
 
   const HomeState({
     required this.products,
     required this.status,
-    required this.likedId,
-    required this.unlikedId,
+    this.isSuccess,
+
     // required this.selectedId,
   });
 
@@ -20,8 +19,8 @@ class HomeState extends Equatable {
     return HomeState(
       products: [],
       status: HomeStatus.loading,
-      likedId: 0,
-      unlikedId: 0,
+      isSuccess: null,
+
       // selectedId: 0,
     );
   }
@@ -29,15 +28,14 @@ class HomeState extends Equatable {
   HomeState copyWith({
     List<ProductsModel>? product,
     HomeStatus? status,
-    int? like,
-    int? unlike,
+    bool? isLike,
     // int? select,
   }) {
     return HomeState(
       products: product ?? products,
       status: status ?? this.status,
-      likedId: like ?? likedId,
-      unlikedId: unlike ?? unlikedId,
+      isSuccess: isLike ?? isSuccess,
+
       // selectedId: select ?? selectedId,
     );
   }
@@ -46,7 +44,6 @@ class HomeState extends Equatable {
   List<Object?> get props => [
         products,
         status,
-        likedId,
-        unlikedId,
+        isSuccess,
       ];
 }
