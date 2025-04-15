@@ -3,8 +3,8 @@ part of 'home_bloc.dart';
 enum HomeStatus { idle, loading, error, }
 
 class HomeState extends Equatable {
-  final List<ProductsModel> products;
-  final List<ProductsModel> saved;
+  final List<ProductsModel>? products;
+  final List<ProductsModel>? saved;
   final HomeStatus status;
   final bool? isSuccess;
 
