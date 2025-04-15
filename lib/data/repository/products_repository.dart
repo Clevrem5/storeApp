@@ -7,10 +7,16 @@ class ProductRepository {
   ProductRepository({required this.client});
 
   List<ProductsModel> products = [];
+  List<ProductsModel> saved = [];
 
   Future<List<ProductsModel>> fetchProducts(int? categoryId ) async {
     var rawProducts = await client.fetchHomeProduct(0);
 
+    products = rawProducts.map((e) => ProductsModel.fromJson(e)).toList();
+    return products;
+  }
+  Future<List<ProductsModel>> fetchSaved() async {
+    var rawProducts = await client.fetchSaveLiked();
     products = rawProducts.map((e) => ProductsModel.fromJson(e)).toList();
     return products;
   }

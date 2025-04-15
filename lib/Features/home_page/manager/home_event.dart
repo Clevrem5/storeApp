@@ -21,4 +21,6 @@ final class LikeUnSaveEvent extends HomeEvent {
   LikeUnSaveEvent({
     required this.unLikeId,
   });
+
 }
+final class SaveLoadEvent extends HomeEvent{}

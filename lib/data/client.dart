@@ -5,7 +5,7 @@ import 'package:store_app/Data/models/Auth_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
-    BaseOptions(baseUrl: "http://192.168.9.229:8888/api/v1"),
+    BaseOptions(baseUrl: "http://192.168.10.82:8888/api/v1"),
   )..interceptors.add(AuthInterceptor());
 
   Future<bool> signUp(AuthModel model) async {
@@ -123,6 +123,14 @@ class ApiClient {
       return true;
     }else{
       return false;
+    }
+  }
+  Future<List<dynamic>>fetchSaveLiked()async{
+    final response =await dio.get('/products/saved-products');
+    if (response.statusCode==200){
+      return List.from(response.data);
+    }else{
+      throw CustomException(message: "xato ma'lumot klemadi");
     }
   }
 }

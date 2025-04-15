@@ -10,6 +10,7 @@ import 'package:store_app/features/home_page/page/home_page_detail.dart';
 import 'package:store_app/features/notification_page/page/notification_detail.dart';
 import 'package:store_app/features/saved_page/page/saved_detail.dart';
 import 'package:store_app/features/search_page/page/search_detai.dart';
+import 'package:store_app/main.dart';
 import '../../Data/repository/Auth_repository.dart';
 import '../../Features/Auth/login/page/login_detail.dart';
 import '../../Features/Auth/reset_password/page/reset_new_password.dart';
@@ -25,7 +26,8 @@ import '../../Features/details/page/details.dart';
 import '../../Features/myCart/presentation/page/cart_detail.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.account,
+  navigatorKey: navigatorKey,
+  initialLocation: Routes.saved,
   routes: [
     GoRoute(
       path: Routes.newAddress,
@@ -85,22 +87,28 @@ final router = GoRouter(
         child: LoginDetail(),
       ),
     ),
-    GoRoute(
-      path: Routes.home,
-      builder: (context, state) => BlocProvider(
+    ShellRoute(
+      builder:(context, state, child) =>  BlocProvider(
+        lazy: false,
         create: (context) => HomeBloc(
           repo: context.read(),
         ),
-        child: HomePageDetail(),
-      ),
+        child: child,
+      ) ,
+      routes: [
+        GoRoute(
+          path: Routes.home,
+          builder: (context, state) => HomePageDetail(),
+        ),
+        GoRoute(
+          path: Routes.saved,
+          builder: (context, state) => SavedDetail(),
+        ),
+      ],
     ),
     GoRoute(
       path: Routes.search,
       builder: (context, state) => SearchDetail(),
-    ),
-    GoRoute(
-      path: Routes.saved,
-      builder: (context, state) => SavedDetail(),
     ),
     GoRoute(
       path: Routes.cart,
