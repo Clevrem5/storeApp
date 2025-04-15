@@ -3,14 +3,17 @@ import 'package:go_router/go_router.dart';
 import 'package:store_app/Features/Auth/login/manger/login_bloc.dart';
 import 'package:store_app/Features/Auth/reset_password/manager/reset_bloc.dart';
 import 'package:store_app/Features/Auth/sign_up/manager/sign_up_bloc.dart';
+import 'package:store_app/Features/help_center/pages/help_center_View.dart';
 import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/Features/map_page/page/new_adress_detail.dart';
+import 'package:store_app/Features/saved_page/manager/saved_event.dart';
 import 'package:store_app/core/navigation/routes.dart';
 import 'package:store_app/features/home_page/page/home_page_detail.dart';
 import 'package:store_app/features/notification_page/page/notification_detail.dart';
 import 'package:store_app/features/saved_page/page/saved_detail.dart';
 import 'package:store_app/features/search_page/page/search_detai.dart';
 import 'package:store_app/main.dart';
+
 import '../../Data/repository/Auth_repository.dart';
 import '../../Features/Auth/login/page/login_detail.dart';
 import '../../Features/Auth/reset_password/page/reset_new_password.dart';
@@ -24,10 +27,11 @@ import '../../Features/checkout/presentation/page/adress_view.dart';
 import '../../Features/checkout/presentation/page/checkout.dart';
 import '../../Features/details/page/details.dart';
 import '../../Features/myCart/presentation/page/cart_detail.dart';
+import '../../Features/saved_page/manager/saved_bloc.dart';
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: Routes.saved,
+  initialLocation: Routes.login,
   routes: [
     GoRoute(
       path: Routes.newAddress,
@@ -67,6 +71,10 @@ final router = GoRouter(
       builder: (context, state) => StoreOnboardingDetail(),
     ),
     GoRoute(
+      path: Routes.helpCenter,
+      builder: (context, state) => HelpCenterScreen(),
+    ),
+    GoRoute(
       path: Routes.details,
       builder: (context, state) => ProductDetailPage(),
     ),
@@ -87,28 +95,26 @@ final router = GoRouter(
         child: LoginDetail(),
       ),
     ),
-    ShellRoute(
-      builder:(context, state, child) =>  BlocProvider(
-        lazy: false,
+    GoRoute(
+      path: Routes.home,
+      builder: (context, state) => BlocProvider(
         create: (context) => HomeBloc(
           repo: context.read(),
-        ),
-        child: child,
-      ) ,
-      routes: [
-        GoRoute(
-          path: Routes.home,
-          builder: (context, state) => HomePageDetail(),
-        ),
-        GoRoute(
-          path: Routes.saved,
-          builder: (context, state) => SavedDetail(),
-        ),
-      ],
+        )..add(HomeLoad()),
+        child: HomePageDetail(),
+      ),
     ),
     GoRoute(
       path: Routes.search,
       builder: (context, state) => SearchDetail(),
+    ),
+    GoRoute(
+      path: Routes.saved,
+      builder: (context, state) => BlocProvider(
+          create: (context) => SavedBloc(
+                repo: context.read(),
+              )..add(SavedLoad()),
+          child: SavedDetail()),
     ),
     GoRoute(
       path: Routes.cart,

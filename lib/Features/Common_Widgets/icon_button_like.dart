@@ -39,14 +39,14 @@ class LikeButton extends StatelessWidget {
                     key: ValueKey('liked_${product.id}'),
                     width: 18,
                     height: 18,
-                    color: Colors.red,
+                    colorFilter: ColorFilter.mode(Colors.red, BlendMode.srcIn),
                   )
                 : SvgPicture.asset(
                     "assets/icons/heart.svg",
                     key: ValueKey('unliked_${product.id}'),
                     width: 18,
                     height: 18,
-                    color: Colors.black,
+              colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
                   ),
           ),
         );

@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:store_app/Core/exceptions/custom_exception.dart';
 import 'package:store_app/data/models/home_page_model.dart';
 import 'package:store_app/data/repository/products_repository.dart';
 
@@ -15,7 +14,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         super(HomeState.initial()) {
     on<HomeLoad>(_load);
     // add(HomeLoad());
-
     on<LikeSaveEvent>(_like);
     on<LikeUnSaveEvent>(_unlike);
     on<SaveLoadEvent>(_save);
@@ -79,9 +77,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
-  Future<void>_save(SaveLoadEvent event,Emitter<HomeState>emit)async{
-    emit (state.copyWith(status: HomeStatus.loading));
-    final saved=await _repository.fetchSaved();
-    emit(state.copyWith(saved: saved,status: HomeStatus.idle));
+  Future<void> _save(SaveLoadEvent event, Emitter<HomeState> emit) async {
+    final saved = await _repository.fetchSaved();
+    emit(state.copyWith(saved: saved, status: HomeStatus.idle));
   }
 }
