@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:store_app/Features/Common_Widgets/store_tex.dart';
+import 'package:store_app/Features/home_page/widgets/products_item.dart';
 import 'package:store_app/Features/myCart/presentation/page/cart_detail_empty.dart';
+import 'package:store_app/Features/saved_page/manager/saved_bloc.dart';
+import 'package:store_app/Features/saved_page/manager/saved_state.dart';
 
 import '../../../Core/navigation/routes.dart';
 import '../../../Core/utils/app_colors.dart';
@@ -18,13 +24,47 @@ class SavedDetail extends StatelessWidget {
       appBar: StoreAppBar(
         title: "Saved",
       ),
-      body: Center(
-        child: StoreAppPageEmpty(
-          text: "No Saved Items!",
-          bio: "You don’t have any saved items.\nGo to home and add some.",
-          icon: Icons.favorite_border,
-        ),
-      ),
+      body: BlocBuilder<SavedBloc, SavedState>(builder: (context, state) {
+        if (state.status == SavedStatus.loading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state.status == SavedStatus.idle) {
+          if (state.saved.isEmpty) {
+            return Center(
+              child: StoreAppPageEmpty(
+                text: "No Saved Items!",
+                bio: "You don't have any saved items.\n"
+                    "Go to home and some.",
+                icon: Icons.heart_broken,
+              ),
+            );
+          } else {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+              child: GridView.builder(
+                itemCount: state.saved.length,
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 19,
+                  mainAxisSpacing: 24.h,
+                  mainAxisExtent: 172.h,
+                  childAspectRatio: 161 / 172,
+                ),
+                itemBuilder: (context, index) => ProductsItem(
+                  product: state.saved[index],
+                ),
+              ),
+            );
+          }
+        } else {
+          return Center(
+            child: StoreText(text: "xato bor", color: Colors.black),
+          );
+        }
+      }),
       bottomNavigationBar: StoreBottomNavigationBar(
         selectedIndex: 2, // Dynamically set index
         onTap: (index) {
@@ -52,3 +92,23 @@ class SavedDetail extends StatelessWidget {
     );
   }
 }
+
+/*
+*  Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+              child: GridView.builder(
+                itemCount: state.saved.length,
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 19,
+                  mainAxisSpacing: 24.h,
+                  mainAxisExtent: 172.h,
+                  childAspectRatio: 161 / 172,
+                ),
+                itemBuilder: (context, index) => ProductsItem(
+                  product: state.saved[index],
+                ),
+              ),
+            ),*/

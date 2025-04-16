@@ -1,52 +1,50 @@
 part of 'home_bloc.dart';
 
-enum HomeStatus { idle, loading, error }
+enum HomeStatus { idle, loading, error, }
 
 class HomeState extends Equatable {
   final List<ProductsModel>? products;
+  final List<ProductsModel>? saved;
   final HomeStatus status;
-  final int likedId;
-  final int unlikedId;
+  final bool? isSuccess;
 
   const HomeState({
     required this.products,
+    required this.saved,
     required this.status,
-    required this.likedId,
-    required this.unlikedId,
+    this.isSuccess,
+
     // required this.selectedId,
   });
 
   factory HomeState.initial() {
     return HomeState(
       products: [],
+      saved: [],
       status: HomeStatus.loading,
-      likedId: 0,
-      unlikedId: 0,
+      isSuccess: null,
+
       // selectedId: 0,
     );
   }
 
   HomeState copyWith({
     List<ProductsModel>? product,
+    List<ProductsModel>? saved,
     HomeStatus? status,
-    int? like,
-    int? unlike,
+    bool? isLike,
     // int? select,
   }) {
     return HomeState(
       products: product ?? products,
       status: status ?? this.status,
-      likedId: like ?? likedId,
-      unlikedId: unlike ?? unlikedId,
+      isSuccess: isLike ?? isSuccess,
+      saved: saved ?? this.saved,
+
       // selectedId: select ?? selectedId,
     );
   }
 
   @override
-  List<Object?> get props => [
-        products,
-        status,
-        likedId,
-        unlikedId,
-      ];
+  List<Object?> get props => [products, status, isSuccess, saved];
 }

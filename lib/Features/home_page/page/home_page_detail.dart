@@ -7,6 +7,8 @@ import 'package:store_app/Features/Common_Widgets/store_tex.dart';
 import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/Features/home_page/widgets/products_item.dart';
 import 'package:store_app/core/utils/app_colors.dart';
+
+
 import '../../../core/navigation/routes.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
 import '../../Common_Widgets/store_icons.dart';
@@ -172,7 +174,28 @@ class HomePageDetail extends StatelessWidget {
                                 Divider(
                                   color: AppColors.buttonBorder,
                                   height: 1.3,
-                                )
+                                ),
+                                SizedBox(
+                                  height: 20.h,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: StoreText(
+                                        text: "Price",
+                                        color: AppColors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    StoreText(
+                                      text: "19",
+                                      color: AppColors.hintText,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ),
@@ -279,7 +302,7 @@ class HomePageDetail extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: StoreBottomNavigationBar(
-        selectedIndex: 0, // Dynamically set index
+        selectedIndex: 0,
         onTap: (index) {
           switch (index) {
             case 0:

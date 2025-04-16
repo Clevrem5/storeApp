@@ -107,22 +107,30 @@ class ApiClient {
       throw CustomException(message: "API xatosi: ${e.toString()}");
     }
   }
-  Future<int>fetchSaveLike(int id)async{
+  Future<bool>fetchSaveLike(int id)async{
     final response=await dio.post('/auth/save/$id');
     if (response.statusCode==200){
-      return response.data as int;
+      return true;
     }else{
-      return int.parse(response.data);
+      return false;
       // throw CustomException(message: "Id saqlanmadi bratim");
 
     }
   }
-  Future<int>fetchUnSave(int id)async{
+  Future<bool>fetchUnSave(int id)async{
     final response=await dio.post('/auth/unsave/$id');
     if (response.statusCode==200){
-      return response.data as int;
+      return true;
     }else{
-      return int.parse(response.data);
+      return false;
+    }
+  }
+  Future<List<dynamic>>fetchSaveLiked()async{
+    final response =await dio.get('/products/saved-products');
+    if (response.statusCode==200){
+      return List.from(response.data);
+    }else{
+      throw CustomException(message: "xato ma'lumot klemadi");
     }
   }
 }

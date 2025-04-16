@@ -43,7 +43,9 @@ class ProductsItem extends StatelessWidget {
                   height: 34.h,
                   decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(8)),
                   child: Center(
-                    child: LikeButton(),
+                    child: LikeButton(
+                      product: product,
+                    ),
                   ),
                 ),
               )
@@ -54,7 +56,7 @@ class ProductsItem extends StatelessWidget {
           height: 10.h,
         ),
         InkWell(
-          onTap: (){
+          onTap: () {
             context.push(Routes.details);
           },
           child: Text(

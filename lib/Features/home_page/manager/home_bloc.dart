@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:store_app/Core/exceptions/custom_exception.dart';
 import 'package:store_app/data/models/home_page_model.dart';
 import 'package:store_app/data/repository/products_repository.dart';
 
@@ -14,9 +13,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       : _repository = repo,
         super(HomeState.initial()) {
     on<HomeLoad>(_load);
-    add(HomeLoad());
+    // add(HomeLoad());
     on<LikeSaveEvent>(_like);
     on<LikeUnSaveEvent>(_unlike);
+    on<SaveLoadEvent>(_save);
   }
 
   Future<void> _load(HomeLoad event, Emitter<HomeState> emit) async {
@@ -41,19 +41,44 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> _like(LikeSaveEvent event, Emitter<HomeState> emit) async {
     try {
-      final like = await _repository.client.fetchSaveLike(event.likeId);
-      emit(state.copyWith(like: like, status: HomeStatus.idle));
-    } on Exception catch (e) {
-      throw CustomException(message: e.toString());
+      final success = await _repository.client.fetchSaveLike(event.likeId);
+
+      final updatedProducts = state.products!.map((p) {
+        if (p.id == event.likeId) return p.copyWith(isLiked: true);
+        return p;
+      }).toList();
+
+      emit(state.copyWith(
+        product: updatedProducts,
+        isLike: success,
+        status: HomeStatus.idle,
+      ));
+    } catch (e) {
+      emit(state.copyWith(status: HomeStatus.error));
     }
   }
 
   Future<void> _unlike(LikeUnSaveEvent event, Emitter<HomeState> emit) async {
     try {
-      final unlike = await _repository.client.fetchUnSave(event.unLikeId);
-      emit(state.copyWith(unlike: unlike, status: HomeStatus.idle));
-    } on Exception catch (e) {
-      throw CustomException(message: e.toString());
+      final success = await _repository.client.fetchUnSave(event.unLikeId);
+
+      final updatedProducts = state.products!.map((p) {
+        if (p.id == event.unLikeId) return p.copyWith(isLiked: false);
+        return p;
+      }).toList();
+
+      emit(state.copyWith(
+        product: updatedProducts,
+        isLike: success,
+        status: HomeStatus.idle,
+      ));
+    } catch (e) {
+      emit(state.copyWith(status: HomeStatus.error));
     }
+  }
+
+  Future<void> _save(SaveLoadEvent event, Emitter<HomeState> emit) async {
+    final saved = await _repository.fetchSaved();
+    emit(state.copyWith(saved: saved, status: HomeStatus.idle));
   }
 }
