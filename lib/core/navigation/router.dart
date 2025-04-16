@@ -27,7 +27,7 @@ import '../../Features/myCart/presentation/page/cart_detail.dart';
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: Routes.saved,
+  initialLocation: Routes.login,
   routes: [
     GoRoute(
       path: Routes.newAddress,
