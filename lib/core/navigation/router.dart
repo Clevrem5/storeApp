@@ -31,7 +31,7 @@ import '../../Features/saved_page/manager/saved_bloc.dart';
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: Routes.home,
+  initialLocation: Routes.helpCenter,
   routes: [
     GoRoute(
       path: Routes.newAddress,
