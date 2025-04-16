@@ -19,4 +19,6 @@ class Routes {
   static const String review = "/review";
   static const String helpCenter = "/helpCenter";
   static const String address = "/address";
+  static const String myOrders = "/myOrders";
+  static const String notificationPermision = "/notification";
 }

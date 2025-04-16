@@ -26,12 +26,16 @@ import '../../Features/account_page/page/account_detail.dart';
 import '../../Features/checkout/presentation/page/adress_view.dart';
 import '../../Features/checkout/presentation/page/checkout.dart';
 import '../../Features/details/page/details.dart';
+import '../../Features/my orders/page/my_orders_view.dart';
 import '../../Features/myCart/presentation/page/cart_detail.dart';
+import '../../Features/notification_page/page/notification_permision.dart';
+
+
 import '../../Features/saved_page/manager/saved_bloc.dart';
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: Routes.saved,
+  initialLocation: Routes.login,
   routes: [
     GoRoute(
       path: Routes.newAddress,
@@ -131,6 +135,14 @@ final router = GoRouter(
     GoRoute(
       path: Routes.address,
       builder: (context, state) => AddressView(),
+    ),
+    GoRoute(
+      path: Routes.notificationPermision,
+      builder: (context, state) => MainScreen(),
+    ),
+    GoRoute(
+      path: Routes.myOrders,
+      builder: (context, state) => MyOrdersPage(),
     ),
     GoRoute(
       path: Routes.signUp,
