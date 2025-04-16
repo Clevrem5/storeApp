@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:store_app/Features/Auth/login/widget/value_listenable_builder.dart';
 import 'package:store_app/Features/Common_Widgets/store_tex.dart';
 import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/Features/home_page/widgets/products_item.dart';
@@ -16,15 +17,12 @@ import '../widgets/home_page_text_form_field.dart';
 class HomePageDetail extends StatelessWidget {
   HomePageDetail({super.key});
 
-  final texlar = [
-    "All",
-    "Tshirts",
-    "Jeans",
-    "Shoes",
-    "Hoodie",
-  ];
+  final texlar = ["All", "Tshirts", "Jeans", "Shoes", "Hoodie"];
   final TextEditingController cont = TextEditingController();
+
   final ValueNotifier<int> selectedIndexNotifier = ValueNotifier(0);
+  final ValueNotifier<RangeValues> selectedPriceRangeNotifier = ValueNotifier(const RangeValues(0, 2000));
+  final ValueNotifier<RangeValues> appliedPriceRangeNotifier = ValueNotifier(const RangeValues(0, 2000));
 
   @override
   Widget build(BuildContext context) {
@@ -58,229 +56,75 @@ class HomePageDetail extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 16, right: 24, left: 24),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                HomePageTextFormField(
-                  controller: cont,
-                ),
-                SizedBox(width: 8.h),
-                SizedBox(
-                  width: 52.w,
-                  height: 52.h,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        )),
-                    onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) => Container(
-                          width: double.infinity.w,
-                          height: 389.h,
-                          decoration: BoxDecoration(
-                            color: AppColors.white,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 30, right: 24, left: 24),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: StoreText(
-                                        text: "Filters",
-                                        color: AppColors.black,
-                                        fontSize: 20.sp,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    StoreIcons(
-                                      icons: "assets/icons/cancel.svg",
-                                      color: AppColors.black,
-                                      callback: () {
-                                        context.pop();
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 14.h),
-                                Divider(
-                                  color: AppColors.buttonBorder,
-                                  height: 1.3,
-                                ),
-                                SizedBox(height: 14.h),
-                                StoreText(
-                                  text: "Sort By",
-                                  color: AppColors.black,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                SizedBox(
-                                  height: 12.h,
-                                ),
-                                SizedBox(
-                                  height: 36,
-                                  width: double.infinity,
-                                  child: ValueListenableBuilder<int>(
-                                    valueListenable: selectedIndexNotifier,
-                                    builder: (context, selectedIndex, _) {
-                                      return ListView.separated(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: texlar.length,
-                                        separatorBuilder: (context, index) => SizedBox(width: 8),
-                                        itemBuilder: (context, index) {
-                                          final isSelected = selectedIndex == index;
-                                          return Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                                            decoration: BoxDecoration(
-                                              color: isSelected ? AppColors.black : AppColors.white,
-                                              borderRadius: BorderRadius.circular(10),
-                                              border: Border.all(color: AppColors.buttonBorder),
-                                            ),
-                                            child: TextButton(
-                                              onPressed: () {
-                                                selectedIndexNotifier.value = index;
-                                              },
-                                              style: TextButton.styleFrom(
-                                                padding: EdgeInsets.zero,
-                                                minimumSize: Size(0, 0),
-                                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                              ),
-                                              child: Text(
-                                                texlar[index],
-                                                style: TextStyle(
-                                                  color: isSelected ? AppColors.white : AppColors.black,
-                                                  fontSize: 16.sp,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20.h,
-                                ),
-                                Divider(
-                                  color: AppColors.buttonBorder,
-                                  height: 1.3,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                    child: Center(
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: 25,
-                        child: SvgPicture.asset(
-                          // alignment: Alignment.center,
-                          "assets/icons/back.svg",
-                          color: AppColors.white,
-                          width: 24.w,
-                          height: 24.h,
-                          fit: BoxFit.fitHeight,
-                        ),
-                      ),
+        child: BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) {
+            if (state.status == HomeStatus.loading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state.status == HomeStatus.error) {
+              return const StoreText(text: "Xato chiqdi", color: Colors.red);
+            }
+
+            return ValueListenableBuilder2<int, RangeValues>(
+              first: selectedIndexNotifier,
+              second: selectedPriceRangeNotifier,
+              builder: (context, selectedIndex, selectedPriceRange, _) {
+                final filteredProducts = state.products!.where((product) {
+                  final price = product.price.toDouble();
+                  return price >= selectedPriceRange.start && price <= selectedPriceRange.end;
+                }).toList();
+
+                return Column(
+                  children: [
+                    Row(
+                      children: [
+                        HomePageTextFormField(controller: cont),
+                        SizedBox(width: 8.h),
+                        buildFilterButton(context, state),
+                      ],
                     ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 16.h),
-            SizedBox(
-              height: 36,
-              width: double.infinity,
-              child: ValueListenableBuilder<int>(
-                valueListenable: selectedIndexNotifier,
-                builder: (context, selectedIndex, _) {
-                  return ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: texlar.length,
-                    separatorBuilder: (context, index) => SizedBox(width: 8),
-                    itemBuilder: (context, index) {
-                      final isSelected = selectedIndex == index;
-                      return Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: isSelected ? AppColors.black : AppColors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: AppColors.buttonBorder),
-                        ),
-                        child: TextButton(
-                          onPressed: () {
-                            selectedIndexNotifier.value = index;
-                          },
-                          style: TextButton.styleFrom(
+                    SizedBox(height: 16.h),
+                    buildSortBar(),
+                    SizedBox(height: 24.h),
+                    Expanded(
+                      child: ValueListenableBuilder<RangeValues>(
+                        valueListenable: appliedPriceRangeNotifier,
+                        builder: (context, appliedPriceRange, _) {
+                          final filtered = state.products!.where((product) {
+                            final price = product.price.toDouble();
+                            return price >= appliedPriceRange.start && price <= appliedPriceRange.end;
+                          }).toList();
+                          if (filtered.isEmpty) {
+                            return const Center(
+                              child: StoreText(
+                                text: "Mahsulot topilmadi",
+                                color: AppColors.black,
+                              ),
+                            );
+                          }
+                          return GridView.builder(
+                            itemCount: filtered.length,
                             padding: EdgeInsets.zero,
-                            minimumSize: Size(0, 0),
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          ),
-                          child: Text(
-                            texlar[index],
-                            style: TextStyle(
-                              color: isSelected ? AppColors.white : AppColors.black,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
-            SizedBox(height: 24.h),
-            Expanded(
-              child: ListView(
-                children: [
-                  BlocBuilder<HomeBloc, HomeState>(
-                    builder: (context, state) {
-                      return switch (state.status) {
-                        HomeStatus.loading => Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        HomeStatus.error => StoreText(
-                            text: "Xato chiqdi",
-                            color: Colors.red,
-                          ),
-                        HomeStatus.idle => GridView.builder(
-                            itemCount: state.products!.length,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            padding: EdgeInsets.zero,
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               crossAxisSpacing: 19,
                               mainAxisSpacing: 20,
                             ),
                             itemBuilder: (context, index) => ProductsItem(
-                              product: state.products![index],
+                              product: filtered[index],
                             ),
-                          ),
-                      };
-                    },
-                  ),
-                ],
-              ),
-            )
-          ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
         ),
       ),
       bottomNavigationBar: StoreBottomNavigationBar(
-        selectedIndex: 0, // Dynamically set index
+        selectedIndex: 0,
         onTap: (index) {
           switch (index) {
             case 0:
@@ -298,10 +142,172 @@ class HomePageDetail extends StatelessWidget {
             case 4:
               context.push(Routes.account);
               break;
-            default:
-              break;
           }
         },
+      ),
+    );
+  }
+
+  Widget buildSortBar() {
+    return SizedBox(
+      height: 36,
+      width: double.infinity,
+      child: ValueListenableBuilder<int>(
+        valueListenable: selectedIndexNotifier,
+        builder: (context, selectedIndex, _) {
+          return ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: texlar.length,
+            separatorBuilder: (context, index) => SizedBox(width: 8),
+            itemBuilder: (context, index) {
+              final isSelected = selectedIndex == index;
+              return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                decoration: BoxDecoration(
+                  color: isSelected ? AppColors.black : AppColors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: AppColors.buttonBorder),
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    selectedIndexNotifier.value = index;
+                  },
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: const Size(0, 0),
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  child: Text(
+                    texlar[index],
+                    style: TextStyle(
+                      color: isSelected ? AppColors.white : AppColors.black,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget buildFilterButton(BuildContext context, HomeState state) {
+    return SizedBox(
+      width: 52.w,
+      height: 52.h,
+      child: GestureDetector(
+        onTap: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) => ValueListenableBuilder<RangeValues>(
+              valueListenable: selectedPriceRangeNotifier,
+              builder: (context, rangeValues, _) {
+                return Container(
+                  width: double.infinity,
+                  height: 389.h,
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 30, right: 24, left: 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Row(
+                          children: [
+                             Expanded(
+                              child: StoreText(
+                                text: "Filters",
+                                color: AppColors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            StoreIcons(
+                              icons: "assets/icons/cancel.svg",
+                              color: AppColors.black,
+                              callback: () => context.pop(),
+                            ),
+                          ],
+                        ),
+                         SizedBox(height: 14),
+                        Divider(color: AppColors.buttonBorder, height: 1.3),
+                         SizedBox(height: 14),
+                         StoreText(
+                          text: "Price",
+                          color: AppColors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                         SizedBox(height: 10),
+                        RangeSlider(
+                          values: rangeValues,
+                          min: 0,
+                          max: 2000,
+                          divisions: 2000,
+                          labels: RangeLabels(
+                            '\$${rangeValues.start.round()}',
+                            '\$${rangeValues.end.round()}',
+                          ),
+                          onChanged: (values) {
+                            selectedPriceRangeNotifier.value = values;
+                          },
+                          activeColor: AppColors.black,
+                          inactiveColor: AppColors.buttonBorder,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("\$${rangeValues.start.round()}"),
+                            Text("\$${rangeValues.end.round()}"),
+                          ],
+                        ),
+                         SizedBox(height: 20),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                          ),
+                          onPressed: () {
+                            appliedPriceRangeNotifier.value = selectedPriceRangeNotifier.value;
+                            context.pop();
+                          },
+                          child: StoreText(
+                            text: "Apply Filters",
+                            color: AppColors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppColors.black,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Center(
+            child: SvgPicture.asset(
+              "assets/icons/filters.svg",
+              color: AppColors.white,
+              width: 26.w,
+              height: 26.h,
+            ),
+          ),
+        ),
       ),
     );
   }

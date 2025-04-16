@@ -36,7 +36,7 @@ class LoginDetail extends StatelessWidget {
           } else if (state.status==LoginStatus.error){
             showDialog(
               context: context,
-              barrierDismissible: true,
+              barrierDismissible: false,
               builder: (context) {
                 return Center(
                   child: Dialog(
@@ -88,12 +88,6 @@ class LoginDetail extends StatelessWidget {
                   ),
                 );
               },
-            );
-          }else{
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (context) => const Center(child: CircularProgressIndicator()),
             );
           }
         },
