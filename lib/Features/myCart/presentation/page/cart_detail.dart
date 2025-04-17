@@ -18,19 +18,14 @@ class CartDetail extends StatelessWidget {
       extendBody: true,
       appBar: StoreAppBar(title: "My Cart"),
       backgroundColor: AppColors.white,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          isNotEmpty == true
-              ? CartDetailItems()
-              : StoreAppPageEmpty(
-                  text: "Your Cart is empty!",
-                  bio: "When you added product they'll\n "
-                      "appear here.",
-                  icon: Icons.shopping_cart,
-                ),
-        ],
-      ),
+      body: isNotEmpty == true
+          ? CartDetailItems()
+          : StoreAppPageEmpty(
+              text: "Your Cart is empty!",
+              bio: "When you added product they'll\n "
+                  "appear here.",
+              icon: Icons.shopping_cart,
+            ),
       bottomNavigationBar: StoreBottomNavigationBar(
         selectedIndex: 3, // Dynamically set index
         onTap: (index) {

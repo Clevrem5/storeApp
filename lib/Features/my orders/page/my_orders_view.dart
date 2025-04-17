@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:store_app/Features/Common_Widgets/storeAppBar.dart';
+
 import '../../../Core/navigation/routes.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
+import 'my_orders_app_bar_bottom.dart';
 
 class MyOrdersPage extends StatelessWidget {
   const MyOrdersPage({super.key});
@@ -11,46 +15,9 @@ class MyOrdersPage extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () {},
-          ),
-          centerTitle: true,
-          title: Text(
-            'My Orders',
-            style: TextStyle(color: Colors.black),
-          ),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.notifications_none, color: Colors.black),
-              onPressed: () {},
-            ),
-          ],
-          bottom: PreferredSize(
-            preferredSize: Size.fromHeight(50),
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: TabBar(
-                indicator: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                labelColor: Colors.white,
-                unselectedLabelColor: Colors.black,
-                tabs: [
-                  Tab(text: 'Ongoing'),
-                  Tab(text: 'Completed'),
-                ],
-              ),
-            ),
-          ),
+        appBar: StoreAppBar(
+          title: "My Orders",
+          bottom:  MyOrdersAppBarBottom(),
         ),
         body: TabBarView(
           children: [
@@ -90,45 +57,23 @@ class OngoingOrders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return ListView.separated(
+      itemCount: 5,
+      separatorBuilder: (context, index) => SizedBox(
+        height: 10,
+      ),
       padding: EdgeInsets.all(12),
-      children: [
-        OrderItem(
-          imageUrl: 'https://via.placeholder.com/60',
-          title: 'Regular Fit Slogan',
-          size: 'M',
-          price: '1,190',
-          status: 'In Transit',
-        ),
-        OrderItem(
-          imageUrl: 'https://via.placeholder.com/60',
-          title: 'Regular Fit Polo',
-          size: 'L',
-          price: '1,100',
-          status: 'Picked',
-        ),
-        OrderItem(
-          imageUrl: 'https://via.placeholder.com/60',
-          title: 'Regular Fit Black',
-          size: 'L',
-          price: '1,690',
-          status: 'In Transit',
-        ),
-        OrderItem(
-          imageUrl: 'https://via.placeholder.com/60',
-          title: 'Regular Fit V-Neck',
-          size: 'S',
-          price: '1,290',
-          status: 'Packing',
-        ),
-        OrderItem(
-          imageUrl: 'https://via.placeholder.com/60',
-          title: 'Regular Fit Pink',
-          size: 'M',
-          price: '1,341',
-          status: 'Picked',
-        ),
-      ],
+      itemBuilder: (context, index) => Column(
+        children: [
+          OrderItem(
+            imageUrl: 'assets/images/image.png',
+            title: 'Regular Fit Slogan',
+            size: 'M',
+            price: '1,190',
+            status: 'In Transit',
+          ),
+        ],
+      ),
     );
   }
 }
@@ -139,17 +84,17 @@ class CompletedOrders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.all(12),
+      padding: EdgeInsets.all(20),
       children: [
         CompletedOrderItem(
-          imageUrl: 'https://via.placeholder.com/60',
+          imageUrl: 'assets/images/image.png',
           title: 'Regular Fit Slogan',
           size: 'M',
           price: '1,190',
           isRated: false,
         ),
         CompletedOrderItem(
-          imageUrl: 'https://via.placeholder.com/60',
+          imageUrl: 'assets/images/image.png',
           title: 'Regular Fit Polo',
           size: 'L',
           price: '1,100',
@@ -157,21 +102,21 @@ class CompletedOrders extends StatelessWidget {
           rating: 4.5,
         ),
         CompletedOrderItem(
-          imageUrl: 'https://via.placeholder.com/60',
+          imageUrl: 'assets/images/image.png',
           title: 'Regular Fit Black',
           size: 'L',
           price: '1,690',
           isRated: false,
         ),
         CompletedOrderItem(
-          imageUrl: 'https://via.placeholder.com/60',
+          imageUrl: 'assets/images/image.png',
           title: 'Regular Fit V-Neck',
           size: 'S',
           price: '1,290',
           isRated: false,
         ),
         CompletedOrderItem(
-          imageUrl: 'https://via.placeholder.com/60',
+          imageUrl: 'assets/images/image.png',
           title: 'Regular Fit Pink',
           size: 'M',
           price: '1,341',
@@ -198,8 +143,9 @@ class OrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 12),
-      padding: EdgeInsets.all(10),
+      width: 342.w,
+      height: 107.h,
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 14),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -207,13 +153,21 @@ class OrderItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Image.network(imageUrl, width: 60, height: 60),
+          Image(image: AssetImage(imageUrl)),
           SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                Text(
+                  title,
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.sp,
+                    height: 1,
+                  ),
+                ),
                 Text('Size $size'),
                 Text('\$ $price', style: TextStyle(fontWeight: FontWeight.bold)),
               ],
@@ -222,7 +176,6 @@ class OrderItem extends StatelessWidget {
           Column(
             children: [
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color: Colors.grey.shade200,
                   borderRadius: BorderRadius.circular(8),
@@ -278,7 +231,7 @@ class CompletedOrderItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Image.network(imageUrl, width: 60, height: 60),
+          Image.asset(imageUrl, width: 60, height: 60),
           SizedBox(width: 12),
           Expanded(
             child: Column(
