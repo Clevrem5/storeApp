@@ -1,31 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyOrdersAppBarBottom extends StatelessWidget implements PreferredSizeWidget {
-  const MyOrdersAppBarBottom({
-    super.key,
-  });
+  const MyOrdersAppBarBottom({super.key});
+
   @override
-  // TODO: implement preferredSize
-  Size get preferredSize => Size(double.infinity, 60,);
+  Size get preferredSize => Size(double.infinity, 65.h);
 
   @override
   Widget build(BuildContext context) {
-    return PreferredSize(
-      preferredSize: Size.fromHeight(50),
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        height: 54.h,
+        padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-          borderRadius: BorderRadius.circular(12),
+          color: Color(0xFFF2F2F2),
+          borderRadius: BorderRadius.circular(12.r),
         ),
         child: TabBar(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          dividerColor: Colors.transparent,
           indicator: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(12),
+            shape: BoxShape.rectangle,
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12.r),
           ),
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.black,
-          tabs: [
+          labelColor: Colors.black,
+          indicatorSize: TabBarIndicatorSize.tab,
+          unselectedLabelColor: Colors.grey,
+          splashFactory: NoSplash.splashFactory,
+          tabAlignment: TabAlignment.fill,
+          indicatorPadding: EdgeInsets.zero,
+          labelStyle: TextStyle(
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w600,
+          ),
+          unselectedLabelStyle: TextStyle(
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w600,
+          ),
+          tabs: const [
             Tab(text: 'Ongoing'),
             Tab(text: 'Completed'),
           ],
