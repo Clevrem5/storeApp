@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HelpCenterTile extends StatelessWidget {
   final String iconPath;
@@ -20,7 +21,7 @@ class HelpCenterTile extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Image.asset(
+          SvgPicture.asset(
             iconPath,
             width: 24,
             height: 24,
