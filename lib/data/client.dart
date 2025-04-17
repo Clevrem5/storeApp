@@ -5,7 +5,10 @@ import 'package:store_app/Data/models/Auth_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
-    BaseOptions(baseUrl: "http://192.168.10.82:8888/api/v1"),
+
+
+    BaseOptions(baseUrl: "http://192.168.11.105:8888/api/v1"),
+
   )..interceptors.add(AuthInterceptor());
 
   Future<bool> signUp(AuthModel model) async {

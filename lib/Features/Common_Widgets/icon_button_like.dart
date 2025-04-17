@@ -8,7 +8,7 @@ import '../home_page/manager/home_bloc.dart';
 class LikeButton extends StatelessWidget {
   final ProductsModel product;
 
-  const LikeButton({
+  const  LikeButton({
     super.key,
     required this.product,
   });
