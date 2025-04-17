@@ -19,7 +19,6 @@ class MyOrdersAppBarBottom extends StatelessWidget implements PreferredSizeWidge
           borderRadius: BorderRadius.circular(12.r),
         ),
         child: TabBar(
-          padding: EdgeInsets.symmetric(horizontal: 10),
           dividerColor: Colors.transparent,
           indicator: BoxDecoration(
             shape: BoxShape.rectangle,
@@ -38,6 +37,7 @@ class MyOrdersAppBarBottom extends StatelessWidget implements PreferredSizeWidge
           ),
           unselectedLabelStyle: TextStyle(
             fontSize: 14.sp,
+            fontFamily: "GeneralSans",
             fontWeight: FontWeight.w600,
           ),
           tabs: const [
