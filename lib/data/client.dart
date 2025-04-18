@@ -71,9 +71,8 @@ class ApiClient {
   Future<bool> postResetEmailCodeReset(
     String email,
     String code,
-      String password,
-
-      ) async {
+    String password,
+  ) async {
     try {
       var response = await dio.post(
         "/auth/reset-password/reset",
@@ -81,7 +80,6 @@ class ApiClient {
           'email': email,
           'code': code,
           'password': password,
-
         },
       );
       if (response.statusCode == 200) {
@@ -94,9 +92,12 @@ class ApiClient {
     }
   }
 
-  Future<List<dynamic>> fetchHomeProduct(int? categoryId) async {
+  Future<List<dynamic>> fetchHomeProduct(Map<String, dynamic>? queryParam) async {
     try {
-      final response = await dio.get('/products/list?categoryId=2');
+      final response = await dio.get(
+        '/products/list',
+        queryParameters: queryParam,
+      );
       if (response.statusCode == 200) {
         final List data = response.data as List;
         return data;
@@ -107,29 +108,31 @@ class ApiClient {
       throw CustomException(message: "API xatosi: ${e.toString()}");
     }
   }
-  Future<bool>fetchSaveLike(int id)async{
-    final response=await dio.post('/auth/save/$id');
-    if (response.statusCode==200){
+
+  Future<bool> fetchSaveLike(int id) async {
+    final response = await dio.post('/auth/save/$id');
+    if (response.statusCode == 200) {
       return true;
-    }else{
+    } else {
       return false;
       // throw CustomException(message: "Id saqlanmadi bratim");
-
     }
   }
-  Future<bool>fetchUnSave(int id)async{
-    final response=await dio.post('/auth/unsave/$id');
-    if (response.statusCode==200){
+
+  Future<bool> fetchUnSave(int id) async {
+    final response = await dio.post('/auth/unsave/$id');
+    if (response.statusCode == 200) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
-  Future<List<dynamic>>fetchSaveLiked()async{
-    final response =await dio.get('/products/saved-products');
-    if (response.statusCode==200){
+
+  Future<List<dynamic>> fetchSaveLiked() async {
+    final response = await dio.get('/products/saved-products');
+    if (response.statusCode == 200) {
       return List.from(response.data);
-    }else{
+    } else {
       throw CustomException(message: "xato ma'lumot klemadi");
     }
   }
@@ -143,15 +146,12 @@ class ApiClient {
   }
 
 
-  Future<List<dynamic>>fetchSizes()async{
-    final response=await dio.get('/sizes/list');
-    if (response.statusCode==200){
+  Future<List<dynamic>> fetchSizes() async {
+    final response = await dio.get('/sizes/list');
+    if (response.statusCode == 200) {
       return response.data as List<dynamic>;
-    }else{
+    } else {
       throw CustomException(message: "xato keldi!!!");
     }
-
   }
-
-
 }
