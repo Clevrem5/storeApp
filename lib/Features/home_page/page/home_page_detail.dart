@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,13 +19,12 @@ import '../widgets/home_page_text_form_field.dart';
 
 class HomePageDetail extends StatelessWidget {
   HomePageDetail({super.key});
-
-  final texlar = ["All", "Tshirts", "Jeans", "Shoes", "Hoodie"];
   final TextEditingController cont = TextEditingController();
 
+  final texlar = ["All", "Tshirts", "Jeans", "Shoes", "Hoodie"];
   final ValueNotifier<int> selectedIndexNotifier = ValueNotifier(0);
-  final ValueNotifier<RangeValues> selectedPriceRangeNotifier = ValueNotifier(const RangeValues(0, 2000));
-  final ValueNotifier<RangeValues> appliedPriceRangeNotifier = ValueNotifier(const RangeValues(0, 2000));
+  final ValueNotifier<RangeValues> selectedPriceRangeNotifier = ValueNotifier(const RangeValues(0, 4000));
+  final ValueNotifier<RangeValues> appliedPriceRangeNotifier = ValueNotifier(const RangeValues(0, 4000));
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +85,50 @@ class HomePageDetail extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 16.h),
-                    buildSortBar(),
+                    SizedBox(
+                      height: 36,
+                      width: double.infinity,
+                      child: ValueListenableBuilder<int>(
+                        valueListenable: selectedIndexNotifier,
+                        builder: (context, selectedIndex, _) {
+                          return ListView.separated(
+
+                            scrollDirection: Axis.horizontal,
+                            itemCount: state.categories!.length,
+                            separatorBuilder: (context, index) => SizedBox(width: 8),
+                            itemBuilder: (context, index) {
+                              final isSelected = selectedIndex == index;
+                              return Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: isSelected ? AppColors.black : AppColors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: AppColors.buttonBorder),
+                                ),
+                                child: TextButton(
+                                  onPressed: () {
+                                    selectedIndexNotifier.value = index;
+                                  },
+                                  style: TextButton.styleFrom(
+                                    padding: EdgeInsets.zero,
+                                    minimumSize: const Size(0, 0),
+                                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                  ),
+                                  child: Text(
+                                    state.categories![index].title,
+                                    style: TextStyle(
+                                      color: isSelected ? AppColors.white : AppColors.black,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
                     SizedBox(height: 24.h),
                     Expanded(
                       child: ValueListenableBuilder<RangeValues>(
@@ -149,52 +193,6 @@ class HomePageDetail extends StatelessWidget {
     );
   }
 
-  Widget buildSortBar() {
-    return SizedBox(
-      height: 36,
-      width: double.infinity,
-      child: ValueListenableBuilder<int>(
-        valueListenable: selectedIndexNotifier,
-        builder: (context, selectedIndex, _) {
-          return ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemCount: texlar.length,
-            separatorBuilder: (context, index) => SizedBox(width: 8),
-            itemBuilder: (context, index) {
-              final isSelected = selectedIndex == index;
-              return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                decoration: BoxDecoration(
-                  color: isSelected ? AppColors.black : AppColors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: AppColors.buttonBorder),
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    selectedIndexNotifier.value = index;
-                  },
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    minimumSize: const Size(0, 0),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  child: Text(
-                    texlar[index],
-                    style: TextStyle(
-                      color: isSelected ? AppColors.white : AppColors.black,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-
   Widget buildFilterButton(BuildContext context, HomeState state) {
     return SizedBox(
       width: 52.w,
@@ -248,8 +246,8 @@ class HomePageDetail extends StatelessWidget {
                         RangeSlider(
                           values: rangeValues,
                           min: 0,
-                          max: 2000,
-                          divisions: 2000,
+                          max: 4000,
+                          divisions: 4000,
                           labels: RangeLabels(
                             '\$${rangeValues.start.round()}',
                             '\$${rangeValues.end.round()}',

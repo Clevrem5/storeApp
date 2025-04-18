@@ -5,7 +5,7 @@ import 'package:store_app/Data/models/Auth_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
-    BaseOptions(baseUrl: "http://192.168.11.105:8888/api/v1"),
+    BaseOptions(baseUrl: "http://192.168.11.58:8888/api/v1"),
   )..interceptors.add(AuthInterceptor());
 
   Future<bool> signUp(AuthModel model) async {
@@ -136,6 +136,15 @@ class ApiClient {
       throw CustomException(message: "xato ma'lumot klemadi");
     }
   }
+  Future<List<dynamic>> fetchCategories() async {
+    final response = await dio.get('/categories/list');
+    if (response.statusCode == 200) {
+      return List.from(response.data);
+    } else {
+      throw CustomException(message: "Malumot Kelmadi");
+    }
+  }
+
 
   Future<List<dynamic>> fetchSizes() async {
     final response = await dio.get('/sizes/list');
