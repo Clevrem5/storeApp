@@ -11,4 +11,5 @@ class AppColors {
   static const Color white = Color(0xffFFFFFF);
   static const Color buttonBorder = Color(0xffCCCCCC);
   static const Color bottomBorder = Color(0xffE6E6E6);
+  static const Color containerBorder = Color(0xff808080);
 }

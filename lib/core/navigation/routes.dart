@@ -20,5 +20,6 @@ class Routes {
   static const String helpCenter = "/helpCenter";
   static const String address = "/address";
   static const String myOrders = "/myOrders";
-  static const String notificationPermision = "/notificationPermision";
+  static const String faqs = "/faqs";
+  static const String notificationPermision = "/notification";
 }
