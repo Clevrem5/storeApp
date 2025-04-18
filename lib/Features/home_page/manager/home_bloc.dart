@@ -17,6 +17,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<LikeSaveEvent>(_like);
     on<LikeUnSaveEvent>(_unlike);
     on<SaveLoadEvent>(_save);
+    on<CategoriesLoadEvent>(_categories);
+    add(CategoriesLoadEvent());
   }
 
   Future<void> _load(HomeLoad event, Emitter<HomeState> emit) async {
@@ -80,5 +82,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _save(SaveLoadEvent event, Emitter<HomeState> emit) async {
     final saved = await _repository.fetchSaved();
     emit(state.copyWith(saved: saved, status: HomeStatus.idle));
+  }
+  Future<void> _categories(CategoriesLoadEvent event, Emitter<HomeState> emit) async {
+    final categories = await _repository.fetchCategories();
+    emit(state.copyWith(categories: categories, status: HomeStatus.idle));
   }
 }

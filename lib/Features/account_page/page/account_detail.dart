@@ -52,27 +52,24 @@ class AccountDetail extends StatelessWidget {
             title: const Text('Notifications'),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () => context.push(Routes.notificationPermision),
-
-            onTap: () => context.push(Routes.notification),
+            // onTap: () => context.push(Routes.notification),
           ),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.help_outline),
             title: const Text('FAQs'),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-            onTap: () => context.push('/faqs'),
-
-            onTap: () => context.push(Routes.home),
+            // onTap: () => context.push('/faqs'),
+            onTap: () => context.push(Routes.faqs),
           ),
           ListTile(
             leading: const Icon(Icons.headset_mic_outlined),
             title: const Text('Help Center'),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
  
-            onTap: () => context.push('/help'),
+            // onTap: () => context.push('/help'),
 
             onTap: () => context.push(Routes.helpCenter),
- 
           ),
           const Divider(),
           ListTile(
@@ -92,7 +89,6 @@ class AccountDetail extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         context.push(Routes.login);
-                        // Logout logikasi shu yerda bo'ladi
                       },
                       child: const Text('Logout'),
                     ),

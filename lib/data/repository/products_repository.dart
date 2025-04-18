@@ -8,12 +8,20 @@ class ProductRepository {
 
   List<ProductsModel> products = [];
   List<ProductsModel> saved = [];
+  List<CategoriesModel> categories = [];
+
+
 
   Future<List<ProductsModel>> fetchProducts(int? categoryId ) async {
     var rawProducts = await client.fetchHomeProduct(0);
 
     products = rawProducts.map((e) => ProductsModel.fromJson(e)).toList();
     return products;
+  }
+  Future<List<CategoriesModel>> fetchCategories() async {
+    var rawProducts = await client.fetchCategories();
+    categories = rawProducts.map((e) => CategoriesModel.fromJson(e)).toList();
+    return categories;
   }
   Future<List<ProductsModel>> fetchSaved() async {
     var rawProducts = await client.fetchSaveLiked();
