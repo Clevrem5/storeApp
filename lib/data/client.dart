@@ -141,4 +141,17 @@ class ApiClient {
       throw CustomException(message: "Malumot Kelmadi");
     }
   }
+
+
+  Future<List<dynamic>>fetchSizes()async{
+    final response=await dio.get('/sizes/list');
+    if (response.statusCode==200){
+      return response.data as List<dynamic>;
+    }else{
+      throw CustomException(message: "xato keldi!!!");
+    }
+
+  }
+
+
 }

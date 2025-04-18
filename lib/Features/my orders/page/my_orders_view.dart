@@ -15,6 +15,7 @@ class MyOrdersPage extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: StoreAppBar(
           title: "My Orders",
           bottom:  MyOrdersAppBarBottom(),

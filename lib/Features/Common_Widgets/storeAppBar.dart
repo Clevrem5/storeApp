@@ -31,7 +31,7 @@ class StoreAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 12, left: 25, right: 25),
+      padding: const EdgeInsets.only(top: 12, left: 15, right: 25),
       child: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.white,
