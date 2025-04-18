@@ -24,7 +24,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _load(HomeLoad event, Emitter<HomeState> emit) async {
     emit(state.copyWith(status: HomeStatus.loading));
     try {
-      final product = await _repository.fetchProducts(null);
+      final product = await _repository.fetchProducts(null,null );
       emit(
         state.copyWith(
           product: product,

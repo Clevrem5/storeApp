@@ -11,14 +11,23 @@ class StoreAppBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     required this.title,
     this.actions,
+    this.bottom,
+    this.toolbarHeight=60,
   });
 
   final String title;
   final List<Widget>? actions;
+  final double toolbarHeight;
+  final PreferredSizeWidget? bottom;
+
 
   @override
-  Size get preferredSize => const Size.fromHeight(60);
-
+  Size get preferredSize {
+    final double? bottomHeight = bottom?.preferredSize.height;
+    final height =
+    bottomHeight == null ? toolbarHeight : bottomHeight + toolbarHeight;
+    return Size(double.infinity, height);
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -52,6 +61,7 @@ class StoreAppBar extends StatelessWidget implements PreferredSizeWidget {
                 callback: () => context.push(Routes.notification),
               )
             ],
+        bottom: bottom,
       ),
     );
   }
