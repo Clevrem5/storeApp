@@ -17,6 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.12.0"
+  birth_picker:
+    dependency: "direct main"
+    description:
+      name: birth_picker
+      sha256: d3ea0e720a240fd0cb77f6b1282dae6beda9e3b0c3c5c7e9f7295e8aa658eeec
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.2+1"
   bloc:
     dependency: "direct main"
     description:
@@ -520,6 +528,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.20.2"
+  intl_phone_field:
+    dependency: "direct main"
+    description:
+      name: intl_phone_field
+      sha256: "73819d3dfcb68d2c85663606f6842597c3ddf6688ac777f051b17814fe767bbf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.0"
   js:
     dependency: transitive
     description:

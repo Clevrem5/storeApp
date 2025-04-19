@@ -33,7 +33,7 @@ class AccountDetail extends StatelessWidget {
             leading: const Icon(Icons.person_outline),
             title: const Text('My Details'),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-            onTap: () => context.push('/details'),
+            onTap: () => context.push(Routes.myDetails),
           ),
           ListTile(
             leading: const Icon(Icons.home_outlined),
