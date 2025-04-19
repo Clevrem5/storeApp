@@ -16,6 +16,7 @@ class Routes {
   static const String resetNewPassword = "/reset-new-password";
   static const String checkout = "/checkout";
   static const String details = "/details";
+  static const String myDetails = "/myDetails";
   static const String review = "/review";
   static const String helpCenter = "/helpCenter";
   static const String address = "/address";

@@ -7,6 +7,7 @@ import 'package:store_app/Features/faqs/page/faqs_detail.dart';
 import 'package:store_app/Features/help_center/pages/help_center_View.dart';
 import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/Features/map_page/page/new_adress_detail.dart';
+import 'package:store_app/Features/my_details/pages/my_detail_view.dart';
 import 'package:store_app/Features/saved_page/manager/saved_event.dart';
 import 'package:store_app/core/navigation/routes.dart';
 import 'package:store_app/features/home_page/page/home_page_detail.dart';
@@ -74,6 +75,10 @@ final router = GoRouter(
     GoRoute(
       path: Routes.onboarding,
       builder: (context, state) => StoreOnboardingDetail(),
+    ),
+    GoRoute(
+      path: Routes.myDetails,
+      builder: (context, state) => MyDetailView(),
     ),
     GoRoute(
       path: Routes.helpCenter,
