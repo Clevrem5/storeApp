@@ -11,7 +11,6 @@ import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/Features/home_page/widgets/products_item.dart';
 import 'package:store_app/core/utils/app_colors.dart';
 
-
 import '../../../core/navigation/routes.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
 import '../../Common_Widgets/store_icons.dart';
@@ -19,12 +18,14 @@ import '../widgets/home_page_text_form_field.dart';
 
 class HomePageDetail extends StatelessWidget {
   HomePageDetail({super.key});
+
   final TextEditingController cont = TextEditingController();
 
   final texlar = ["All", "Tshirts", "Jeans", "Shoes", "Hoodie"];
   final ValueNotifier<int> selectedIndexNotifier = ValueNotifier(0);
   final ValueNotifier<RangeValues> selectedPriceRangeNotifier = ValueNotifier(const RangeValues(0, 4000));
   final ValueNotifier<RangeValues> appliedPriceRangeNotifier = ValueNotifier(const RangeValues(0, 4000));
+  final ValueNotifier<int?> selectedSizeIdNotifier = ValueNotifier(null);
 
   @override
   Widget build(BuildContext context) {
@@ -68,20 +69,164 @@ class HomePageDetail extends StatelessWidget {
 
             return ValueListenableBuilder2<int, RangeValues>(
               first: selectedIndexNotifier,
-              second: selectedPriceRangeNotifier,
-              builder: (context, selectedIndex, selectedPriceRange, _) {
-                final filteredProducts = state.products!.where((product) {
-                  final price = product.price.toDouble();
-                  return price >= selectedPriceRange.start && price <= selectedPriceRange.end;
-                }).toList();
-
+              second: appliedPriceRangeNotifier,
+              builder: (context, selectedIndex, appliedPriceRange, _) {
                 return Column(
                   children: [
                     Row(
                       children: [
                         HomePageTextFormField(controller: cont),
                         SizedBox(width: 8.h),
-                        buildFilterButton(context, state),
+                        SizedBox(
+                          width: 52.w,
+                          height: 52.h,
+                          child: GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) => ValueListenableBuilder<RangeValues>(
+                                  valueListenable: selectedPriceRangeNotifier,
+                                  builder: (context, rangeValues, _) {
+                                    return Container(
+                                      width: double.infinity,
+                                      height: 389.h,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 30, right: 24, left: 24),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: StoreText(
+                                                    text: "Filters",
+                                                    color: AppColors.black,
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                                StoreIcons(
+                                                  icons: "assets/icons/cancel.svg",
+                                                  color: AppColors.black,
+                                                  callback: () => context.pop(),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 14),
+                                            Divider(color: AppColors.buttonBorder, height: 1.3),
+                                            SizedBox(height: 14),
+                                            StoreText(
+                                              text: "Price",
+                                              color: AppColors.black,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                            SizedBox(height: 10),
+                                            RangeSlider(
+                                              values: rangeValues,
+                                              min: 0,
+                                              max: 4000,
+                                              divisions: 4000,
+                                              labels: RangeLabels(
+                                                '\$${rangeValues.start.round()}',
+                                                '\$${rangeValues.end.round()}',
+                                              ),
+                                              onChanged: (values) {
+                                                selectedPriceRangeNotifier.value = values;
+                                              },
+                                              activeColor: AppColors.black,
+                                              inactiveColor: AppColors.buttonBorder,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text("\$${rangeValues.start.round()}"),
+                                                Text("\$${rangeValues.end.round()}"),
+                                              ],
+                                            ),
+                                            SizedBox(height: 20),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: AppColors.black,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(12),
+                                                ),
+                                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                              ),
+                                              onPressed: () {
+                                                appliedPriceRangeNotifier.value = selectedPriceRangeNotifier.value;
+                                                context.pop();
+                                              },
+                                              child: StoreText(
+                                                text: "Apply Filters",
+                                                color: AppColors.white,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                const Text(
+                                                  'Size',
+                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                                ),
+                                                const Spacer(),
+                                                ValueListenableBuilder<int?>(
+                                                  valueListenable: selectedSizeIdNotifier,
+                                                  builder: (context, selectedSizeId, _) {
+                                                    return DropdownButtonHideUnderline(
+                                                      child: DropdownButton<int>(
+                                                        value: selectedSizeId,
+                                                        items: state.sizes!
+                                                            .map((size) => DropdownMenuItem<int>(
+                                                                  value: size.id,
+                                                                  child: Text(size.title),
+                                                                ))
+                                                            .toList(),
+                                                        onChanged: (value) {
+                                                          selectedSizeIdNotifier.value = value;
+                                                        },
+                                                        hint: Row(
+                                                          children: const [
+                                                            Text("Select", style: TextStyle(fontSize: 18)),
+                                                            SizedBox(width: 5),
+                                                            Icon(Icons.arrow_drop_down),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.black,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Center(
+                                child: SvgPicture.asset(
+                                  "assets/icons/filters.svg",
+                                  color: AppColors.white,
+                                  width: 26.w,
+                                  height: 26.h,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     SizedBox(height: 16.h),
@@ -92,7 +237,6 @@ class HomePageDetail extends StatelessWidget {
                         valueListenable: selectedIndexNotifier,
                         builder: (context, selectedIndex, _) {
                           return ListView.separated(
-
                             scrollDirection: Axis.horizontal,
                             itemCount: state.categories!.length,
                             separatorBuilder: (context, index) => SizedBox(width: 8),
@@ -131,13 +275,18 @@ class HomePageDetail extends StatelessWidget {
                     ),
                     SizedBox(height: 24.h),
                     Expanded(
-                      child: ValueListenableBuilder<RangeValues>(
-                        valueListenable: appliedPriceRangeNotifier,
-                        builder: (context, appliedPriceRange, _) {
-                          final filtered = state.products!.where((product) {
-                            final price = product.price.toDouble();
-                            return price >= appliedPriceRange.start && price <= appliedPriceRange.end;
-                          }).toList();
+                      child: ValueListenableBuilder2<RangeValues, int?>(
+                        first: appliedPriceRangeNotifier,
+                        second: selectedSizeIdNotifier,
+                        builder: (context, appliedPriceRange, selectedSizeId, _) {
+                          final filtered = state.products!.where(
+                            (product) {
+                              final price = product.price.toDouble();
+                              final priceMatch = price >= appliedPriceRange.start && price <= appliedPriceRange.end;
+                              final sizeMatch = selectedSizeId == null || product.id == selectedSizeId;
+                              return priceMatch && sizeMatch;
+                            },
+                          ).toList();
                           if (filtered.isEmpty) {
                             return const Center(
                               child: StoreText(
@@ -146,6 +295,7 @@ class HomePageDetail extends StatelessWidget {
                               ),
                             );
                           }
+
                           return GridView.builder(
                             itemCount: filtered.length,
                             padding: EdgeInsets.zero,
@@ -154,9 +304,7 @@ class HomePageDetail extends StatelessWidget {
                               crossAxisSpacing: 19,
                               mainAxisSpacing: 20,
                             ),
-                            itemBuilder: (context, index) => ProductsItem(
-                              product: filtered[index],
-                            ),
+                            itemBuilder: (context, index) => ProductsItem(product: filtered[index]),
                           );
                         },
                       ),
@@ -189,124 +337,6 @@ class HomePageDetail extends StatelessWidget {
               break;
           }
         },
-      ),
-    );
-  }
-
-  Widget buildFilterButton(BuildContext context, HomeState state) {
-    return SizedBox(
-      width: 52.w,
-      height: 52.h,
-      child: GestureDetector(
-        onTap: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) => ValueListenableBuilder<RangeValues>(
-              valueListenable: selectedPriceRangeNotifier,
-              builder: (context, rangeValues, _) {
-                return Container(
-                  width: double.infinity,
-                  height: 389.h,
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 30, right: 24, left: 24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          children: [
-                             Expanded(
-                              child: StoreText(
-                                text: "Filters",
-                                color: AppColors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            StoreIcons(
-                              icons: "assets/icons/cancel.svg",
-                              color: AppColors.black,
-                              callback: () => context.pop(),
-                            ),
-                          ],
-                        ),
-                         SizedBox(height: 14),
-                        Divider(color: AppColors.buttonBorder, height: 1.3),
-                         SizedBox(height: 14),
-                         StoreText(
-                          text: "Price",
-                          color: AppColors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                         SizedBox(height: 10),
-                        RangeSlider(
-                          values: rangeValues,
-                          min: 0,
-                          max: 4000,
-                          divisions: 4000,
-                          labels: RangeLabels(
-                            '\$${rangeValues.start.round()}',
-                            '\$${rangeValues.end.round()}',
-                          ),
-                          onChanged: (values) {
-                            selectedPriceRangeNotifier.value = values;
-                          },
-                          activeColor: AppColors.black,
-                          inactiveColor: AppColors.buttonBorder,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("\$${rangeValues.start.round()}"),
-                            Text("\$${rangeValues.end.round()}"),
-                          ],
-                        ),
-                         SizedBox(height: 20),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.black,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                          ),
-                          onPressed: () {
-                            appliedPriceRangeNotifier.value = selectedPriceRangeNotifier.value;
-                            context.pop();
-                          },
-                          child: StoreText(
-                            text: "Apply Filters",
-                            color: AppColors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          );
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.black,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Center(
-            child: SvgPicture.asset(
-              "assets/icons/filters.svg",
-              color: AppColors.white,
-              width: 26.w,
-              height: 26.h,
-            ),
-          ),
-        ),
       ),
     );
   }

@@ -1,6 +1,6 @@
 class ProductsModel {
   final int id, discount;
-  final String image, title;
+  final String image, title;  
   final num price;
   final bool isLiked;
 
@@ -63,6 +63,32 @@ class CategoriesModel {
     String? title,
   }) {
     return CategoriesModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+    );
+  }
+}
+class SizesModel {
+  final int id;
+  final String title;
+
+  const SizesModel({
+    required this.id,
+    required this.title,
+  });
+
+  factory SizesModel.fromJson(Map<String, dynamic> json) {
+    return SizesModel(
+      id: json['id'],
+      title: json['title'],
+    );
+  }
+
+  SizesModel copyWith({
+    int? id,
+    String? title,
+  }) {
+    return SizesModel(
       id: id ?? this.id,
       title: title ?? this.title,
     );

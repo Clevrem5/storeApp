@@ -38,3 +38,4 @@ final class LikeUnSaveEvent extends HomeEvent {
 }
 final class SaveLoadEvent extends HomeEvent{}
 final class CategoriesLoadEvent extends HomeEvent{}
+final class SizesLoadEvent extends HomeEvent{}
