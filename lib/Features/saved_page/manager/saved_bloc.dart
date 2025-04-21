@@ -17,5 +17,25 @@ class SavedBloc extends Bloc<SavedEvent, SavedState> {
         emit(state.copyWith(saved: saved, status: SavedStatus.idle));
       },
     );
+    on<SavedLikesEvent>(_unlike);
+  }
+
+  Future<void> _unlike(SavedLikesEvent event, Emitter<SavedState> emit) async {
+    try {
+      final success = await _repository.client.fetchUnSave(event.id);
+
+      final updatedProducts = state.saved.map((p) {
+        if (p.id == event.id) return p.copyWith(isLiked: false);
+        return p;
+      }).toList();
+
+      emit(state.copyWith(
+        saved: updatedProducts,
+        success: success,
+        status: SavedStatus.idle,
+      ));
+    } catch (e) {
+      emit(state.copyWith(status: SavedStatus.error));
+    }
   }
 }
