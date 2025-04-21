@@ -3,6 +3,7 @@ import 'package:store_app/Core/exceptions/custom_exception.dart';
 import 'package:store_app/Core/inter_septor.dart';
 import 'package:store_app/Data/models/Auth_model.dart';
 import 'package:store_app/data/models/Auth_model.dart';
+import 'package:store_app/data/models/detaisl_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
@@ -173,4 +174,13 @@ class ApiClient {
     }
   }
 
+  Future<dynamic> fetchDetails(int id) async {
+    final response = await dio.get('/products/detail/$id');
+    if (response.statusCode == 200) {
+      print(response.data);
+      return response.data;
+    } else {
+      throw CustomException(message: "xato detailsdan ma'lumot kelamdi!!!");
+    }
+  }
 }

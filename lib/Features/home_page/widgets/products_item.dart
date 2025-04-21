@@ -57,7 +57,7 @@ class ProductsItem extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            context.push(Routes.details);
+            context.push(Routes.get(product.id));
           },
           child: Text(
             product.title,

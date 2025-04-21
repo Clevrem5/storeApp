@@ -51,6 +51,8 @@ class HomePageDetail extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: StoreIcons(
               icons: "assets/icons/notification.svg",
+              width: 19.w,
+              height: 20.h,
               color: AppColors.black,
               callback: () => context.push(Routes.notification),
             ),
