@@ -32,11 +32,13 @@ class ProductRepository {
     products = rawProducts.map((e) => ProductsModel.fromJson(e)).toList();
     return products;
   }
+
   Future<List<CategoriesModel>> fetchCategories() async {
     var rawProducts = await client.fetchCategories();
     categories = rawProducts.map((e) => CategoriesModel.fromJson(e)).toList();
     return categories;
   }
+
   Future<List<SizesModel>> fetchSizes() async {
     var rawProducts = await client.fetchSizes();
     sizes = rawProducts.map((e) => SizesModel.fromJson(e)).toList();
