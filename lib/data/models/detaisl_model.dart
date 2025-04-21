@@ -4,8 +4,8 @@ class DetailsModel {
   final num price;
   final bool isLiked;
   final num reviewsCount, rating;
-  final List<ProductImagesModel> productImages;
-  final List<ProductSizesModel> productSizes;
+  // final List<ProductImagesModel> productImages;
+  // final List<ProductSizesModel> productSizes;
 
   DetailsModel({
     required this.id,
@@ -15,8 +15,8 @@ class DetailsModel {
     required this.isLiked,
     required this.rating,
     required this.reviewsCount,
-    required this.productImages,
-    required this.productSizes,
+    // required this.productImages,
+    // required this.productSizes,
   });
 
   factory DetailsModel.fromJson(Map<String, dynamic> json) {
@@ -28,8 +28,8 @@ class DetailsModel {
       isLiked: json['isLiked'],
       rating: json['rating'],
       reviewsCount: json['reviewsCount'],
-      productImages: (json['productImages'] as List).map((e) => ProductImagesModel.fromJson(e)).toList(),
-      productSizes: (json['productSizes'] as List).map((e) => ProductSizesModel.fromJson(e)).toList(),
+      // productImages: (json['productImages'] as List).map((e) => ProductImagesModel.fromJson(e)).toList(),
+      // productSizes: (json['productSizes'] as List).map((e) => ProductSizesModel.fromJson(e)).toList(),
     );
   }
 }
