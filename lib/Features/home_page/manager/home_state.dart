@@ -6,6 +6,7 @@ class HomeState extends Equatable {
   final List<ProductsModel>? products;
   final List<ProductsModel>? saved;
   final List<CategoriesModel>? categories;
+  final List<SizesModel>? sizes;
   final HomeStatus status;
   final bool? isSuccess;
 
@@ -14,6 +15,7 @@ class HomeState extends Equatable {
     required this.saved,
     required this.status,
     required this.categories,
+    required this.sizes,
     this.isSuccess,
 
     // required this.selectedId,
@@ -24,6 +26,7 @@ class HomeState extends Equatable {
       products: [],
       saved: [],
       categories: [],
+      sizes: [],
       status: HomeStatus.loading,
       isSuccess: null,
       // selectedId: 0,
@@ -34,6 +37,7 @@ class HomeState extends Equatable {
     List<ProductsModel>? product,
     List<ProductsModel>? saved,
     List<CategoriesModel>? categories,
+    List<SizesModel>? sizes,
     HomeStatus? status,
     bool? isLike,
     // int? select,
@@ -44,11 +48,11 @@ class HomeState extends Equatable {
       isSuccess: isLike ?? isSuccess,
       saved: saved ?? this.saved,
       categories: categories ?? this.categories,
-
+      sizes: sizes ?? this.sizes
       // selectedId: select ?? selectedId,
     );
   }
 
   @override
-  List<Object?> get props => [products, status, isSuccess, saved, categories];
+  List<Object?> get props => [products, status, isSuccess, saved, categories, sizes];
 }

@@ -151,7 +151,7 @@ class ApiClient {
   Future<List<dynamic>> fetchSizes() async {
     final response = await dio.get('/sizes/list');
     if (response.statusCode == 200) {
-      return response.data as List<dynamic>;
+      return List.from(response.data);
     } else {
       throw CustomException(message: "xato keldi!!!");
     }

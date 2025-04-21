@@ -9,6 +9,7 @@ class ProductRepository {
   List<ProductsModel> products = [];
   List<ProductsModel> saved = [];
   List<CategoriesModel> categories = [];
+  List<SizesModel> sizes = [];
 
 
 
@@ -35,6 +36,11 @@ class ProductRepository {
     var rawProducts = await client.fetchCategories();
     categories = rawProducts.map((e) => CategoriesModel.fromJson(e)).toList();
     return categories;
+  }
+  Future<List<SizesModel>> fetchSizes() async {
+    var rawProducts = await client.fetchSizes();
+    sizes = rawProducts.map((e) => SizesModel.fromJson(e)).toList();
+    return sizes;
   }
 
   Future<List<ProductsModel>> fetchSaved() async {
