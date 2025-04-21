@@ -3,13 +3,19 @@ import 'package:go_router/go_router.dart';
 import 'package:store_app/Features/Auth/login/manger/login_bloc.dart';
 import 'package:store_app/Features/Auth/reset_password/manager/reset_bloc.dart';
 import 'package:store_app/Features/Auth/sign_up/manager/sign_up_bloc.dart';
+import 'package:store_app/Features/Reviews/pages/rewiew_page.dart';
 import 'package:store_app/Features/faqs/page/faqs_detail.dart';
 import 'package:store_app/Features/help_center/pages/help_center_View.dart';
 import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/Features/map_page/page/new_adress_detail.dart';
+
 import 'package:store_app/Features/my_details/page/my_details_detail.dart';
 import 'package:store_app/Features/payment_methods/page/methods_new_card_detail.dart';
 import 'package:store_app/Features/payment_methods/page/payment_methods_detail.dart';
+
+import 'package:store_app/Features/my_details/manager/my_details_bloc.dart';
+import 'package:store_app/Features/my_details/pages/my_detail_view.dart';
+
 import 'package:store_app/Features/saved_page/manager/saved_event.dart';
 import 'package:store_app/core/navigation/routes.dart';
 import 'package:store_app/features/home_page/page/home_page_detail.dart';
@@ -38,7 +44,9 @@ import '../../Features/saved_page/manager/saved_bloc.dart';
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
+
   initialLocation: Routes.paymentMethods,
+
   routes: [
     GoRoute(
       path: Routes.newAddress,
@@ -76,6 +84,14 @@ final router = GoRouter(
     GoRoute(
       path: Routes.onboarding,
       builder: (context, state) => StoreOnboardingDetail(),
+    ),
+    GoRoute(
+      path: Routes.myDetails,
+      builder: (context, state) => BlocProvider(
+          create: (context) => MyDetailsBloc(
+                repo: context.read(),
+              ),
+          child: MyDetailView()),
     ),
     GoRoute(
       path: Routes.helpCenter,
@@ -162,6 +178,9 @@ final router = GoRouter(
     GoRoute(
       path: Routes.newCard,
       builder: (context, state) => MethodsNewCardDetail(),
+
+      path: Routes.review,
+      builder: (context, state) => ReviewPage(),
     ),
     GoRoute(
       path: Routes.signUp,

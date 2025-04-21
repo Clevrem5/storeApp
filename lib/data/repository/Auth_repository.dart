@@ -61,4 +61,23 @@ class AuthRepository {
   Future<bool> postResetEmailCodeReset(String email, String code, String password) async {
     return await client.postResetEmailCodeReset(email, code, password);
   }
+
+  Future<bool> updateUser({
+    required String gender,
+    required String fullName,
+    required String birthdate,
+    required String phoneNumber,
+    required String email,
+  }) async {
+    final result = await client.fetchAuthUpdate(
+      AuthUpdateModel(
+        gender: gender,
+        fullName: fullName,
+        email: email,
+        phoneNumber: phoneNumber,
+        birthdate: birthdate,
+      ),
+    );
+    return result;
+  }
 }

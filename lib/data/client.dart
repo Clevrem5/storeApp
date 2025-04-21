@@ -2,13 +2,15 @@ import 'package:dio/dio.dart';
 import 'package:store_app/Core/exceptions/custom_exception.dart';
 import 'package:store_app/Core/inter_septor.dart';
 import 'package:store_app/Data/models/Auth_model.dart';
+import 'package:store_app/data/models/Auth_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
-    BaseOptions(baseUrl: "http://192.168.11.58:8888/api/v1"),
+    BaseOptions(baseUrl: "http://192.168.11.105:8888/api/v1"),
   )..interceptors.add(AuthInterceptor());
 
-  Future<bool> signUp(AuthModel model) async {
+  Future<bool> signUp(
+      model) async {
     final response = await dio.post(
       '/auth/register',
       data: model.toJson(),
@@ -154,4 +156,21 @@ class ApiClient {
       throw CustomException(message: "xato keldi!!!");
     }
   }
+
+  Future<bool> fetchAuthUpdate(model) async {
+    try {
+      final response = await dio.patch(
+        "/auth/update",
+        data: model.toJson(),
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
 }

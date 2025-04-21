@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:store_app/Features/saved_page/manager/saved_bloc.dart';
+import 'package:store_app/Features/saved_page/manager/saved_event.dart';
 
 import '../../data/models/home_page_model.dart';
 import '../home_page/manager/home_bloc.dart';
@@ -23,8 +25,11 @@ class LikeButton extends StatelessWidget {
           onTap: () {
             if (isLiked) {
               context.read<HomeBloc>().add(LikeUnSaveEvent(unLikeId: product.id));
+              context.read<SavedBloc>().add(SavedLoad());
             } else {
               context.read<HomeBloc>().add(LikeSaveEvent(likeId: product.id));
+              context.read<SavedBloc>().add(SavedLoad());
+
             }
           },
           child: AnimatedSwitcher(

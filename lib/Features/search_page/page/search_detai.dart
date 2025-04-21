@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/Features/myCart/presentation/page/cart_detail_empty.dart';
 import 'package:store_app/core/utils/app_colors.dart';
@@ -6,6 +5,7 @@ import '../../../core/navigation/routes.dart';
 import '../../Common_Widgets/storeAppBar.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
 import '../../home_page/widgets/home_page_text_form_field.dart';
+import 'package:flutter/material.dart';
 
 class SearchDetail extends StatefulWidget {
   const SearchDetail({super.key});
