@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/Core/utils/app_colors.dart';
+import 'package:store_app/Features/Common_Widgets/storeAppBar.dart';
 import 'package:store_app/core/navigation/routes.dart';
 
 class CheckoutPage extends StatefulWidget {
@@ -25,15 +26,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        leading: const BackButton(color: Colors.black),
-        title: const Text("Checkout", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600)),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
+      appBar: StoreAppBar(
+        title: "Checkout",
+        actions: [],
       ),
       body: Padding(
-        padding: const EdgeInsets.only(bottom: 8.0, right: 24, left: 24),
+        padding: const EdgeInsets.only(bottom: 8.0, right: 24, left: 24, top: 10),
         child: ListView(
           children: [
             Row(
@@ -118,7 +116,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   border: Border.all(color: Colors.grey.shade300),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Row(
+                child: Row(
                   children: [
                     SizedBox(width: 15),
                     Text(
@@ -126,7 +124,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       style: TextStyle(color: AppColors.black, fontWeight: FontWeight.w600),
                     ),
                     Spacer(),
-                    Icon(Icons.edit),
+                    IconButton(
+                      onPressed: () {
+                        context.push(Routes.paymentMethods);
+                      },
+                      icon: Icon(Icons.edit),
+                    ),
                   ],
                 ),
               ),
