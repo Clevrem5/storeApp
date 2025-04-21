@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/Features/Auth/store_onboarding/page/store_app_elevated_button.dart';
 import 'package:store_app/Features/Common_Widgets/storeAppBar.dart';
+import 'package:store_app/Features/my_details/manager/my_details_bloc.dart';
+import 'package:store_app/Features/my_details/manager/my_details_event.dart';
+import 'package:store_app/Features/my_details/manager/my_details_state.dart';
 import 'package:store_app/Features/my_details/pages/store_app_text_field_string.dart';
 import 'package:store_app/Features/my_details/widgets/my_detail_data.dart';
 import 'package:store_app/Features/my_details/widgets/mydetailNumber.dart';
@@ -37,12 +41,12 @@ class MyDetailView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   StoreAppTextFieldString(
-                    controller: fullNameController,
+                    controller: context.read<MyDetailsBloc>().fullNameContr,
                     validator: (value) => null,
                     text: 'Full Name',
                   ),
                   StoreAppTextFieldString(
-                    controller: emailController,
+                    controller: context.read<MyDetailsBloc>().emailContr,
                     validator: (value) => null,
                     text: 'Email Address',
                   ),
@@ -93,9 +97,62 @@ class MyDetailView extends StatelessWidget {
                     },
                   ),
                   MyDetailsDateBirth(title: "Data"),
-                  PhoneNumber(controller: numberController),
+                  PhoneNumber(controller: context.read<MyDetailsBloc>().numberContr),
                   SizedBox(height:60),
-                  StoreAppElevatedButton(text: "Submit", callback: () {}, radius: 10,),
+                  BlocConsumer<MyDetailsBloc, MyDetailsState>(
+                    builder: (context, state) => StoreAppElevatedButton(
+                      text: "Submit",
+                      callback: () {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          final bloc = context.read<MyDetailsBloc>();
+                          bloc.genderContr.text = genderNotifier.value ?? '';
+                          bloc.add(MyDetailsLoad());
+                        }
+                      },
+                      radius: 10,
+                    ),
+                    listener: (BuildContext context, MyDetailsState state) {
+                      if (state.status == MyDetailsStatus.submitted) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("Success"),
+                              content: Text("Your details have been updated successfully."),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop(); // dialogni yopish
+                                    context.go(Routes.login); // loginga o'tish
+                                  },
+                                  child: Text("OK"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else if (state.status == MyDetailsStatus.error) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("Error"),
+                              content: Text("Something went wrong. Please try again."),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text("OK"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    },
+
+                  ),
                 ],
               ),
             ),
