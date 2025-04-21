@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/Data/client.dart';
 import 'package:store_app/Data/repository/Auth_repository.dart';
+import 'package:store_app/Features/Common_Widgets/storeAppBar.dart';
 
 import '../../../Core/navigation/routes.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
@@ -15,16 +16,8 @@ class AccountDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: const BackButton(),
-        title: const Text('Account', style: TextStyle(fontWeight: FontWeight.bold)),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 16.0),
-            child: Icon(Icons.notifications_none),
-          )
-        ],
-      ),
+      backgroundColor: Colors.white,
+      appBar: StoreAppBar(title: "Account",),
       body: ListView(
         children: [
           ListTile(

@@ -4,18 +4,16 @@ import 'package:store_app/Features/Auth/login/manger/login_bloc.dart';
 import 'package:store_app/Features/Auth/reset_password/manager/reset_bloc.dart';
 import 'package:store_app/Features/Auth/sign_up/manager/sign_up_bloc.dart';
 import 'package:store_app/Features/Reviews/pages/rewiew_page.dart';
+import 'package:store_app/Features/details/manager/details_bloc.dart';
 import 'package:store_app/Features/faqs/page/faqs_detail.dart';
 import 'package:store_app/Features/help_center/pages/help_center_View.dart';
 import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/Features/map_page/page/new_adress_detail.dart';
-
+import 'package:store_app/Features/my_details/manager/my_details_bloc.dart';
 import 'package:store_app/Features/my_details/page/my_details_detail.dart';
+import 'package:store_app/Features/my_details/pages/my_detail_view.dart';
 import 'package:store_app/Features/payment_methods/page/methods_new_card_detail.dart';
 import 'package:store_app/Features/payment_methods/page/payment_methods_detail.dart';
-
-import 'package:store_app/Features/my_details/manager/my_details_bloc.dart';
-import 'package:store_app/Features/my_details/pages/my_detail_view.dart';
-
 import 'package:store_app/Features/saved_page/manager/saved_event.dart';
 import 'package:store_app/core/navigation/routes.dart';
 import 'package:store_app/features/home_page/page/home_page_detail.dart';
@@ -39,12 +37,11 @@ import '../../Features/details/page/details.dart';
 import '../../Features/my orders/page/my_orders_view.dart';
 import '../../Features/myCart/presentation/page/cart_detail.dart';
 import '../../Features/notification_page/page/notification_permision.dart';
-
 import '../../Features/saved_page/manager/saved_bloc.dart';
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: Routes.home,
+  initialLocation: Routes.login,
   routes: [
     GoRoute(
       path: Routes.newAddress,
@@ -97,7 +94,15 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.details,
-      builder: (context, state) => ProductDetailPage(),
+      builder: (context, state) => BlocProvider(
+          create: (context) => DetailsBloc(
+                repo: context.read(),
+              )..add(
+                  DetailsLoad(
+                    id: int.parse(state.pathParameters['id']!),
+                  ),
+                ),
+          child: ProductDetailPage()),
     ),
     GoRoute(
       path: Routes.checkout,
