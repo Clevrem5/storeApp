@@ -31,7 +31,7 @@ class AccountDetail extends StatelessWidget {
             leading: const Icon(Icons.inventory_2_outlined),
             title: const Text('My Orders'),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-            onTap: () => context.push('/orders'),
+            onTap: () => context.push(Routes.myOrders),
           ),
           const Divider(),
           ListTile(
@@ -44,7 +44,7 @@ class AccountDetail extends StatelessWidget {
             leading: const Icon(Icons.home_outlined),
             title: const Text('Address Book'),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-            onTap: () => context.push('/address'),
+            onTap: () => context.push(Routes.address),
           ),
           ListTile(
             leading: const Icon(Icons.credit_card_outlined),

@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:store_app/Data/models/Auth_model.dart';
+import 'package:flutter/material.dart';
 import 'package:store_app/Data/repository/Auth_repository.dart';
 import 'package:store_app/Features/my_details/manager/my_details_event.dart';
 import 'package:store_app/Features/my_details/manager/my_details_state.dart';

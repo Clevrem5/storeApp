@@ -161,7 +161,6 @@ class _PaymentMethodsDetailState extends State<PaymentMethodsDetail> {
           : "assets/icons/visa.svg",
       width: 32.w,
     );
-
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
       decoration: BoxDecoration(

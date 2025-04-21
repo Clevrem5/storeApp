@@ -44,9 +44,7 @@ import '../../Features/saved_page/manager/saved_bloc.dart';
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
-
-  initialLocation: Routes.paymentMethods,
-
+  initialLocation: Routes.home,
   routes: [
     GoRoute(
       path: Routes.newAddress,
@@ -169,7 +167,11 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.myDetails,
-      builder: (context, state) => MyDetailsDetail(),
+      builder: (context, state) => BlocProvider(
+          create: (context) => MyDetailsBloc(
+                repo: context.read(),
+              ),
+          child: MyDetailsDetail()),
     ),
     GoRoute(
       path: Routes.paymentMethods,
@@ -178,7 +180,8 @@ final router = GoRouter(
     GoRoute(
       path: Routes.newCard,
       builder: (context, state) => MethodsNewCardDetail(),
-
+    ),
+    GoRoute(
       path: Routes.review,
       builder: (context, state) => ReviewPage(),
     ),
