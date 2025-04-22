@@ -33,7 +33,7 @@ import '../../Features/Auth/store_onboarding/page/state_oboarding_detail.dart';
 import '../../Features/account_page/page/account_detail.dart';
 import '../../Features/checkout/presentation/page/adress_view.dart';
 import '../../Features/checkout/presentation/page/checkout.dart';
-import '../../Features/details/page/details.dart';
+import '../../Features/details/page/product_details.dart';
 import '../../Features/my orders/page/my_orders_view.dart';
 import '../../Features/myCart/presentation/page/cart_detail.dart';
 import '../../Features/notification_page/page/notification_permision.dart';
@@ -102,7 +102,7 @@ final router = GoRouter(
                     id: int.parse(state.pathParameters['id']!),
                   ),
                 ),
-          child: ProductDetailPage()),
+          child: ProductDetails()),
     ),
     GoRoute(
       path: Routes.checkout,
