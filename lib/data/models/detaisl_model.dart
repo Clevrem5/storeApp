@@ -5,7 +5,7 @@ class DetailsModel {
   final int price;
   final bool isLiked;
   final List<ProductImagesModel> productImages;
-  final List<String>? productSizes;
+  final String? productSizes;
   final int reviewsCount;
   final double rating;
 
@@ -31,7 +31,7 @@ class DetailsModel {
       productImages: (json['productImages'] as List)
           .map((e) => ProductImagesModel.fromJson(e))
           .toList(),
-      productSizes: (json['productSizes'] as List?)?.map((e) => e.toString()).toList(),
+      productSizes: json['productSizes'],
       reviewsCount: json['reviewsCount'],
       rating: (json['rating'] as num).toDouble(),
     );
