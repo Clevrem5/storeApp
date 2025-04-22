@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:store_app/Core/exceptions/custom_exception.dart';
 import 'package:store_app/Core/inter_septor.dart';
+import 'package:store_app/data/models/review_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
     BaseOptions(baseUrl: "http://192.168.11.58:8888/api/v1"),
   )..interceptors.add(AuthInterceptor());
 
-  Future<bool> signUp(
-      model) async {
+  Future<bool> signUp(model) async {
     final response = await dio.post(
       '/auth/register',
       data: model.toJson(),
@@ -136,6 +136,7 @@ class ApiClient {
       throw CustomException(message: "xato ma'lumot klemadi");
     }
   }
+
   Future<List<dynamic>> fetchCategories() async {
     final response = await dio.get('/categories/list');
     if (response.statusCode == 200) {
@@ -144,7 +145,6 @@ class ApiClient {
       throw CustomException(message: "Malumot Kelmadi");
     }
   }
-
 
   Future<List<dynamic>> fetchSizes() async {
     final response = await dio.get('/sizes/list');
@@ -178,6 +178,29 @@ class ApiClient {
       return response.data;
     } else {
       throw CustomException(message: "xato detailsdan ma'lumot kelamdi!!!");
+    }
+  }
+
+  Future<List<dynamic>> fetchReview(int productId) async {
+    final response = await dio.get('/reviews/list/$productId');
+    if (response.statusCode == 200) {
+      List<dynamic> data = response.data;
+      return data;
+    } else {
+      throw CustomException(message: "xato keldi reviewsdan");
+    }
+  }
+
+  Future<bool> fetchCreateReview(ReviewCreateModel model) async{
+    final response =await dio.post(
+      '/reviews/create',
+      data: model.toJson(),
+    );
+    if (response.statusCode==200){
+      return true;
+    }else{
+      return false;
+      // throw CustomException(message: "salom");
     }
   }
 }
