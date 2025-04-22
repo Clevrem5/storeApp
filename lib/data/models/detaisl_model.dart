@@ -1,38 +1,57 @@
 class DetailsModel {
   final int id;
-  final String description, title;
-  final num price;
+  final String title;
+  final String description;
+  final int price;
   final bool isLiked;
-  final num reviewsCount, rating;
-  // final List<ProductImagesModel> productImages;
-  // final List<ProductSizesModel> productSizes;
+  final List<ProductImagesModel> productImages;
+  final List<String>? productSizes;
+  final int reviewsCount;
+  final double rating;
 
   DetailsModel({
     required this.id,
-    required this.description,
     required this.title,
+    required this.description,
     required this.price,
     required this.isLiked,
-    required this.rating,
+    required this.productImages,
+    this.productSizes,
     required this.reviewsCount,
-    // required this.productImages,
-    // required this.productSizes,
+    required this.rating,
   });
 
   factory DetailsModel.fromJson(Map<String, dynamic> json) {
     return DetailsModel(
       id: json['id'],
-      description: json['description'],
       title: json['title'],
+      description: json['description'],
       price: json['price'],
       isLiked: json['isLiked'],
-      rating: json['rating'],
+      productImages: (json['productImages'] as List)
+          .map((e) => ProductImagesModel.fromJson(e))
+          .toList(),
+      productSizes: (json['productSizes'] as List?)?.map((e) => e.toString()).toList(),
       reviewsCount: json['reviewsCount'],
-      // productImages: (json['productImages'] as List).map((e) => ProductImagesModel.fromJson(e)).toList(),
-      // productSizes: (json['productSizes'] as List).map((e) => ProductSizesModel.fromJson(e)).toList(),
+      rating: (json['rating'] as num).toDouble(),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'price': price,
+      'isLiked': isLiked,
+      'productImages': productImages.map((e) => ()).toList(),
+      'productSizes': productSizes,
+      'reviewsCount': reviewsCount,
+      'rating': rating,
+    };
+  }
 }
+
 
 class ProductImagesModel {
   final int id;
@@ -41,6 +60,7 @@ class ProductImagesModel {
   ProductImagesModel({
     required this.id,
     required this.image,
+
   });
 
   factory ProductImagesModel.fromJson(Map<String, dynamic> json) {
