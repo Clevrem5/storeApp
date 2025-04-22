@@ -44,7 +44,7 @@ class DetailsModel {
       'description': description,
       'price': price,
       'isLiked': isLiked,
-      'productImages': productImages.map((e) => ()).toList(),
+      'productImages': productImages.map((e) =>   ()).toList(),
       'productSizes': productSizes,
       'reviewsCount': reviewsCount,
       'rating': rating,
@@ -68,16 +68,16 @@ class ProductImagesModel {
   }
 }
 
-class ProductSizesModel {
-  final int id;
-  final String title;
-
-  ProductSizesModel({
-    required this.id,
-    required this.title,
-  });
-
-  factory ProductSizesModel.fromJson(Map<String, dynamic> json) {
-    return ProductSizesModel(id: json['id'], title: json['title']);
-  }
-}
+// class ProductSizesModel {
+//   final int id;
+//   final String title;
+//
+//   ProductSizesModel({
+//     required this.id,
+//     required this.title,
+//   });
+//
+//   factory ProductSizesModel.fromJson(Map<String, dynamic> json) {
+//     return ProductSizesModel(id: json['id'], title: json['title']);
+//   }
+// }
