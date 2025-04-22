@@ -55,7 +55,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           ),
                         ),
                       ),
-                      Positioned(
+                      Positioned(//
                         top: 8,
                         right: 7,
                         child: LikeButton<DetailsModel>(
