@@ -1,13 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:store_app/Core/exceptions/custom_exception.dart';
 import 'package:store_app/Core/inter_septor.dart';
-import 'package:store_app/Data/models/Auth_model.dart';
-import 'package:store_app/data/models/Auth_model.dart';
-import 'package:store_app/data/models/detaisl_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
-    BaseOptions(baseUrl: "http://192.168.11.105:8888/api/v1"),
+    BaseOptions(baseUrl: "http://192.168.11.58:8888/api/v1"),
   )..interceptors.add(AuthInterceptor());
 
   Future<bool> signUp(

@@ -68,7 +68,6 @@ class HomePageDetail extends StatelessWidget {
             } else if (state.status == HomeStatus.error) {
               return const StoreText(text: "Xato chiqdi", color: Colors.red);
             }
-
             return ValueListenableBuilder2<int, RangeValues>(
               first: selectedIndexNotifier,
               second: appliedPriceRangeNotifier,
