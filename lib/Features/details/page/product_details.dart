@@ -8,7 +8,7 @@ import 'package:store_app/Features/Common_Widgets/store_tex.dart';
 import 'package:store_app/Features/details/manager/details_bloc.dart';
 import 'package:store_app/Features/details/manager/details_state.dart';
 
-import '../../../data/models/detaisl_model.dart';
+import '../../../data/models/details model/details_model.dart';
 import '../../Common_Widgets/icon_button_like.dart';
 import '../../home_page/manager/home_bloc.dart';
 import '../../saved_page/manager/saved_bloc.dart';

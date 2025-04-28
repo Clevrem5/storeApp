@@ -31,7 +31,7 @@ class SavedBloc extends Bloc<SavedEvent, SavedState> {
 
       emit(state.copyWith(
         saved: updatedProducts,
-        success: success,
+        isSuccess: success,
         status: SavedStatus.idle,
       ));
     } catch (e) {

@@ -1,3 +1,9 @@
+
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'review_model.g.dart';
+
+@JsonSerializable()
 class ReviewModel {
   final int id;
   final String comment;
@@ -11,16 +17,9 @@ class ReviewModel {
     required this.userFullName,
   });
 
-  factory ReviewModel.fromJson(Map<String, dynamic> json) {
-    return ReviewModel(
-      id: json['id'],
-      comment: json['comment'],
-      created: DateTime.parse(json['created']),
-      userFullName: json['userFullName'],
-    );
-  }
+  factory ReviewModel.fromJson(Map<String, dynamic> json) =>_$ReviewModelFromJson(json);
 }
-
+@JsonSerializable()
 class ReviewCreateModel {
   final String productId;
   final String rating;
@@ -32,11 +31,5 @@ class ReviewCreateModel {
     required this.comment,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'productId':productId,
-      'rating':rating,
-      'comment':comment,
-    };
-  }
+  Map<String, dynamic> toJson() =>_$ReviewCreateModelToJson(this);
 }
