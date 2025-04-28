@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/core/utils/app_colors.dart';
-import 'package:store_app/data/models/home_page_model.dart';
+import 'package:store_app/data/models/home_models/home_page_model.dart';
 
 import '../../../Core/navigation/routes.dart';
 import '../../Common_Widgets/icon_button_like.dart';

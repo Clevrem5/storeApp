@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +12,7 @@ import 'package:store_app/core/utils/app_colors.dart';
 import '../../../core/navigation/routes.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
 import '../../Common_Widgets/store_icons.dart';
+import '../manager/home_state.dart';
 import '../widgets/home_page_text_form_field.dart';
 
 class HomePageDetail extends StatelessWidget {
@@ -182,7 +181,7 @@ class HomePageDetail extends StatelessWidget {
                                                     return DropdownButtonHideUnderline(
                                                       child: DropdownButton<int>(
                                                         value: selectedSizeId,
-                                                        items: state.sizes!
+                                                        items: state.sizes
                                                             .map((size) => DropdownMenuItem<int>(
                                                                   value: size.id,
                                                                   child: Text(size.title),
@@ -220,7 +219,7 @@ class HomePageDetail extends StatelessWidget {
                               child: Center(
                                 child: SvgPicture.asset(
                                   "assets/icons/filters.svg",
-                                  color: AppColors.white,
+                                  colorFilter: ColorFilter.mode(AppColors.white, BlendMode.srcIn),
                                   width: 26.w,
                                   height: 26.h,
                                 ),
@@ -239,7 +238,7 @@ class HomePageDetail extends StatelessWidget {
                         builder: (context, selectedIndex, _) {
                           return ListView.separated(
                             scrollDirection: Axis.horizontal,
-                            itemCount: state.categories!.length,
+                            itemCount: state.categories.length,
                             separatorBuilder: (context, index) => SizedBox(width: 8),
                             itemBuilder: (context, index) {
                               final isSelected = selectedIndex == index;
@@ -260,7 +259,7 @@ class HomePageDetail extends StatelessWidget {
                                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                   ),
                                   child: Text(
-                                    state.categories![index].title,
+                                    state.categories[index].title,
                                     style: TextStyle(
                                       color: isSelected ? AppColors.white : AppColors.black,
                                       fontSize: 16.sp,
@@ -280,7 +279,7 @@ class HomePageDetail extends StatelessWidget {
                         first: appliedPriceRangeNotifier,
                         second: selectedSizeIdNotifier,
                         builder: (context, appliedPriceRange, selectedSizeId, _) {
-                          final filtered = state.products!.where(
+                          final filtered = state.product.where(
                             (product) {
                               final price = product.price.toDouble();
                               final priceMatch = price >= appliedPriceRange.start && price <= appliedPriceRange.end;

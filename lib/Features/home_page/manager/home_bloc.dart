@@ -1,11 +1,10 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:store_app/data/models/home_page_model.dart';
 import 'package:store_app/data/repository/products_repository.dart';
+
+import 'home_state.dart';
 
 part 'home_event.dart';
 
-part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final ProductRepository _repository;
@@ -54,14 +53,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       final success = await _repository.client.fetchSaveLike(event.likeId);
 
-      final updatedProducts = state.products!.map((p) {
+      final updatedProducts = state.product.map((p) {
         if (p.id == event.likeId) return p.copyWith(isLiked: true);
         return p;
       }).toList();
 
       emit(state.copyWith(
         product: updatedProducts,
-        isLike: success,
+        isSuccess: success,
         status: HomeStatus.idle,
       ));
     } catch (e) {
@@ -73,14 +72,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       final success = await _repository.client.fetchUnSave(event.unLikeId);
 
-      final updatedProducts = state.products!.map((p) {
+      final updatedProducts = state.product.map((p) {
         if (p.id == event.unLikeId) return p.copyWith(isLiked: false);
         return p;
       }).toList();
 
       emit(state.copyWith(
         product: updatedProducts,
-        isLike: success,
+        isSuccess: success,
         status: HomeStatus.idle,
       ));
     } catch (e) {

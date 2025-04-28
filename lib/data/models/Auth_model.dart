@@ -1,3 +1,8 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'Auth_model.g.dart';
+
+@JsonSerializable()
 class AuthModel {
   final String fullName;
   final String email;
@@ -9,15 +14,9 @@ class AuthModel {
     required this.password,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      "fullName": fullName,
-      "email": email,
-      "password": password,
-    };
-  }
+  Map<String, dynamic> toJson() =>_$AuthModelToJson(this);
 }
-
+@JsonSerializable()
 class AuthUpdateModel {
   final String gender;
   final String fullName;
@@ -33,14 +32,6 @@ class AuthUpdateModel {
     required this.birthdate,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      "gender": gender,
-      'fullName': fullName,
-      "email": email,
-      'phoneNumber': phoneNumber,
-      'birthdate': birthdate,
-    };
-  }
+  Map<String, dynamic> toJson() =>_$AuthUpdateModelToJson(this);
 
 }

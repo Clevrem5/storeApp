@@ -5,6 +5,7 @@ import 'package:store_app/Features/Common_Widgets/store_svg_button.dart';
 
 import '../../Core/navigation/routes.dart';
 import '../../Core/utils/app_colors.dart';
+import '../../core/utils/images.dart';
 
 class StoreAppBar extends StatelessWidget implements PreferredSizeWidget {
   const StoreAppBar({
@@ -57,7 +58,7 @@ class StoreAppBar extends StatelessWidget implements PreferredSizeWidget {
         actions: actions ??
             [
               StoreSvgButton(
-                svg: "assets/icons/notification.svg",
+                svg: AppImages.notification,
                 callback: () => context.push(Routes.notification),
               )
             ],
