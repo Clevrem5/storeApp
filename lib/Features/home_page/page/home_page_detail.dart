@@ -8,11 +8,9 @@ import 'package:store_app/Features/Common_Widgets/store_tex.dart';
 import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/Features/home_page/widgets/products_item.dart';
 import 'package:store_app/core/utils/app_colors.dart';
-
 import '../../../core/navigation/routes.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
 import '../../Common_Widgets/store_icons.dart';
-import '../manager/home_state.dart';
 import '../widgets/home_page_text_form_field.dart';
 
 class HomePageDetail extends StatelessWidget {
@@ -227,7 +225,7 @@ class HomePageDetail extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ],//
+                      ],
                     ),
                     SizedBox(height: 16.h),
                     SizedBox(
