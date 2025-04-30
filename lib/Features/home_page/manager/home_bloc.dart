@@ -1,14 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:store_app/data/repository/products_repository.dart';
+import 'package:equatable/equatable.dart';
+import '../../../data/models/home_models/category_model.dart';
+import '../../../data/models/home_models/home_page_model.dart';
+import '../../../data/models/home_models/size_model.dart';
 
-import 'home_state.dart';
+part 'home_state.dart';
 
 part 'home_event.dart';
 
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final ProductRepository _repository;
-
   HomeBloc({required ProductRepository repo})
       : _repository = repo,
         super(HomeState.initial()) {
@@ -60,7 +63,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       emit(state.copyWith(
         product: updatedProducts,
-        isSuccess: success,
+        isLike: success,
         status: HomeStatus.idle,
       ));
     } catch (e) {
@@ -79,7 +82,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       emit(state.copyWith(
         product: updatedProducts,
-        isSuccess: success,
+        isLike: success,
         status: HomeStatus.idle,
       ));
     } catch (e) {
