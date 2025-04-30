@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:store_app/Data/client.dart';
 import 'package:store_app/data/models/details%20model/details_model.dart';
 import 'package:store_app/data/models/home_models/home_page_model.dart';
@@ -16,25 +17,31 @@ class ProductRepository {
   List<SizesModel> sizes = [];
   DetailsModel? details;
 
+
+
   Future<List<ProductsModel>> fetchProducts(
-    int? categoryId,
-    String? title,
-    int? sizeId,
-    double? maxPrise,
-    double? minPrise,
-    String? orderBy,
-  ) async {
-    var rawProducts = await client.fetchHomeProduct({
-      "Title": title,
-      "CategoryId": categoryId,
-      "SizeID": sizeId,
-      "MinPrice": minPrise,
-      "MaxPrice": maxPrise,
-      "OrderBy": orderBy,
-    });
-    products = rawProducts.map((e) => ProductsModel.fromJson(e)).toList();
+      int? categoryId,
+      String? title,
+      int? sizeId,
+      double? maxPrise,
+      double? minPrise,
+      String? orderBy,
+      ) async {
+
+        final rawProducts = await client.fetchHomeProduct({
+          "Title": title,
+          "CategoryId": categoryId,
+          "SizeID": sizeId,
+          "MinPrice": minPrise,
+          "MaxPrice": maxPrise,
+          "OrderBy": orderBy,
+        });
+        products = rawProducts.map((e) => ProductsModel.fromJson(e)).toList();
+
+
     return products;
   }
+
 
   Future<List<CategoriesModel>> fetchCategories() async {
     var rawProducts = await client.fetchCategories();
@@ -57,7 +64,6 @@ class ProductRepository {
   Future<DetailsModel> fetchDetails(int id) async {
     final rawDetails=await client.fetchDetails(id);
     details = DetailsModel.fromJson(rawDetails);
-    print("1111111111111    $details");
     return details!;
   }
 }

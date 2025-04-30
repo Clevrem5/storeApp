@@ -1,23 +1,26 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../data/models/home_models/category_model.dart';
-import '../../../data/models/home_models/home_page_model.dart';
-import '../../../data/models/home_models/size_model.dart';
+part of 'home_bloc.dart';
 
-part 'home_state.freezed.dart';
+
 
 enum HomeStatus { idle, loading, error }
 
-@freezed
-abstract class HomeState with _$HomeState {
-  const factory HomeState({
-    required List<ProductsModel> product,
-    required List<ProductsModel> saved,
-    required List<CategoriesModel> categories,
-    required List<SizesModel> sizes,
-    required HomeStatus status,
-    required bool? isSuccess,
-  }) = _HomeState;
+class HomeState extends Equatable {
+  final List<ProductsModel>product;
+  final List<ProductsModel>saved;
+  final List<CategoriesModel>categories;
+  final List<SizesModel>sizes;
+  final HomeStatus status;
+  final bool? isSuccess;
+
+  const HomeState({
+    required this.product,
+    required this.saved,
+    required this.categories,
+    required this.sizes,
+    required this.status,
+    required this.isSuccess,
+  });
 
   factory HomeState.initial() {
     return const HomeState(
@@ -29,28 +32,30 @@ abstract class HomeState with _$HomeState {
       isSuccess: null,
     );
   }
+
+  HomeState copyWith({
+    List<ProductsModel>? product,
+    List<ProductsModel>? saved,
+    List<CategoriesModel>? categories,
+    List<SizesModel>? sizes,
+    HomeStatus? status,
+    bool? isLike,
+    // int? select,
+  }) {
+    return HomeState(
+        product: product ?? this.product,
+        status: status ?? this.status,
+        isSuccess: isLike ?? isSuccess,
+        saved: saved ?? this.saved,
+        categories: categories ?? this.categories,
+        sizes: sizes ?? this.sizes
+      // selectedId: select ?? selectedId,
+    );
 }
 
-// HomeState copyWith({
-//   List<ProductsModel>? product,
-//   List<ProductsModel>? saved,
-//   List<CategoriesModel>? categories,
-//   List<SizesModel>? sizes,
-//   HomeStatus? status,
-//   bool? isLike,
-//   // int? select,
-// }) {
-//   return HomeState(
-//     products: product ?? products,
-//     status: status ?? this.status,
-//     isSuccess: isLike ?? isSuccess,
-//     saved: saved ?? this.saved,
-//     categories: categories ?? this.categories,
-//     sizes: sizes ?? this.sizes
-//     // selectedId: select ?? selectedId,
-//   );
-// }
-//
-// @override
-// List<Object?> get props => [products, status, isSuccess, saved, categories, sizes];
+  @override
+  List<Object?> get props => [product, status, isSuccess, saved, categories, sizes];
+
+}
+
 

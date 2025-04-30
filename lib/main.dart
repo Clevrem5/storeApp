@@ -6,7 +6,9 @@ import 'core/navigation/router.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-void main() async {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const StoreApp());
 }
 
