@@ -203,4 +203,13 @@ class ApiClient {
       // throw CustomException(message: "salom");
     }
   }
+  Future<List<dynamic>>fetchNotification()async{
+    final response=await dio.get('/notifications/list');
+    if (response.statusCode==200){
+      return response.data as List;
+    }
+    else {
+      throw CustomException(message: "xato ketdi notification");
+    }
+  }
 }
