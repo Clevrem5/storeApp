@@ -1,10 +1,9 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:store_app/Data/client.dart';
 import 'package:store_app/data/models/details%20model/details_model.dart';
 import 'package:store_app/data/models/home_models/home_page_model.dart';
 
-import '../models/home_models/category_model.dart';
-import '../models/home_models/size_model.dart';
+import '../../models/home_models/category_model.dart';
+import '../../models/home_models/size_model.dart';
 
 class ProductRepository {
   final ApiClient client;

@@ -12,6 +12,7 @@ import 'package:store_app/Features/map_page/page/new_adress_detail.dart';
 import 'package:store_app/Features/my_details/manager/my_details_bloc.dart';
 import 'package:store_app/Features/my_details/page/my_details_detail.dart';
 import 'package:store_app/Features/my_details/pages/my_detail_view.dart';
+import 'package:store_app/Features/notification_page/manager/notification_bloc.dart';
 import 'package:store_app/Features/payment_methods/page/methods_new_card_detail.dart';
 import 'package:store_app/Features/payment_methods/page/payment_methods_detail.dart';
 import 'package:store_app/Features/saved_page/manager/saved_event.dart';
@@ -152,7 +153,14 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.notification,
-      builder: (context, state) => NotificationDetail(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => NotificationBloc(
+          repo: context.read(),
+        )..add(
+            NotificationLoad(),
+          ),
+        child: NotificationDetail(),
+      ),
     ),
     GoRoute(
       path: Routes.address,

@@ -5,9 +5,9 @@ import 'package:store_app/Data/repository/Auth_repository.dart';
 import 'package:store_app/Features/details/manager/details_bloc.dart';
 import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/Features/saved_page/manager/saved_bloc.dart';
-import 'package:store_app/data/repository/products_repository.dart';
-
+import 'package:store_app/data/repository/notification/notification_reporsitory.dart';
 import '../../Data/client.dart';
+import '../../data/repository/product/products_repository.dart';
 
 final List<SingleChildWidget> providers = [
   Provider(
@@ -15,6 +15,11 @@ final List<SingleChildWidget> providers = [
   ),
   Provider(
     create: (context) => AuthRepository(
+      client: context.read(),
+    ),
+  ),
+  Provider(
+    create: (context) => NotificationRepository(
       client: context.read(),
     ),
   ),
