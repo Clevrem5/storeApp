@@ -25,8 +25,8 @@ class StoreApp extends StatelessWidget {
           child: MaterialApp.router(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              fontFamily: "GeneralSans",
-              colorSchemeSeed: Colors.white
+                fontFamily: "GeneralSans",
+                colorSchemeSeed: Colors.white
             ),
             routerConfig: router,
           ),
