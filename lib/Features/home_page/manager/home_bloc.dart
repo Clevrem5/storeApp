@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:store_app/data/repository/products_repository.dart';
 import 'package:equatable/equatable.dart';
 import '../../../data/models/home_models/category_model.dart';
 import '../../../data/models/home_models/home_page_model.dart';
 import '../../../data/models/home_models/size_model.dart';
+import '../../../data/repository/product/products_repository.dart';
 
 part 'home_state.dart';
 

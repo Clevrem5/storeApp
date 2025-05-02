@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
-import '../../Common_Widgets/store_icons.dart';
 import '../../Common_Widgets/store_tex.dart';
 
 
@@ -33,12 +33,14 @@ class StoreNotificationDailyNews extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        StoreIcons(
-          callback: () {},
-          icons: icons,
-          color: iconsColor,
-          width: iconWidth.w,
-          height: iconHeight.h,
+        SvgPicture.network(
+          icons,
+          width: iconWidth,
+          height: iconHeight,
+          colorFilter: ColorFilter.mode(
+            iconsColor,
+            BlendMode.srcIn,
+          ),
         ),
         SizedBox(width: 13.w),
         Column(

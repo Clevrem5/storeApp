@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/Features/myCart/presentation/page/cart_detail_empty.dart';
+import 'package:store_app/Features/notification_page/manager/notification_bloc.dart';
+import 'package:store_app/Features/notification_page/manager/notification_state.dart';
 import 'package:store_app/Features/notification_page/widget/notification_detail_full.dart';
 import 'package:store_app/core/utils/app_colors.dart';
 
@@ -19,19 +22,33 @@ class NotificationDetail extends StatelessWidget {
       extendBody: true,
       backgroundColor: AppColors.white,
       appBar: StoreAppBar(
-
         actions: [],
         title: "Notifications",
       ),
       body: Padding(
         padding: EdgeInsets.only(left: 24),
-        child: isNotEmpty==true
-            ? NotificationDetailFull()
-            : StoreAppPageEmpty(
-                text: "You haven’t gotten any\nnotifications yet!",
-                bio: "We’ll alert you when something\ncool happens.",
-                icon: Icons.notifications_none,
-              ),
+        child: BlocBuilder<NotificationBloc, NotificationState>(
+          builder: (context, state) {
+            final isNotEmpty = state.notification.isNotEmpty;
+            if (state.status == NotificationStatus.loading) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state.status == NotificationStatus.idle) {
+              return isNotEmpty == true
+                  ? NotificationDetailFull(data: state.notification,)
+                  : StoreAppPageEmpty(
+                      text: "You haven’t gotten any\nnotifications yet!",
+                      bio: "We’ll alert you when something\ncool happens.",
+                      icon: Icons.notifications_none,
+                    );
+            } else {
+              return Center(
+                child: Text("Xato Chiqdi"),
+              );
+            }
+          },
+        ),
       ),
       bottomNavigationBar: StoreBottomNavigationBar(
         selectedIndex: 0, // Dynamically set index
