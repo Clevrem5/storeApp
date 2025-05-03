@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../Common_Widgets/store_tex.dart';
 
-
 class StoreNotificationDailyNews extends StatelessWidget {
   const StoreNotificationDailyNews({
     super.key,
@@ -51,7 +50,7 @@ class StoreNotificationDailyNews extends StatelessWidget {
               text: type,
               color: typeColor,
               fontSize: typeFontSize.sp,
-              fontWeight:typeWeight,
+              fontWeight: typeWeight,
             ),
             StoreText(
               text: meaning,

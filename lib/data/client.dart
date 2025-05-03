@@ -5,7 +5,7 @@ import 'package:store_app/data/models/review_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
-    BaseOptions(baseUrl: "http://0.0.0.0:8888/api/v1"),
+    BaseOptions(baseUrl: "http://192.168.10.79:8888/api/v1"),
   )..interceptors.add(AuthInterceptor());
 
   Future<bool> signUp(model) async {
@@ -191,24 +191,24 @@ class ApiClient {
     }
   }
 
-  Future<bool> fetchCreateReview(ReviewCreateModel model) async{
-    final response =await dio.post(
+  Future<bool> fetchCreateReview(ReviewCreateModel model) async {
+    final response = await dio.post(
       '/reviews/create',
       data: model.toJson(),
     );
-    if (response.statusCode==200){
+    if (response.statusCode == 200) {
       return true;
-    }else{
+    } else {
       return false;
       // throw CustomException(message: "salom");
     }
   }
-  Future<List<dynamic>>fetchNotification()async{
-    final response=await dio.get('/notifications/list');
-    if (response.statusCode==200){
+
+  Future<List<dynamic>> fetchNotification() async {
+    final response = await dio.get('/notifications/list');
+    if (response.statusCode == 200) {
       return response.data as List;
-    }
-    else {
+    } else {
       throw CustomException(message: "xato ketdi notification");
     }
   }

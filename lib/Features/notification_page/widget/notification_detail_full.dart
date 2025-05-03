@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:store_app/core/utils/app_colors.dart';
-import 'package:store_app/data/models/notifiaction_model/notification_model.dart';
+import 'package:store_app/data/models/notification_model/notification_model.dart';
 import 'package:store_app/features/notification_page/widget/store_notification_daily_news.dart';
 
 import '../../Common_Widgets/store_tex.dart';
