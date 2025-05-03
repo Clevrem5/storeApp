@@ -156,9 +156,7 @@ final router = GoRouter(
       builder: (context, state) => BlocProvider(
         create: (context) => NotificationBloc(
           repo: context.read(),
-        )..add(
-            NotificationLoad(),
-          ),
+        ),
         child: NotificationDetail(),
       ),
     ),

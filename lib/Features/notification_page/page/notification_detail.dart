@@ -36,7 +36,9 @@ class NotificationDetail extends StatelessWidget {
               );
             } else if (state.status == NotificationStatus.idle) {
               return isNotEmpty == true
-                  ? NotificationDetailFull(data: state.notification,)
+                  ? NotificationDetailFull(
+                      data: state.notification,
+                    )
                   : StoreAppPageEmpty(
                       text: "You haven’t gotten any\nnotifications yet!",
                       bio: "We’ll alert you when something\ncool happens.",
