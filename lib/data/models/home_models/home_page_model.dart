@@ -1,6 +1,8 @@
+import 'package:hive/hive.dart';
+
 class ProductsModel {
   final int id, discount;
-  final String image, title;  
+  final String image, title;
   final num price;
   final bool isLiked;
 
@@ -39,6 +41,39 @@ class ProductsModel {
       title: title ?? this.title,
       price: price ?? this.price,
       isLiked: isLiked ?? this.isLiked,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'ProductsModel :( $id ,$discount,$image,$title, $price,$isLiked,)';
+    return super.toString();
+  }
+}
+
+class ProductsAdapter extends TypeAdapter<ProductsModel> {
+  @override
+  int get typeId => 3;
+
+  @override
+  void write(BinaryWriter writer, ProductsModel obj) {
+    writer.write(obj.id);
+    writer.write(obj.discount);
+    writer.write(obj.image);
+    writer.write(obj.title);
+    writer.write(obj.price);
+    writer.write(obj.isLiked);
+  }
+
+  @override
+  ProductsModel read(BinaryReader reader) {
+    return ProductsModel(
+      id: reader.read(),
+      discount: reader.read(),
+      image: reader.read(),
+      title: reader.read(),
+      isLiked: reader.read(),
+      price: reader.read(),
     );
   }
 }
