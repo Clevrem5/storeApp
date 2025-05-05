@@ -2,11 +2,12 @@ import 'package:bloc/bloc.dart';
 import 'package:store_app/Features/saved_page/manager/saved_event.dart';
 import 'package:store_app/Features/saved_page/manager/saved_state.dart';
 import '../../../data/repository/product/products_repository.dart';
+import '../../../data/repository/saved/saved_repository.dart';
 
 class SavedBloc extends Bloc<SavedEvent, SavedState> {
-  final ProductRepository _repository;
+  final SavedRepository _repository;
 
-  SavedBloc({required ProductRepository repo})
+  SavedBloc({required SavedRepository repo})
       : _repository = repo,
         super(
           SavedState.initial(),

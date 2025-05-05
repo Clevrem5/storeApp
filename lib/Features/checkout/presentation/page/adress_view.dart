@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:store_app/Features/Auth/store_onboarding/page/store_app_elevated_button.dart';
 import 'package:store_app/Features/Common_Widgets/store_tex.dart';
 import '../../../../Core/navigation/routes.dart';
-import '../../../../data/models/adress_model.dart';
+import '../../../../data/models/adress_model/adress_model.dart';
 import '../../../Common_Widgets/storeAppBar.dart';
 
 class AddressView extends StatefulWidget {

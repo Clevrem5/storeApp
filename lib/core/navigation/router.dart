@@ -127,7 +127,13 @@ final router = GoRouter(
       builder: (context, state) => BlocProvider(
         create: (context) => HomeBloc(
           repo: context.read(),
-        )..add(HomeLoad()),
+          categoriesRepo: context.read(),
+          sizesRepo: context.read(),
+          savedRepo: context.read(),
+        )
+          ..add(HomeLoad())
+          ..add(CategoriesLoadEvent())
+          ..add(SizesLoadEvent()),
         child: HomePageDetail(),
       ),
     ),

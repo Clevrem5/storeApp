@@ -1,7 +1,6 @@
 import 'package:store_app/Data/client.dart';
-import 'package:store_app/Data/models/Auth_model.dart';
-
-import '../../Core/secure_storage.dart';
+import '../../../Core/secure_storage.dart';
+import '../../models/auth_model/Auth_model.dart';
 
 class AuthRepository {
   final ApiClient client;

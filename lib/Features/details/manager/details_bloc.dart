@@ -1,14 +1,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:store_app/Features/details/manager/details_state.dart';
+import 'package:store_app/data/repository/details/details_repository.dart';
 import '../../../data/repository/product/products_repository.dart';
 
 part 'details_event.dart';
 
 class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
-  final ProductRepository _repo;
+  final DetailsRepository _repo;
 
 
-  DetailsBloc({required ProductRepository repo})
+  DetailsBloc({required DetailsRepository repo})
       : _repo = repo,
         super(DetailsState.initial()) {
     on<DetailsLoad>(_load);

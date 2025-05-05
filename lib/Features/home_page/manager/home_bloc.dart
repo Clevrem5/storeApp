@@ -1,19 +1,33 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:store_app/data/repository/categories/categories_repository.dart';
+import 'package:store_app/data/repository/saved/saved_repository.dart';
+import 'package:store_app/data/repository/sizes/sizes_repository.dart';
+
 import '../../../data/models/home_models/category_model.dart';
 import '../../../data/models/home_models/home_page_model.dart';
 import '../../../data/models/home_models/size_model.dart';
 import '../../../data/repository/product/products_repository.dart';
 
-part 'home_state.dart';
-
 part 'home_event.dart';
 
+part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final ProductRepository _repository;
-  HomeBloc({required ProductRepository repo})
-      : _repository = repo,
+  final CategoriesRepository _categoriesRepository;
+  final SizesRepository _sizesRepository;
+  final SavedRepository _savedRepository;
+
+  HomeBloc({
+    required ProductRepository repo,
+    required CategoriesRepository categoriesRepo,
+    required SizesRepository sizesRepo,
+    required SavedRepository savedRepo,
+  })  : _repository = repo,
+  _sizesRepository=sizesRepo,
+  _categoriesRepository=categoriesRepo,
+  _savedRepository=savedRepo,
         super(HomeState.initial()) {
     on<HomeLoad>(_load);
     // add(HomeLoad());
@@ -22,8 +36,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<SaveLoadEvent>(_save);
     on<CategoriesLoadEvent>(_categories);
     on<SizesLoadEvent>(_sizes);
-    add(CategoriesLoadEvent());
-    add(SizesLoadEvent());
   }
 
   Future<void> _load(HomeLoad event, Emitter<HomeState> emit) async {
@@ -91,15 +103,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _save(SaveLoadEvent event, Emitter<HomeState> emit) async {
-    final saved = await _repository.fetchSaved();
+    final saved = await _savedRepository.fetchSaved();
     emit(state.copyWith(saved: saved, status: HomeStatus.idle));
   }
   Future<void> _categories(CategoriesLoadEvent event, Emitter<HomeState> emit) async {
-    final categories = await _repository.fetchCategories();
+    final categories = await _categoriesRepository.fetchCategories();
     emit(state.copyWith(categories: categories, status: HomeStatus.idle));
   }
   Future<void> _sizes(SizesLoadEvent event, Emitter<HomeState> emit) async {
-    final sizes = await _repository.fetchSizes();
+    final sizes = await _sizesRepository.fetchSizes();
     emit(state.copyWith(sizes: sizes, status: HomeStatus.idle));
   }
 }

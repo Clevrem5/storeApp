@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:store_app/Core/exceptions/custom_exception.dart';
 import 'package:store_app/Core/inter_septor.dart';
-import 'package:store_app/data/models/review_model.dart';
+import 'package:store_app/data/models/review_model/review_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
