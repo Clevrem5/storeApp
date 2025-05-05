@@ -2,9 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/Core/secure_storage.dart';
-import 'package:store_app/Data/repository/Auth_repository.dart';
 import 'package:store_app/main.dart';
-
+import '../data/repository/auth/Auth_repository.dart';
 import 'navigation/routes.dart';
 
 class AuthInterceptor extends Interceptor {

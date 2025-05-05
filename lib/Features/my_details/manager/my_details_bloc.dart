@@ -1,8 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:store_app/Data/repository/Auth_repository.dart';
 import 'package:store_app/Features/my_details/manager/my_details_event.dart';
 import 'package:store_app/Features/my_details/manager/my_details_state.dart';
+
+import '../../../data/repository/auth/Auth_repository.dart';
 
 class MyDetailsBloc extends Bloc<MyDetailsEvent, MyDetailsState> {
   final AuthRepository _repo;

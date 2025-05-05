@@ -7,6 +7,7 @@ import 'package:store_app/data/repository/sizes/sizes_repository.dart';
 import '../../../data/models/home_models/category_model.dart';
 import '../../../data/models/home_models/home_page_model.dart';
 import '../../../data/models/home_models/size_model.dart';
+import '../../../data/repository/product/product_repository_interface.dart';
 import '../../../data/repository/product/products_repository.dart';
 
 part 'home_event.dart';
@@ -14,13 +15,13 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final ProductRepository _repository;
+  final IProductRepository _repository;
   final CategoriesRepository _categoriesRepository;
   final SizesRepository _sizesRepository;
   final SavedRepository _savedRepository;
 
   HomeBloc({
-    required ProductRepository repo,
+    required IProductRepository repo,
     required CategoriesRepository categoriesRepo,
     required SizesRepository sizesRepo,
     required SavedRepository savedRepo,
@@ -41,12 +42,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _load(HomeLoad event, Emitter<HomeState> emit) async {
     try {
       final product = await _repository.fetchProducts(
-        event.categoryId,
-        event.title,
-        event.sizeId,
-        event.maxPrice,
-        event.minPrice,
-        event.orderBy,
+        // event.categoryId,
+        // event.title,
+        // event.sizeId,
+        // event.maxPrice,
+        // event.minPrice,
+        // event.orderBy,
       );
       emit(
         state.copyWith(
@@ -66,7 +67,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> _like(LikeSaveEvent event, Emitter<HomeState> emit) async {
     try {
-      final success = await _repository.client.fetchSaveLike(event.likeId);
+      final success = await _savedRepository.client.fetchSaveLike(event.likeId);
 
       final updatedProducts = state.product.map((p) {
         if (p.id == event.likeId) return p.copyWith(isLiked: true);
@@ -85,7 +86,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> _unlike(LikeUnSaveEvent event, Emitter<HomeState> emit) async {
     try {
-      final success = await _repository.client.fetchUnSave(event.unLikeId);
+      final success = await _savedRepository.client.fetchUnSave(event.unLikeId);
 
       final updatedProducts = state.product.map((p) {
         if (p.id == event.unLikeId) return p.copyWith(isLiked: false);
