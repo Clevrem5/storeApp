@@ -22,7 +22,6 @@ Future<List<ProductsModel>> fetchProducts(
     // QueryParam query
     ) async {
   final Box<ProductsModel> box = await AppLocal.homeProduct();
-
   final rawProducts = await client.fetchHomeProduct({
     // "Title": title,
     //     "CategoryId": categoryId,

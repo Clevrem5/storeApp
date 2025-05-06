@@ -6,7 +6,10 @@ import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/Features/notification_page/manager/notification_bloc.dart';
 import 'package:store_app/Features/saved_page/manager/saved_bloc.dart';
 import 'package:store_app/data/repository/categories/categories_repository.dart';
+import 'package:store_app/data/repository/details/IdetailsRepository.dart';
+import 'package:store_app/data/repository/details/deatils_repository_remote.dart';
 import 'package:store_app/data/repository/details/details_repository.dart';
+import 'package:store_app/data/repository/details/details_repository_local.dart';
 import 'package:store_app/data/repository/notification/notification_repository.dart';
 import 'package:store_app/data/repository/notification/notification_repository_interface.dart';
 import 'package:store_app/data/repository/notification/notification_repository_local.dart';
@@ -32,8 +35,17 @@ final List<SingleChildWidget> providers = [
     create: (context) => ProductsRepositoryLocal(),
   ),
   RepositoryProvider(
-    create: (context) => DetailsRepository(
+    create: (context) => DetailsRepositoryRemote(
       client: context.read(),
+    ),
+  ),
+  RepositoryProvider(
+    create: (context) => DetailsRepositoryLocal(),
+  ),
+  RepositoryProvider<IDetailsRepository>(
+    create: (context) => DetailsRepository(
+      repositoryLocal: context.read(),
+      repositoryRemote: context.read(),
     ),
   ),
   RepositoryProvider(
