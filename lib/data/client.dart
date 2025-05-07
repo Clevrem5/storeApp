@@ -5,8 +5,9 @@ import 'package:store_app/data/models/review_model/review_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
-    BaseOptions(baseUrl: "http://0.0.0.0:8888/api/v1"),
-  )..interceptors.add(AuthInterceptor());
+    BaseOptions(baseUrl: "http://192.168.10.185:8888/api/v1"),
+  )
+    ..interceptors.add(AuthInterceptor());
 
   Future<bool> signUp(model) async {
     final response = await dio.post(
@@ -68,11 +69,9 @@ class ApiClient {
     }
   }
 
-  Future<bool> postResetEmailCodeReset(
-    String email,
-    String code,
-    String password,
-  ) async {
+  Future<bool> postResetEmailCodeReset(String email,
+      String code,
+      String password,) async {
     try {
       var response = await dio.post(
         "/auth/reset-password/reset",

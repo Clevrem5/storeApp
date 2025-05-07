@@ -22,8 +22,6 @@ import 'package:store_app/features/notification_page/page/notification_detail.da
 import 'package:store_app/features/saved_page/page/saved_detail.dart';
 import 'package:store_app/features/search_page/page/search_detai.dart';
 import 'package:store_app/main.dart';
-
-import '../../Data/repository/Auth_repository.dart';
 import '../../Features/Auth/login/page/login_detail.dart';
 import '../../Features/Auth/reset_password/page/reset_new_password.dart';
 import '../../Features/Auth/reset_password/page/reset_password_code.dart';
@@ -39,6 +37,7 @@ import '../../Features/my orders/page/my_orders_view.dart';
 import '../../Features/myCart/presentation/page/cart_detail.dart';
 import '../../Features/notification_page/page/notification_permision.dart';
 import '../../Features/saved_page/manager/saved_bloc.dart';
+import '../../data/repository/auth/Auth_repository.dart';
 
 final router = GoRouter(
   navigatorKey: navigatorKey,

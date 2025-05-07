@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-import 'package:store_app/Data/repository/Auth_repository.dart';
 import 'package:store_app/Features/details/manager/details_bloc.dart';
 import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/Features/notification_page/manager/notification_bloc.dart';
@@ -15,6 +14,7 @@ import 'package:store_app/data/repository/saved/saved_repository.dart';
 import 'package:store_app/data/repository/sizes/sizes_repository.dart';
 
 import '../../Data/client.dart';
+import '../../data/repository/auth/Auth_repository.dart';
 import '../../data/repository/product/products_repository.dart';
 
 final List<SingleChildWidget> providers = [

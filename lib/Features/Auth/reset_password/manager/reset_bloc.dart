@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app/Core/secure_storage.dart';
-import '../../../../Data/repository/Auth_repository.dart';
+import '../../../../data/repository/auth/Auth_repository.dart';
 
 part 'reset_event.dart';
 part 'reset_state.dart';
