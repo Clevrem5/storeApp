@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:store_app/data/models/details%20model/details_model.dart';
 

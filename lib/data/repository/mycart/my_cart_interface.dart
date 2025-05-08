@@ -1,0 +1,5 @@
+import '../../models/mycart/my_cart_model.dart';
+
+abstract interface class IMyCartRepository{
+  Future<MyCartModel>fetchMyCart();
+}

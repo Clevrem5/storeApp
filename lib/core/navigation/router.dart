@@ -9,6 +9,8 @@ import 'package:store_app/Features/faqs/page/faqs_detail.dart';
 import 'package:store_app/Features/help_center/pages/help_center_View.dart';
 import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/Features/map_page/page/new_adress_detail.dart';
+import 'package:store_app/Features/myCart/manager/my_cart_bloc.dart';
+import 'package:store_app/Features/myCart/manager/my_cart_event.dart';
 import 'package:store_app/Features/my_details/manager/my_details_bloc.dart';
 import 'package:store_app/Features/my_details/page/my_details_detail.dart';
 import 'package:store_app/Features/my_details/pages/my_detail_view.dart';
@@ -22,6 +24,7 @@ import 'package:store_app/features/notification_page/page/notification_detail.da
 import 'package:store_app/features/saved_page/page/saved_detail.dart';
 import 'package:store_app/features/search_page/page/search_detai.dart';
 import 'package:store_app/main.dart';
+
 import '../../Features/Auth/login/page/login_detail.dart';
 import '../../Features/Auth/reset_password/page/reset_new_password.dart';
 import '../../Features/Auth/reset_password/page/reset_password_code.dart';
@@ -150,7 +153,11 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.cart,
-      builder: (context, state) => CartDetail(),
+      builder: (context, state) => BlocProvider(
+          create: (context) => MyCartBloc(
+                repo: context.read(),
+              ),
+          child: CartDetail()),
     ),
     GoRoute(
       path: Routes.account,

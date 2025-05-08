@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,12 +49,20 @@ class ProductDetails extends StatelessWidget {
                           state.details!.productImages.length,
                           (index) => ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                              state.details!.productImages[index].image,
+                            child: CachedNetworkImage(
+                              imageUrl: state.details!.productImages[index].image,
                               width: double.infinity.w,
                               height: 368.h,
                               fit: BoxFit.cover,
+                              placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                              errorWidget: (context, url, error) => Icon(Icons.error),
                             ),
+                            // child: Image.network(
+                            //   state.details!.productImages[index].image,
+                            //   width: double.infinity.w,
+                            //   height: 368.h,
+                            //   fit: BoxFit.cover,
+                            // ),
                           ),
                         ),
                       ),

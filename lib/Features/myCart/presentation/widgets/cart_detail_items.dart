@@ -1,15 +1,20 @@
+import 'package:store_app/Features/myCart/presentation/widgets/cart_detail_item_lar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/Features/Auth/store_onboarding/page/store_app_elevated_button.dart';
+import 'package:store_app/data/models/mycart/my_cart_model.dart';
+
 import '../../../../Core/navigation/routes.dart';
 import '../../../Common_Widgets/store_tex.dart';
-import 'cart_detail_container.dart';
 
 class CartDetailItems extends StatelessWidget {
   const CartDetailItems({
     super.key,
+    required this.myCart,
   });
+
+  final MyCartModel myCart;
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +26,7 @@ class CartDetailItems extends StatelessWidget {
       child: Column(
         spacing: 10,
         children: [
-          SizedBox(
-            width: double.infinity,
-            height: 355.h,
-            child: ListView.separated(
-              itemBuilder: (context, index) => CartDetailContainer(),
-              separatorBuilder: (context, index) => SizedBox(
-                height: 15.h,
-              ),
-              itemCount: 5,
-            ),
-          ),
+          CartDetailItemLar(myCart: myCart),
           Column(
             spacing: 20,
             children: [
@@ -45,7 +40,7 @@ class CartDetailItems extends StatelessWidget {
                     fontSize: 16.sp,
                   ),
                   StoreText(
-                    text: "\$ 5,870",
+                    text: "\$ ${myCart.subTotal}",
                     color: Colors.black,
                     fontWeight: FontWeight.w500,
                     fontSize: 16.sp,
@@ -62,7 +57,7 @@ class CartDetailItems extends StatelessWidget {
                     fontSize: 16.sp,
                   ),
                   StoreText(
-                    text: "\$ 0.00",
+                    text: "\$ ${myCart.vat}",
                     color: Colors.black,
                     fontWeight: FontWeight.w500,
                     fontSize: 16.sp,
@@ -79,7 +74,7 @@ class CartDetailItems extends StatelessWidget {
                     fontSize: 16.sp,
                   ),
                   StoreText(
-                    text: "\$ 80",
+                    text: "\$ ${myCart.shippingFee}",
                     color: Colors.black,
                     fontWeight: FontWeight.w500,
                     fontSize: 16.sp,
@@ -99,7 +94,7 @@ class CartDetailItems extends StatelessWidget {
                     fontSize: 16.sp,
                   ),
                   StoreText(
-                    text: "\$ 5,950",
+                    text: "\$ ${myCart.total}",
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
                     fontSize: 16.sp,

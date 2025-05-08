@@ -12,10 +12,8 @@ DetailsModel _$DetailsModelFromJson(Map<String, dynamic> json) => DetailsModel(
       description: json['description'] as String,
       price: (json['price'] as num).toInt(),
       isLiked: json['isLiked'] as bool,
-      productImages: (json['productImages'] as List<dynamic>)
-          .map((e) => const ProductImagesConvertor()
-              .fromJson(e as Map<String, dynamic>))
-          .toList(),
+      productImages: const ListProductImagesConverter()
+          .fromJson(json['productImages'] as List),
       productSizes: json['productSizes'] as String?,
       reviewsCount: (json['reviewsCount'] as num).toInt(),
       rating: (json['rating'] as num).toDouble(),
@@ -28,9 +26,8 @@ Map<String, dynamic> _$DetailsModelToJson(DetailsModel instance) =>
       'description': instance.description,
       'price': instance.price,
       'isLiked': instance.isLiked,
-      'productImages': instance.productImages
-          .map(const ProductImagesConvertor().toJson)
-          .toList(),
+      'productImages':
+          const ListProductImagesConverter().toJson(instance.productImages),
       'productSizes': instance.productSizes,
       'reviewsCount': instance.reviewsCount,
       'rating': instance.rating,
