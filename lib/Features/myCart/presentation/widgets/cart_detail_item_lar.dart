@@ -38,7 +38,7 @@ class CartDetailItemLar extends StatelessWidget {
             child: Row(
               spacing: 10,
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: [//!!!
                 CachedNetworkImage(
                   imageUrl: "http://$url:8888/uploads/${item.image}",
                   width: 83.w,
