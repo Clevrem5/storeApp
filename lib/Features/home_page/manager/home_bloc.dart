@@ -8,10 +8,8 @@ import '../../../data/models/home_models/category_model.dart';
 import '../../../data/models/home_models/home_page_model.dart';
 import '../../../data/models/home_models/size_model.dart';
 import '../../../data/repository/product/product_repository_interface.dart';
-import '../../../data/repository/product/products_repository.dart';
 
 part 'home_event.dart';
-
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {

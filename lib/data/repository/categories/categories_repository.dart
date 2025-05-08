@@ -1,4 +1,4 @@
-import 'package:store_app/Data/client.dart';
+import '../../client.dart';
 import '../../models/home_models/category_model.dart';
 
 class CategoriesRepository {

@@ -1,6 +1,6 @@
 void main() {
   final coffee = CoffeeMachine();
-  final name=coffee;
+  // final name=coffee;
 
   coffee.addCoffee(
     Coffee(

@@ -1,5 +1,5 @@
-import 'package:store_app/Data/client.dart';
 import '../../../Core/secure_storage.dart';
+import '../../client.dart';
 import '../../models/auth_model/Auth_model.dart';
 
 class AuthRepository {

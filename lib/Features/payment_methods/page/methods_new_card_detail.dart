@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:store_app/Features/payment_methods/page/payment_methods_detail.dart';
-
 import '../../../Core/navigation/routes.dart';
 import '../../../Core/utils/app_colors.dart';
 import '../../Common_Widgets/storeAppBar.dart';

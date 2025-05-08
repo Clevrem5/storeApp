@@ -47,7 +47,6 @@ class ProductsModel {
   @override
   String toString() {
     return 'ProductsModel :( $id ,$discount,$image,$title, $price,$isLiked,)';
-    return super.toString();
   }
 }
 
@@ -72,8 +71,9 @@ class ProductsAdapter extends TypeAdapter<ProductsModel> {
       discount: reader.read(),
       image: reader.read(),
       title: reader.read(),
-      isLiked: reader.read(),
       price: reader.read(),
+      isLiked: reader.read(),
+
     );
   }
 }
