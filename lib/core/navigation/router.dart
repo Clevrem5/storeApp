@@ -35,6 +35,7 @@ import '../../Features/Auth/store_onboarding/page/state_oboarding_detail.dart';
 import '../../Features/account_page/page/account_detail.dart';
 import '../../Features/checkout/presentation/page/adress_view.dart';
 import '../../Features/checkout/presentation/page/checkout.dart';
+import '../../Features/customer_service/pages/customer_service.dart';
 import '../../Features/details/page/product_details.dart';
 import '../../Features/my orders/page/my_orders_view.dart';
 import '../../Features/myCart/presentation/page/cart_detail.dart';
@@ -44,7 +45,7 @@ import '../../data/repository/auth/Auth_repository.dart';
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: Routes.login,
+  initialLocation: Routes.customerService,
   routes: [
     GoRoute(
       path: Routes.newAddress,
@@ -216,6 +217,10 @@ final router = GoRouter(
         ),
         child: SignUpDetail(),
       ),
+    ),
+    GoRoute(
+      path: Routes.customerService,
+      builder: (context, state) => CustomerServiceView(),
     ),
   ],
 );

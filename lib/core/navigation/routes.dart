@@ -27,4 +27,5 @@ class Routes {
   static const String notificationPermission = "/notification";
 
   static  String get(int id) => "/details/$id";
+  static const String customerService = "/customer-service";
 }
