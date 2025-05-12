@@ -1,7 +1,6 @@
 import 'package:hive/hive.dart';
-import 'package:store_app/Data/client.dart';
-import 'package:store_app/data/local_hive/home_local.dart';
 import 'package:store_app/data/repository/notification/notification_repository_interface.dart';
+import '../../client.dart';
 import '../../models/notification_model/notification_model.dart';
 
 class NotificationRepositoryRemote implements INotificationRepository {
@@ -15,7 +14,7 @@ class NotificationRepositoryRemote implements INotificationRepository {
   Future<List<NotificationModel>> fetchNotification() async {
     // Hive box ni ochish (AppLocal bilan integratsiya)
     final Box<NotificationModel> box =
-    await AppLocal.notifications();
+    await Hive.box<NotificationModel>("notifications");
 
     // API dan xabarlarni olish
     var rawNotification = await client.fetchNotification();

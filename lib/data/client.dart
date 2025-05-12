@@ -212,4 +212,12 @@ class ApiClient {
       throw CustomException(message: "xato ketdi notification");
     }
   }
+  Future<dynamic>fetchMyCart()async{
+    final response=await dio.get("/my-cart/my-cart-items");
+    if (response.statusCode==200){
+      return response.data;
+    }else{
+      throw Exception("Xato MyCart");
+    }
+  }
 }

@@ -1,5 +1,4 @@
-import 'package:store_app/Data/client.dart';
-
+import '../../client.dart';
 import '../../models/home_models/size_model.dart';
 
 class SizesRepository{

@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app/Core/exceptions/custom_exception.dart';
 import 'package:store_app/Features/notification_page/manager/notification_state.dart';
 
-import '../../../data/repository/notification/notification_repository.dart';
 import '../../../data/repository/notification/notification_repository_interface.dart';
 
 part 'notification_event.dart';

@@ -1,9 +1,9 @@
 // ... importlar
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:store_app/Data/client.dart';
 import 'package:store_app/Features/Common_Widgets/storeAppBar.dart';
 import '../../../Core/navigation/routes.dart';
+import '../../../data/client.dart';
 import '../../../data/repository/auth/Auth_repository.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
 

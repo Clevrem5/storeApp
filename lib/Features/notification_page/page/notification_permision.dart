@@ -13,7 +13,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _currentIndex = 4;
+  // int _currentIndex = 4;
   Map<String, bool> switches = {
     "General Notifications": true,
     "Sound": true,
