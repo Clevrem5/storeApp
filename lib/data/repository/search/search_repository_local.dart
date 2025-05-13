@@ -37,7 +37,7 @@ class SearchRepositoryLocal implements ISearchRepository {
   Future<List<String>> getSearchHistory() async {
     // Tarixni teskari tartibda (so'nggi qidiruv birinchi) chiqarish
     return historyBox.values.toList().reversed.toList();
-  }
+  }//
 
   @override
   Future<void> clearHistory() async {
