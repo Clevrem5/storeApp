@@ -10,7 +10,6 @@ import 'package:store_app/Features/help_center/pages/help_center_View.dart';
 import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/Features/map_page/page/new_adress_detail.dart';
 import 'package:store_app/Features/myCart/manager/my_cart_bloc.dart';
-import 'package:store_app/Features/myCart/manager/my_cart_event.dart';
 import 'package:store_app/Features/my_details/manager/my_details_bloc.dart';
 import 'package:store_app/Features/my_details/page/my_details_detail.dart';
 import 'package:store_app/Features/my_details/pages/my_detail_view.dart';
@@ -18,11 +17,12 @@ import 'package:store_app/Features/notification_page/manager/notification_bloc.d
 import 'package:store_app/Features/payment_methods/page/methods_new_card_detail.dart';
 import 'package:store_app/Features/payment_methods/page/payment_methods_detail.dart';
 import 'package:store_app/Features/saved_page/manager/saved_event.dart';
+import 'package:store_app/Features/search_page/bloc/search_bloc.dart';
 import 'package:store_app/core/navigation/routes.dart';
+import 'package:store_app/data/repository/search/search_repository_remote.dart';
 import 'package:store_app/features/home_page/page/home_page_detail.dart';
 import 'package:store_app/features/notification_page/page/notification_detail.dart';
 import 'package:store_app/features/saved_page/page/saved_detail.dart';
-import 'package:store_app/features/search_page/page/search_detai.dart';
 import 'package:store_app/main.dart';
 
 import '../../Features/Auth/login/page/login_detail.dart';
@@ -40,11 +40,12 @@ import '../../Features/my orders/page/my_orders_view.dart';
 import '../../Features/myCart/presentation/page/cart_detail.dart';
 import '../../Features/notification_page/page/notification_permision.dart';
 import '../../Features/saved_page/manager/saved_bloc.dart';
+import '../../Features/search_page/page/search_detai.dart';
 import '../../data/repository/auth/Auth_repository.dart';
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: Routes.login,
+  initialLocation: Routes.search,
   routes: [
     GoRoute(
       path: Routes.newAddress,
@@ -141,7 +142,11 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.search,
-      builder: (context, state) => SearchDetail(),
+      builder: (context, state) => BlocProvider(
+          create: (context) => SearchBloc(
+                repo: context.read<SearchRepositoryRemote>() ,
+              ),
+          child: SearchDetail()),
     ),
     GoRoute(
       path: Routes.saved,

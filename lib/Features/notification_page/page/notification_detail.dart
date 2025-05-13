@@ -11,9 +11,14 @@ import '../../../core/navigation/routes.dart';
 import '../../Common_Widgets/storeAppBar.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
 
-class NotificationDetail extends StatelessWidget {
-  NotificationDetail({super.key});
+class NotificationDetail extends StatefulWidget {
+  const NotificationDetail({super.key});
 
+  @override
+  State<NotificationDetail> createState() => _NotificationDetailState();
+}
+
+class _NotificationDetailState extends State<NotificationDetail> {
   bool isNotEmpty = true;
 
   @override

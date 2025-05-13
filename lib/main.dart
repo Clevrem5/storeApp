@@ -11,7 +11,12 @@ final navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppLocal.initHive();
-  runApp(const StoreApp());
+  runApp(
+    MultiProvider(
+      providers: providers, // 🟢 bu siz yaratgan ro‘yxat
+      child: const StoreApp(),
+    ),
+  ); // 🟢 bu yerda GoRouter ishlatiladi
 }
 
 class StoreApp extends StatelessWidget {
@@ -22,17 +27,14 @@ class StoreApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(390, 844),
       builder: (context, child) {
-        return MultiProvider(
-          providers: providers,
-          child: MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              fontFamily: "GeneralSans",
-              colorSchemeSeed: Colors.white,
-              // primaryColor: Colors.white,
-            ),
-            routerConfig: router,
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            fontFamily: "GeneralSans",
+            colorSchemeSeed: Colors.white,
+            // primaryColor: Colors.white,
           ),
+          routerConfig: router,
         );
       },
     );

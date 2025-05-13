@@ -6,7 +6,7 @@ part of 'queryParam.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Map<String, dynamic> _$QueryParamToJson(QueryParam instance) =>
+Map<String, dynamic>  _$QueryParamToJson(QueryParam instance) =>
     <String, dynamic>{
       'categoryId': instance.categoryId,
       'title': instance.title,
