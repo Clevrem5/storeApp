@@ -18,6 +18,7 @@ class ReviewModel {
   });
 
   factory ReviewModel.fromJson(Map<String, dynamic> json) =>_$ReviewModelFromJson(json);
+  Map<String, dynamic> toJson() =>_$ReviewModelToJson(this);
 }
 @JsonSerializable()
 class ReviewCreateModel {
@@ -30,6 +31,6 @@ class ReviewCreateModel {
     required this.rating,
     required this.comment,
   });
-
+  factory ReviewCreateModel.fromJson(Map<String,dynamic>json)=>_$ReviewCreateModelFromJson(json);
   Map<String, dynamic> toJson() =>_$ReviewCreateModelToJson(this);
 }

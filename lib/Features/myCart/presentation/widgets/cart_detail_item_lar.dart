@@ -15,7 +15,7 @@ class CartDetailItemLar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final url="192.168.10.117";
+    final url="192.168.11.200";
     return SizedBox(
       width: double.infinity,
       height: 355.h,
@@ -47,13 +47,6 @@ class CartDetailItemLar extends StatelessWidget {
                   placeholder: (context, url) => Center(child: LinearProgressIndicator()),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
-                // Image.network(
-                //   "http://$url:8888/uploads/${item.image}",
-                //   // "assets/images/image.png",
-                //   width: 83.w,
-                //   height: 79.h,
-                //   fit: BoxFit.cover,
-                // ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,

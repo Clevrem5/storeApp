@@ -14,4 +14,5 @@ class DetailsRepositoryLocal implements IDetailsRepository {
     }
   }
 
+
 }

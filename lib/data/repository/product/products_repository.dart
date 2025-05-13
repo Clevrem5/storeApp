@@ -14,7 +14,14 @@ class ProductRepository implements IProductRepository {
   });
 
   @override
-  Future<List<ProductsModel>> fetchProducts() async {
+  Future<List<ProductsModel>> fetchProducts(
+    int? categoryId,
+    String? title,
+    int? sizeId,
+    double? maxPrise,
+    double? minPrise,
+    String? orderBy,
+  ) async {
     final isConnect = await Connectivity().checkConnectivity();
     final isOnline = isConnect.contains(
           ConnectivityResult.mobile,
@@ -23,9 +30,23 @@ class ProductRepository implements IProductRepository {
           ConnectivityResult.wifi,
         );
     if (isOnline) {
-      return await remoteProduct.fetchProducts();
+      return await remoteProduct.fetchProducts(
+        categoryId,
+        title,
+        sizeId,
+        maxPrise,
+        minPrise,
+        orderBy,
+      );
     } else {
-      return await localProduct.fetchProducts();
+      return await localProduct.fetchProducts(
+        categoryId,
+        title,
+        sizeId,
+        maxPrise,
+        minPrise,
+        orderBy,
+      );
     }
   }
 }
