@@ -46,7 +46,7 @@ class ProductDetails extends StatelessWidget {
             ),
           );
         }
-      },
+      },//
       builder: (context, state) {
         if (state.status == DetailsStatus.loading) {
           return const Scaffold(
