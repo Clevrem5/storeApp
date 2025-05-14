@@ -7,6 +7,7 @@ import 'package:store_app/data/models/mycart/my_cart_model.dart';
 import '../models/details model/details_model.dart';
 import '../models/home_models/home_page_model.dart';
 import '../models/notification_model/notification_model.dart';
+import '../models/review_model/review_model.dart';
 
 class AppLocal {
   static bool _isInitialized = false;
@@ -19,6 +20,7 @@ class AppLocal {
 
     Hive.registerAdapter(ProductsAdapter());
     Hive.registerAdapter(NotificationAdapter());
+    Hive.registerAdapter(ReviewModelAdapter());
     Hive.registerAdapter(DetailsAdapter());
     Hive.registerAdapter(ProductImagesAdapter());
     Hive.registerAdapter(MyCartAdapter());
@@ -29,11 +31,10 @@ class AppLocal {
     await Hive.openBox<ProductsModel>("search");
     await Hive.openBox<String>('searchHistory');
     await Hive.openBox<NotificationModel>("notifications");
+    await Hive.openBox<ReviewModel>("reviews");
     await Hive.openBox<DetailsModel>("details2");
     await Hive.openBox<MyCartModel>("myCart");
 
     _isInitialized = true;
   }
-
-
 }
