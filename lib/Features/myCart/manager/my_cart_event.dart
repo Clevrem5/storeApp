@@ -1,3 +1,3 @@
- sealed class MyCartEvent{}
+sealed class MyCartEvent {}
 
- final class MyCartLoad extends MyCartEvent{}
+final class MyCartLoad extends MyCartEvent {}

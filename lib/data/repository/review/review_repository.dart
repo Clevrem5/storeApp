@@ -1,32 +1,51 @@
-import 'package:store_app/Data/client.dart';
-import 'package:store_app/data/models/review_model/review_model.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:store_app/data/repository/review/review_repository_interface.dart';
 
-class ReviewRepository {
-  final ApiClient client;
+import '../../models/review_model/review_model.dart';
+import 'review_repository_local.dart';
+import 'review_repository_remote.dart';
 
-  ReviewRepository({required this.client});
+class ReviewRepository implements IReviewRepository {
+  final ReviewRepositoryRemote remoteRepo;
+  final ReviewRepositoryLocal localRepo;
 
-  List<ReviewModel> review = [];
-  ReviewCreateModel? createReview;
+  ReviewRepository({required this.remoteRepo, required this.localRepo});
 
+  @override
   Future<List<ReviewModel>> fetchReviews(int id) async {
-    final rawReviews = await client.fetchReview(id);
-    review = rawReviews.map((e) => ReviewModel.fromJson(e)).toList();
-    return review;
+    final connectivityResult = await Connectivity().checkConnectivity();
+    final isOnline = connectivityResult.contains(ConnectivityResult.mobile) || connectivityResult.contains(ConnectivityResult.wifi);
+
+    if (isOnline) {
+      final reviews = await remoteRepo.fetchReviews(id);
+
+      final box = localRepo.box;
+      await box.clear();
+      await box.addAll(reviews);
+
+      return reviews;
+    } else {
+      return await localRepo.fetchReviews(id);
+    }
   }
 
+  @override
   Future<bool> fetchCreateReview({
     required String productId,
-    required String rating,
+    required num rating,
     required String comment,
   }) async {
-    final result = await client.fetchCreateReview(
-      ReviewCreateModel(
+    final connectivityResult = await Connectivity().checkConnectivity();
+    final isOnline = connectivityResult.contains(ConnectivityResult.mobile) || connectivityResult.contains(ConnectivityResult.wifi);
+
+    if (isOnline) {
+      return await remoteRepo.fetchCreateReview(
         productId: productId,
         rating: rating,
         comment: comment,
-      ),
-    );
-   return result;
+      );
+    } else {
+      throw Exception("Internet mavjud emas. Fikr qoldirib bo‘lmaydi.");
+    }
   }
 }

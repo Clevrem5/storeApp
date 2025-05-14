@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:store_app/Core/utils/app_colors.dart';
 import 'package:store_app/Features/Common_Widgets/storeAppBar.dart';
 import 'package:store_app/Features/Common_Widgets/store_icons.dart';
@@ -9,6 +10,7 @@ import 'package:store_app/Features/Common_Widgets/store_tex.dart';
 import 'package:store_app/Features/details/manager/details_bloc.dart';
 import 'package:store_app/Features/details/manager/details_state.dart';
 
+import '../../../Core/navigation/routes.dart';
 import '../../../data/models/details model/details_model.dart';
 import '../../Common_Widgets/icon_button_like.dart';
 import '../../home_page/manager/home_bloc.dart';
@@ -103,36 +105,35 @@ class ProductDetails extends StatelessWidget {
                 SizedBox(
                   height: 13.h,
                 ),
-                Row(
-                  children: [
-                    StoreIcons(
-                      icons: "assets/icons/star_filled.svg",
-                      color: Colors.amber,
-                      callback: () {},
-                    ),
-                    SizedBox(
-                      width: 2.w,
-                    ),
-                    StoreText(
-                      text: state.details!.rating.toStringAsFixed(1),
-                      color: AppColors.black,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    SizedBox(
-                      width: 3.h,
-                    ),
-                    StoreText(
-                      text: '(${state.details!.reviewsCount.toString()} reviews)',
-                      color: AppColors.hintText,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    context.push(Routes.getReview(state.details!.id));
+                  },
+                  child: Row(
+                    children: [
+                      StoreIcons(
+                        icons: "assets/icons/star_filled.svg",
+                        color: Colors.amber,
+                        callback: () {},
+                      ),
+                      SizedBox(width: 2.w),
+                      StoreText(
+                        text: state.details!.rating.toStringAsFixed(1),
+                        color: AppColors.black,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      SizedBox(width: 3.h),
+                      StoreText(
+                        text: '(${state.details!.reviewsCount.toString()} reviews)',
+                        color: AppColors.hintText,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ],
+                  ),
                 ),
-                SizedBox(
-                  height: 13.h,
-                ),
+                SizedBox(height: 13.h),
                 StoreText(
                   text: state.details!.description,
                   color: AppColors.hintText,

@@ -5,7 +5,7 @@ import 'package:store_app/data/models/review_model/review_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
-    BaseOptions(baseUrl: "http://192.168.11.200:8888/api/v1"),
+    BaseOptions(baseUrl: "http://0.0.0.0:8888/api/v1"),
   )..interceptors.add(AuthInterceptor());
 
   Future<bool> signUp(model) async {
@@ -68,11 +68,9 @@ class ApiClient {
     }
   }
 
-  Future<bool> postResetEmailCodeReset(
-    String email,
-    String code,
-    String password,
-  ) async {
+  Future<bool> postResetEmailCodeReset(String email,
+      String code,
+      String password,) async {
     try {
       var response = await dio.post(
         "/auth/reset-password/reset",
@@ -236,11 +234,12 @@ class ApiClient {
       throw CustomException(message: "xato ketdi notification");
     }
   }
-  Future<dynamic>fetchMyCart()async{
-    final response=await dio.get("/my-cart/my-cart-items");
-    if (response.statusCode==200){
+
+  Future<dynamic> fetchMyCart() async {
+    final response = await dio.get("/my-cart/my-cart-items");
+    if (response.statusCode == 200) {
       return response.data;
-    }else{
+    } else {
       throw Exception("Xato MyCart");
     }
   }
