@@ -5,9 +5,8 @@ import 'package:store_app/data/models/review_model/review_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
-    BaseOptions(baseUrl: "http://192.168.8.245:8888/api/v1"),
-  )
-    ..interceptors.add(AuthInterceptor());
+    BaseOptions(baseUrl: "http://0.0.0.0:8888/api/v1"),
+  )..interceptors.add(AuthInterceptor());
 
   Future<bool> signUp(model) async {
     final response = await dio.post(
@@ -100,6 +99,30 @@ class ApiClient {
       if (response.statusCode == 200) {
         final List data = response.data as List;
         return data;
+      } else {
+        throw CustomException(message: "Xato: ${response.statusMessage ?? 'product kelmadi'}");
+      }
+    } catch (e) {
+      throw CustomException(message: "API xatosi: ${e.toString()}");
+    }
+  }
+  Future<List<dynamic>> fetchSearch(String? title) async {
+    try {
+      final response = await dio.get(
+        '/products/list',
+        queryParameters: {
+          'Title': title,
+        },
+      );
+      if (response.statusCode == 200) {
+        final data = response.data;
+        print("1111111111111 $data");
+
+        if (data is List) {
+          return data;
+        } else {
+          throw CustomException(message: "Noto‘g‘ri format: data list emas");
+        }
       } else {
         throw CustomException(message: "Xato: ${response.statusMessage ?? 'product kelmadi'}");
       }

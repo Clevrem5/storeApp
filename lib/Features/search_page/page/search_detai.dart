@@ -1,11 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:store_app/Features/myCart/presentation/page/cart_detail_empty.dart';
+import 'package:hive/hive.dart';
+import 'package:store_app/Features/search_page/bloc/search_bloc.dart';
+import 'package:store_app/Features/search_page/bloc/search_event.dart';
+import 'package:store_app/Features/search_page/bloc/search_state.dart';
+import 'package:store_app/core/navigation/routes.dart';
 import 'package:store_app/core/utils/app_colors.dart';
-import '../../../core/navigation/routes.dart';
+
 import '../../Common_Widgets/storeAppBar.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
 import '../../home_page/widgets/home_page_text_form_field.dart';
-import 'package:flutter/material.dart';
+import '../../myCart/presentation/page/cart_detail_empty.dart';
 
 class SearchDetail extends StatefulWidget {
   const SearchDetail({super.key});
@@ -16,19 +23,15 @@ class SearchDetail extends StatefulWidget {
 
 class _SearchDetailState extends State<SearchDetail> {
   final TextEditingController _controller = TextEditingController();
-  String query = '';
-  List<String> recent = ["Jeans", "Casual clothes", "Hoodie", "Nike shoes black", "V-neck tshirt", "Winter clothes"];
-  List<String> products = [
-    "Regular Fit Slogan",
-    "Regular Fit Polo",
-    "Regular Fit Black",
-    "Regular Fit V-Neck",
-  ];
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<SearchBloc>().add(SearchLoading(title: null));
+  }
 
   @override
   Widget build(BuildContext context) {
-    final results = products.where((item) => item.toLowerCase().contains(query.toLowerCase())).toList();
-
     return Scaffold(
       backgroundColor: AppColors.white,
       extendBody: true,
@@ -41,96 +44,128 @@ class _SearchDetailState extends State<SearchDetail> {
             HomePageTextFormField(
               width: double.infinity,
               controller: _controller,
-              onChanged: (val) => setState(() => query = val),
+              onChanged: (val) {
+                context.read<SearchBloc>().add(SearchLoading(title: val));
+              },
             ),
-            if (query.isEmpty) _buildRecentSearches() else Expanded(child: _buildSearchResults(results)),
+            const SizedBox(height: 12),
+            Expanded(
+              child: BlocBuilder<SearchBloc, SearchState>(
+                builder: (context, state) {
+                  if (state.status == SearchStatus.loading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (_controller.text.isEmpty) {
+                    return _buildRecentSearches(state.recently);
+                  }
+
+                  if (state.product.isEmpty) {
+                    return const StoreAppPageEmpty(
+                      text: 'No Results Found!',
+                      bio: "Try similar word or something more general.",
+                      icon: Icons.search,
+                    );
+                  }
+
+                  return _buildSearchResults(state);
+                },
+              ),
+            ),
           ],
         ),
       ),
       bottomNavigationBar: StoreBottomNavigationBar(
         selectedIndex: 1,
         onTap: (index) {
-          switch (index) {
-            case 0:
-              context.push(Routes.home);
-              break;
-            case 1:
-              context.push(Routes.search);
-              break;
-            case 2:
-              context.push(Routes.saved);
-              break;
-            case 3:
-              context.push(Routes.cart);
-              break;
-            case 4:
-              context.push(Routes.account);
-              break;
-          }
+          final routes = [
+            Routes.home,
+            Routes.search,
+            Routes.saved,
+            Routes.cart,
+            Routes.account,
+          ];
+          context.push(routes[index]);
         },
       ),
     );
   }
 
-  Widget _buildRecentSearches() {
-    return Expanded(
-      child: ListView(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text('Recent Searches', style: TextStyle(fontWeight: FontWeight.bold)),
-              TextButton(
-                onPressed: () => setState(() => recent.clear()),
-                child: const Text(
-                  'Clear all',
-                  style: TextStyle(color: Colors.black),
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: 10),
-          ...recent.map(
-            (item) => ListTile(
-              title: Text(item),
-              trailing: IconButton(
-                icon: const Icon(Icons.delete_forever_outlined, size: 16),
-                onPressed: () {
-                  setState(() => recent.remove(item));
-                },
+  Widget _buildRecentSearches(List<String> recent) {
+    if (recent.isEmpty) {
+      return const Center(child: Text("No recent searches."));
+    }
+
+    return ListView(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('Recent Searches', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            TextButton(
+              onPressed: () {
+                context.read<SearchBloc>().add(SearchClearHistory());
+              },
+              child: const Text(
+                'Clear all',
+                style: TextStyle(color: Colors.black54),
               ),
-              onTap: () {
-                _controller.text = item;
-                setState(() => query = item);
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        ...recent.map(
+              (item) => ListTile(
+            leading: const Icon(Icons.history, size: 20),
+            title: Text(item),
+            trailing: IconButton(
+              icon: const Icon(Icons.close, size: 16),
+              onPressed: () {
+                context.read<SearchBloc>().add(SearchDeleteItem(item));  // O'chirish
               },
             ),
+            onTap: () {
+              _controller.text = item;
+              context.read<SearchBloc>().add(SearchLoading(title: item));  // So'zni qidirish
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  Widget _buildSearchResults(List<String> results) {
-    if (results.isEmpty) {
-      return StoreAppPageEmpty(
-        text: 'No Results Found!',
-        bio: "Try similar word or Something\n"
-            "more general.",
-        icon: Icons.search,
-      );
-    }
+
+  Widget _buildSearchResults(SearchState state) {
     return ListView.builder(
-      itemCount: results.length,
+      itemCount: state.product.length,
       itemBuilder: (context, index) {
+        final product = state.product[index];
         return ListTile(
-          leading: Container(
-            width: 60,
-            height: 60,
-            color: Colors.black,
-            child: const Icon(Icons.image_not_supported_sharp),
+          contentPadding: const EdgeInsets.symmetric(vertical: 8.0),
+          leading: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: CachedNetworkImage(
+              imageUrl: product.image,
+              width: 60,
+              height: 60,
+              fit: BoxFit.cover,
+              placeholder: (context, url) =>
+              const Center(child: CircularProgressIndicator(strokeWidth: 2)),
+              errorWidget: (context, url, error) =>
+              const Icon(Icons.image_not_supported_outlined),
+            ),
           ),
-          title: Text(results[index]),
-          subtitle: Text('\$${index + 2}${index + 3}.00 - 6${index + 4}%'),
+          title: InkWell(
+            onTap: () {
+              final box=Hive.box<String>("searchHistory");
+              box.put(_controller.text.trim(), _controller.text.trim());
+              context.push(Routes.get(product.id));
+            },
+            child: Text(
+              product.title,
+              style: const TextStyle(fontWeight: FontWeight.w500),
+            ),
+          ),
+          subtitle: Text('\$${product.price} - ${product.discount}%'),
         );
       },
     );
