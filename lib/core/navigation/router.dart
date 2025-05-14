@@ -3,14 +3,13 @@ import 'package:go_router/go_router.dart';
 import 'package:store_app/Features/Auth/login/manger/login_bloc.dart';
 import 'package:store_app/Features/Auth/reset_password/manager/reset_bloc.dart';
 import 'package:store_app/Features/Auth/sign_up/manager/sign_up_bloc.dart';
-import 'package:store_app/Features/Reviews/pages/rewiew_page.dart';
+import 'package:store_app/Features/Reviews/manager/review_bloc.dart';
 import 'package:store_app/Features/details/manager/details_bloc.dart';
 import 'package:store_app/Features/faqs/page/faqs_detail.dart';
 import 'package:store_app/Features/help_center/pages/help_center_View.dart';
 import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/Features/map_page/page/new_adress_detail.dart';
 import 'package:store_app/Features/myCart/manager/my_cart_bloc.dart';
-import 'package:store_app/Features/myCart/manager/my_cart_event.dart';
 import 'package:store_app/Features/my_details/manager/my_details_bloc.dart';
 import 'package:store_app/Features/my_details/page/my_details_detail.dart';
 import 'package:store_app/Features/my_details/pages/my_detail_view.dart';
@@ -32,6 +31,7 @@ import '../../Features/Auth/reset_password/page/reset_password_email.dart';
 import '../../Features/Auth/sign_up/page/sign_up_detail.dart';
 import '../../Features/Auth/store_onboarding/page/onboarding_started.dart';
 import '../../Features/Auth/store_onboarding/page/state_oboarding_detail.dart';
+import '../../Features/Reviews/pages/rewiew_page.dart';
 import '../../Features/account_page/page/account_detail.dart';
 import '../../Features/checkout/presentation/page/adress_view.dart';
 import '../../Features/checkout/presentation/page/checkout.dart';
@@ -206,7 +206,15 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.review,
-      builder: (context, state) => ReviewPage(),
+      builder: (context, state) {
+        final productId = int.parse(state.pathParameters['productId']!);
+        return BlocProvider(
+          create: (context) => ReviewBloc(
+            repo: context.read(),
+          )..add(ReviewLoad(productId: productId)),
+          child: ReviewPage(),
+        );
+      },
     ),
     GoRoute(
       path: Routes.signUp,

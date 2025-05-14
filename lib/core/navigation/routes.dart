@@ -17,7 +17,7 @@ class Routes {
   static const String checkout = "/checkout";
   static const String details = "/details/:id";
   static const String myDetails = "/myDetails";
-  static const String review = "/review";
+  static const String review = "/review/:productId";
   static const String helpCenter = "/helpCenter";
   static const String address = "/address";
   static const String myOrders = "/myOrders";
@@ -26,5 +26,7 @@ class Routes {
   static const String newCard = "/new-card";
   static const String notificationPermission = "/notification";
 
-  static  String get(int id) => "/details/$id";
+  static String getReview(int productId) => "/review/$productId";
+
+  static String get(int id) => "/details/$id";
 }

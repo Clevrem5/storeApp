@@ -1,10 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:store_app/Features/Reviews/manager/review_bloc.dart';
 import 'package:store_app/data/repository/mycart/my_cart_repo_local.dart';
 import 'package:store_app/data/repository/mycart/my_cart_repo_remote.dart';
 import 'package:store_app/data/repository/mycart/my_cart_repository.dart';
 import 'package:store_app/data/repository/product/product_repository_local.dart';
+import 'package:store_app/data/repository/review/review_repository.dart';
+import 'package:store_app/data/repository/review/review_repository_interface.dart';
+import 'package:store_app/data/repository/review/review_repository_local.dart';
+import 'package:store_app/data/repository/review/review_repository_remote.dart';
 
 import '../../Features/details/manager/details_bloc.dart';
 import '../../Features/home_page/manager/home_bloc.dart';
@@ -47,6 +52,12 @@ final List<SingleChildWidget> providers = [
       client: context.read(),
     ),
   ),
+  RepositoryProvider<ReviewRepositoryRemote>(
+    create: (context) => ReviewRepositoryRemote(client: context.read()),
+  ),
+  RepositoryProvider<ReviewRepositoryLocal>(
+    create: (context) => ReviewRepositoryLocal(),
+  ),
   RepositoryProvider<DetailsRepositoryLocal>(
     create: (context) => DetailsRepositoryLocal(),
   ),
@@ -86,6 +97,12 @@ final List<SingleChildWidget> providers = [
       remoteProduct: context.read(),
     ),
   ),
+  RepositoryProvider<IReviewRepository>(
+    create: (context) => ReviewRepository(
+      localRepo: context.read(),
+      remoteRepo: context.read(),
+    ),
+  ),
   // Bloc providerlar
   BlocProvider<NotificationBloc>(
     create: (context) => NotificationBloc(
@@ -102,6 +119,14 @@ final List<SingleChildWidget> providers = [
   ),
   BlocProvider<SavedBloc>(
     create: (context) => SavedBloc(repo: context.read()),
+  ),
+  BlocProvider<ReviewBloc>(
+    create: (context) => ReviewBloc(
+      repo: ReviewRepository(
+        remoteRepo: context.read(),
+        localRepo: context.read(),
+      ),
+    ),
   ),
   BlocProvider<DetailsBloc>(
     create: (context) => DetailsBloc(repo: context.read()),
