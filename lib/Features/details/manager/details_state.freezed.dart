@@ -17,6 +17,7 @@ T _$identity<T>(T value) => value;
 mixin _$DetailsState {
   DetailsStatus get status;
   DetailsModel? get details;
+  bool? get success;
 
   /// Create a copy of DetailsState
   /// with the given fields replaced by the non-null parameter values.
@@ -32,15 +33,16 @@ mixin _$DetailsState {
         (other.runtimeType == runtimeType &&
             other is DetailsState &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.details, details) || other.details == details));
+            (identical(other.details, details) || other.details == details) &&
+            (identical(other.success, success) || other.success == success));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, details);
+  int get hashCode => Object.hash(runtimeType, status, details, success);
 
   @override
   String toString() {
-    return 'DetailsState(status: $status, details: $details)';
+    return 'DetailsState(status: $status, details: $details, success: $success)';
   }
 }
 
@@ -50,7 +52,7 @@ abstract mixin class $DetailsStateCopyWith<$Res> {
           DetailsState value, $Res Function(DetailsState) _then) =
       _$DetailsStateCopyWithImpl;
   @useResult
-  $Res call({DetailsStatus status, DetailsModel? details});
+  $Res call({DetailsStatus status, DetailsModel? details, bool? success});
 }
 
 /// @nodoc
@@ -67,6 +69,7 @@ class _$DetailsStateCopyWithImpl<$Res> implements $DetailsStateCopyWith<$Res> {
   $Res call({
     Object? status = null,
     Object? details = freezed,
+    Object? success = freezed,
   }) {
     return _then(_self.copyWith(
       status: null == status
@@ -77,6 +80,10 @@ class _$DetailsStateCopyWithImpl<$Res> implements $DetailsStateCopyWith<$Res> {
           ? _self.details
           : details // ignore: cast_nullable_to_non_nullable
               as DetailsModel?,
+      success: freezed == success
+          ? _self.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -84,12 +91,15 @@ class _$DetailsStateCopyWithImpl<$Res> implements $DetailsStateCopyWith<$Res> {
 /// @nodoc
 
 class _DetailsState implements DetailsState {
-  const _DetailsState({required this.status, required this.details});
+  const _DetailsState(
+      {required this.status, required this.details, required this.success});
 
   @override
   final DetailsStatus status;
   @override
   final DetailsModel? details;
+  @override
+  final bool? success;
 
   /// Create a copy of DetailsState
   /// with the given fields replaced by the non-null parameter values.
@@ -105,15 +115,16 @@ class _DetailsState implements DetailsState {
         (other.runtimeType == runtimeType &&
             other is _DetailsState &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.details, details) || other.details == details));
+            (identical(other.details, details) || other.details == details) &&
+            (identical(other.success, success) || other.success == success));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, details);
+  int get hashCode => Object.hash(runtimeType, status, details, success);
 
   @override
   String toString() {
-    return 'DetailsState(status: $status, details: $details)';
+    return 'DetailsState(status: $status, details: $details, success: $success)';
   }
 }
 
@@ -125,7 +136,7 @@ abstract mixin class _$DetailsStateCopyWith<$Res>
       __$DetailsStateCopyWithImpl;
   @override
   @useResult
-  $Res call({DetailsStatus status, DetailsModel? details});
+  $Res call({DetailsStatus status, DetailsModel? details, bool? success});
 }
 
 /// @nodoc
@@ -143,6 +154,7 @@ class __$DetailsStateCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
     Object? details = freezed,
+    Object? success = freezed,
   }) {
     return _then(_DetailsState(
       status: null == status
@@ -153,6 +165,10 @@ class __$DetailsStateCopyWithImpl<$Res>
           ? _self.details
           : details // ignore: cast_nullable_to_non_nullable
               as DetailsModel?,
+      success: freezed == success
+          ? _self.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }

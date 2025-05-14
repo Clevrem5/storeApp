@@ -24,4 +24,13 @@ class DetailsRepository implements IDetailsRepository {
     }
   }
 
+  @override
+  Future<bool> fetchAddCart(int productId, int sizeId) async {
+    final result = await repositoryRemote.fetchAddCart(productId, sizeId);
+    if (result) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

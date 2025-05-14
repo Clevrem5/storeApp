@@ -24,6 +24,7 @@ class AppLocal {
     Hive.registerAdapter(MyCartAdapter());
     Hive.registerAdapter(MyCartItemsAdapter());
     await Hive.deleteBoxFromDisk('details2');
+    await Hive.deleteBoxFromDisk('myCart');
     await Hive.openBox<ProductsModel>("products");
     await Hive.openBox<ProductsModel>("search");
     await Hive.openBox<String>('searchHistory');

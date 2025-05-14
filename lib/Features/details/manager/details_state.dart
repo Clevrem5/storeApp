@@ -10,12 +10,14 @@ abstract class DetailsState with _$DetailsState {
   const factory DetailsState({
     required DetailsStatus status,
     required DetailsModel? details,
+    required bool? success,
   }) = _DetailsState;
 
   factory DetailsState.initial() {
     return  DetailsState(
       status: DetailsStatus.loading,
       details: null,
+      success: null,
     );
   }
 }

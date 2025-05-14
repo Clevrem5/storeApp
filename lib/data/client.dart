@@ -244,4 +244,19 @@ class ApiClient {
       throw Exception("Xato MyCart");
     }
   }
+
+  Future<bool> fetchAddCart(int productId, int sizeId) async {
+    final response = await dio.post(
+      "/my-cart/add-item",
+      data: {
+        "productId": productId,
+        "sizeId": 1,
+      },
+    );
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

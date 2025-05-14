@@ -14,5 +14,8 @@ class DetailsRepositoryLocal implements IDetailsRepository {
     }
   }
 
-
+  @override
+  Future<bool> fetchAddCart(int productId, int sizeId) async {
+    return true;
+    }
 }
