@@ -20,19 +20,46 @@ import '../../saved_page/manager/saved_event.dart';
 class ProductDetails extends StatelessWidget {
   ProductDetails({super.key});
 
-  final List salom = ["M", "S", "L"];
+  final List<String> salom = ["M", "S", "L"];
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DetailsBloc, DetailsState>(
+    return BlocConsumer<DetailsBloc, DetailsState>(
+      listener: (context, state) {
+        if (state.success == true) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Mahsulot savatchaga qo‘shildi!"),
+              backgroundColor: Colors.green,
+            ),
+          );
+        } else if(state.success==false){
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Mahsulot savatchaga qo‘shilmadi!"),
+              backgroundColor: Colors.red,
+            ),
+          );
+      } else if (state.status == DetailsStatus.error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Xatolik yuz berdi!"),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },//
       builder: (context, state) {
         if (state.status == DetailsStatus.loading) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
           );
         } else if (state.status == DetailsStatus.error) {
-          return const StoreText(text: "xato Balam", color: AppColors.black);
+          return const Scaffold(
+            body: Center(child: StoreText(text: "Xatolik yuz berdi", color: AppColors.black)),
+          );
         }
+
         return Scaffold(
           backgroundColor: AppColors.white,
           extendBody: true,
@@ -42,6 +69,7 @@ class ProductDetails extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Image carousel
                 SizedBox(
                   height: 368.h,
                   child: Stack(
@@ -49,32 +77,30 @@ class ProductDetails extends StatelessWidget {
                       PageView(
                         children: List.generate(
                           state.details!.productImages.length,
-                          (index) => ClipRRect(
+                              (index) => ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: CachedNetworkImage(
                               imageUrl: state.details!.productImages[index].image,
                               width: double.infinity.w,
                               height: 368.h,
                               fit: BoxFit.cover,
-                              placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                              errorWidget: (context, url, error) => Icon(Icons.error),
+                              placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                              errorWidget: (context, url, error) => const Icon(Icons.error),
                             ),
-                            // child: Image.network(
-                            //   state.details!.productImages[index].image,
-                            //   width: double.infinity.w,
-                            //   height: 368.h,
-                            //   fit: BoxFit.cover,
-                            // ),
                           ),
                         ),
                       ),
+                      // Like button
                       Positioned(
                         top: 7,
                         right: 10,
                         child: Container(
                           width: 48.w,
                           height: 48.h,
-                          decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(10)),
+                          decoration: BoxDecoration(
+                            color: AppColors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                           child: LikeButton<DetailsModel>(
                             item: state.details!,
                             isLiked: (item) => item.isLiked,
@@ -93,15 +119,49 @@ class ProductDetails extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 12.h,
-                ),
+
+                SizedBox(height: 12.h),
+
+                // Title
                 StoreText(
                   text: state.details!.title,
                   color: AppColors.black,
                   fontSize: 24.sp,
                   fontWeight: FontWeight.w600,
                 ),
+
+
+                SizedBox(height: 13.h),
+
+                // Rating
+                Row(
+                  children: [
+                    StoreIcons(
+                      icons: "assets/icons/star_filled.svg",
+                      color: Colors.amber,
+                      callback: () {},
+                    ),
+                    SizedBox(width: 2.w),
+                    StoreText(
+                      text: state.details!.rating.toStringAsFixed(1),
+                      color: AppColors.black,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    SizedBox(width: 3.h),
+                    StoreText(
+                      text: '(${state.details!.reviewsCount.toString()} reviews)',
+                      color: AppColors.hintText,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 13.h),
+
+                // Description
+
                 SizedBox(
                   height: 13.h,
                 ),
@@ -134,59 +194,71 @@ class ProductDetails extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 13.h),
+
                 StoreText(
                   text: state.details!.description,
                   color: AppColors.hintText,
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
                 ),
-                SizedBox(
-                  height: 12.h,
-                ),
+
+                SizedBox(height: 12.h),
+
+                // Choose size
                 StoreText(
                   text: "Choose size",
                   color: AppColors.black,
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w600,
                 ),
-                SizedBox(
-                  height: 12.h,
-                ),
+
+                SizedBox(height: 12.h),
+
+                // Size selector (hardcoded for now)
                 Row(
-                  spacing: 5.sp,
                   children: List.generate(
                     salom.length,
-                    (index) => Container(
-                      width: 50.w,
-                      height: 47.h,
-                      decoration: BoxDecoration(
+                        (index) => Padding(
+                      padding: EdgeInsets.only(right: 8.w),
+                      child: Container(
+                        width: 50.w,
+                        height: 47.h,
+                        decoration: BoxDecoration(
                           color: AppColors.white,
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: AppColors.buttonBorder, width: 1)),
-                      child: Center(
-                        child: StoreText(
-                          text: salom[index],
-                          color: AppColors.black,
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.w600,
+                          border: Border.all(color: AppColors.buttonBorder, width: 1),
+                        ),
+                        child: Center(
+                          child: StoreText(
+                            text: salom[index],
+                            color: AppColors.black,
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
+
+          // Bottom nav: price + add to cart
           bottomNavigationBar: Container(
             width: double.infinity.w,
             height: 95.h,
-            decoration: BoxDecoration(color: AppColors.white, border: Border(top: BorderSide(color: AppColors.bottomBorder, width: 1.5))),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              border: Border(top: BorderSide(color: AppColors.bottomBorder, width: 1.5)),
+            ),
             child: Padding(
               padding: const EdgeInsets.only(top: 22, left: 24, right: 24),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       StoreText(
                         text: "Price",
@@ -202,19 +274,24 @@ class ProductDetails extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    width: 30.w,
-                  ),
+                  SizedBox(width: 30.w),
                   SizedBox(
                     width: 240.w,
                     height: 54.h,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.black,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          )),
-                      onPressed: () {},
+                        backgroundColor: AppColors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      onPressed: () {
+                        context.read<DetailsBloc>().add(AddCart(
+                          productId: state.details!.id,
+                          sizeId: 1, // Tanlangan o‘lchamga qarab o‘zgartiring
+                        ));
+                        print("ishladi ${state.details!.id}");
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -223,9 +300,7 @@ class ProductDetails extends StatelessWidget {
                             color: AppColors.white,
                             callback: () {},
                           ),
-                          SizedBox(
-                            width: 10.w,
-                          ),
+                          SizedBox(width: 10.w),
                           StoreText(
                             text: "Add to Cart",
                             color: AppColors.white,

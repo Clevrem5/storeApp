@@ -7,3 +7,10 @@ final class DetailsLoad extends DetailsEvent {
 
   DetailsLoad({required this.id});
 }
+
+final class AddCart extends DetailsEvent {
+  final int productId;
+  final int sizeId;
+
+  AddCart({required this.productId, required this.sizeId});
+}

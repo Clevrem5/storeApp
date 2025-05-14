@@ -1,5 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:store_app/data/repository/details/IdetailsRepository.dart';
+
 import '../../client.dart';
 import '../../models/details model/details_model.dart';
 
@@ -19,5 +20,15 @@ class DetailsRepositoryRemote implements IDetailsRepository {
 
     await box.put(id, details);
     return details;
+  }
+
+  @override
+  Future<bool> fetchAddCart(int productId, int sizeId) async {
+    final result = await client.fetchAddCart(productId, sizeId);
+    if (result) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

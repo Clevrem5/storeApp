@@ -94,7 +94,6 @@ class _SearchDetailState extends State<SearchDetail> {
     if (recent.isEmpty) {
       return const Center(child: Text("No recent searches."));
     }
-
     return ListView(
       children: [
         Row(
@@ -120,7 +119,11 @@ class _SearchDetailState extends State<SearchDetail> {
             trailing: IconButton(
               icon: const Icon(Icons.close, size: 16),
               onPressed: () {
-                context.read<SearchBloc>().add(SearchDeleteItem(item));  // O'chirish
+                final box=Hive.box<String>("searchHistory");
+                box.delete(item);setState(() {
+
+                });
+                // context.read<SearchBloc>().add(SearchDeleteItem(item));  // O'chirish
               },
             ),
             onTap: () {
