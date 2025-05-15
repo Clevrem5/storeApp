@@ -7,7 +7,7 @@ import 'models/review_model/review_stats_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
-    BaseOptions(baseUrl: "http://0.0.0.0:8888/api/v1"),
+    BaseOptions(baseUrl: "http://192.168.11.200:8888/api/v1"),
   )..interceptors.add(AuthInterceptor());
 
   Future<bool> signUp(model) async {
@@ -268,7 +268,7 @@ class ApiClient {
       "/my-cart/add-item",
       data: {
         "productId": productId,
-        "sizeId": 1,
+        "sizeId": sizeId,
       },
     );
     if (response.statusCode == 200) {
