@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app/Core/exceptions/custom_exception.dart';
 import 'package:store_app/Features/Reviews/manager/review_state.dart';
-import 'package:store_app/data/repository/review/review_repository_interface.dart';
+
+import '../../../data/repository/review/review_repository_interface.dart';
 
 part 'review_event.dart';
 
@@ -13,6 +14,7 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
         super(ReviewState.initial()) {
     on<ReviewLoad>(_loadReviews);
     on<ReviewCreate>(_createReview);
+    on<ReviewStatsLoad>(_loadReviewStats);
   }
 
   Future<void> _loadReviews(ReviewLoad event, Emitter<ReviewState> emit) async {
@@ -20,7 +22,7 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
       emit(state.copyWith(status: ReviewStatus.loading));
       final reviews = await _repo.fetchReviews(event.productId);
       emit(state.copyWith(reviews: reviews, status: ReviewStatus.success));
-    } on Exception catch (e) {
+    } catch (e) {
       emit(state.copyWith(status: ReviewStatus.failure));
       throw CustomException(message: e.toString());
     }
@@ -41,8 +43,19 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
       } else {
         emit(state.copyWith(status: ReviewStatus.failure));
       }
-    } on Exception catch (e) {
+    } catch (e) {
       emit(state.copyWith(status: ReviewStatus.failure));
+      throw CustomException(message: e.toString());
+    }
+  }
+
+  Future<void> _loadReviewStats(ReviewStatsLoad event, Emitter<ReviewState> emit) async {
+    try {
+      emit(state.copyWith(statsStatus: ReviewStatus.loading));
+      final stats = await _repo.fetchReviewStats(event.productId);
+      emit(state.copyWith(stats: stats, statsStatus: ReviewStatus.success));
+    } catch (e) {
+      emit(state.copyWith(statsStatus: ReviewStatus.failure));
       throw CustomException(message: e.toString());
     }
   }

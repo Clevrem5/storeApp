@@ -18,3 +18,8 @@ class ReviewCreate extends ReviewEvent {
     required this.comment,
   });
 }
+
+class ReviewStatsLoad extends ReviewEvent {
+  final int productId;
+  ReviewStatsLoad({required this.productId});
+}

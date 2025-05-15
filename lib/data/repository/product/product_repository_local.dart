@@ -5,6 +5,7 @@ import 'package:store_app/data/repository/product/product_repository_interface.d
 class ProductsRepositoryLocal implements IProductRepository {
   //birinchi boxni ochib olamiz va keyin uni methondi ichidan ishlatamiz!!!
   final Box<ProductsModel> box = Hive.box<ProductsModel>('products');
+
 // bu yerda interface ichidagi talab qilingan funksiyani ishlatamiz override qilib yuboramiz yani ustiga yozib yuboramiz xar xil amallar ishlatib!!!
   @override
   Future<List<ProductsModel>> fetchProducts(
