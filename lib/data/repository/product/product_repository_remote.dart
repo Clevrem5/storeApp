@@ -5,24 +5,16 @@ import 'package:store_app/data/repository/product/product_repository_interface.d
 import '../../client.dart';
 
 class ProductRepositoryRemote implements IProductRepository {
-final ApiClient client;
+  final ApiClient client;
 
-ProductRepositoryRemote({required this.client});
+  ProductRepositoryRemote({required this.client});
 
-List<ProductsModel> products = [];
+  List<ProductsModel> products = [];
 
-@override
-Future<List<ProductsModel>> fetchProducts(
-    int? categoryId,
-    String? title,
-    int? sizeId,
-    double? maxPrise,
-    double? minPrise,
-    String? orderBy
-
-    ) async {
-  final Box<ProductsModel> box = Hive.box("products");
-  final rawProducts = await client.fetchHomeProduct({
+  @override
+  Future<List<ProductsModel>> fetchProducts(int? categoryId, String? title, int? sizeId, double? maxPrise, double? minPrise, String? orderBy) async {
+    final Box<ProductsModel> box = Hive.box("products");
+    final rawProducts = await client.fetchHomeProduct({
       "Title": title,
       "CategoryId": categoryId,
       "SizeID": sizeId,
@@ -30,17 +22,15 @@ Future<List<ProductsModel>> fetchProducts(
       "MaxPrice": maxPrise,
       "OrderBy": orderBy,
     });
-  products = rawProducts
-      .map(
-        (e) => ProductsModel.fromJson(e),
-  )
-      .toList();
+    products = rawProducts
+        .map(
+          (e) => ProductsModel.fromJson(e),
+        )
+        .toList();
 
-  await box.clear();
-  await box.addAll(products);
+    await box.clear();
+    await box.addAll(products);
 
-  return products;
-}
-
-
+    return products;
+  }
 }

@@ -3,6 +3,8 @@ import 'package:store_app/Core/exceptions/custom_exception.dart';
 import 'package:store_app/Core/inter_septor.dart';
 import 'package:store_app/data/models/review_model/review_model.dart';
 
+import 'models/review_model/review_stats_model.dart';
+
 class ApiClient {
   final Dio dio = Dio(
     BaseOptions(baseUrl: "http://0.0.0.0:8888/api/v1"),
@@ -232,6 +234,23 @@ class ApiClient {
       return response.data as List;
     } else {
       throw CustomException(message: "xato ketdi notification");
+    }
+  }
+
+  Future<ReviewStatsModel> fetchReviewStats(int productId) async {
+    try {
+      final response = await dio.get('/reviews/stats/$productId');
+      if (response.statusCode == 200) {
+        return ReviewStatsModel.fromJson(response.data);
+      } else {
+        throw CustomException(
+          message: "Xato: ${response.statusMessage ?? 'Review statistikasi kelmadi'}",
+        );
+      }
+    } catch (e) {
+      throw CustomException(
+        message: "API xatosi: ${e.toString()}",
+      );
     }
   }
 

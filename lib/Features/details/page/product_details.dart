@@ -129,39 +129,6 @@ class ProductDetails extends StatelessWidget {
                   fontSize: 24.sp,
                   fontWeight: FontWeight.w600,
                 ),
-
-
-                SizedBox(height: 13.h),
-
-                // Rating
-                Row(
-                  children: [
-                    StoreIcons(
-                      icons: "assets/icons/star_filled.svg",
-                      color: Colors.amber,
-                      callback: () {},
-                    ),
-                    SizedBox(width: 2.w),
-                    StoreText(
-                      text: state.details!.rating.toStringAsFixed(1),
-                      color: AppColors.black,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    SizedBox(width: 3.h),
-                    StoreText(
-                      text: '(${state.details!.reviewsCount.toString()} reviews)',
-                      color: AppColors.hintText,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 13.h),
-
-                // Description
-
                 SizedBox(
                   height: 13.h,
                 ),

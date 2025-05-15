@@ -15,7 +15,7 @@ class CartDetailItemLar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final url="192.168.11.200";
+    // final url="192.168.11.200";
     return SizedBox(
       width: double.infinity,
       height: 355.h,
@@ -38,9 +38,10 @@ class CartDetailItemLar extends StatelessWidget {
             child: Row(
               spacing: 10,
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [//!!!
+              children: [ //!!!
                 CachedNetworkImage(
-                  imageUrl: "http://$url:8888/uploads/${item.image}",
+                  imageUrl: item.image,
+                  // imageUrl: "http://$url:8888/uploads${item.image}",
                   width: 83.w,
                   height: 79.h,
                   fit: BoxFit.cover,
@@ -148,9 +149,10 @@ class CartDetailItemLar extends StatelessWidget {
             ),
           );
         },
-        separatorBuilder: (context, index) => SizedBox(
-          height: 15.h,
-        ),
+        separatorBuilder: (context, index) =>
+            SizedBox(
+              height: 15.h,
+            ),
         itemCount: myCart.items.length,
       ),
     );

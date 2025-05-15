@@ -1,5 +1,7 @@
+import 'package:hive/hive.dart';
 import 'package:store_app/data/client.dart';
 import 'package:store_app/data/models/review_model/review_model.dart';
+import 'package:store_app/data/models/review_model/review_stats_model.dart';
 import 'package:store_app/data/repository/review/review_repository_interface.dart';
 
 class ReviewRepositoryRemote implements IReviewRepository {
@@ -7,12 +9,15 @@ class ReviewRepositoryRemote implements IReviewRepository {
 
   ReviewRepositoryRemote({required this.client});
 
-  List<ReviewModel> reviews = [];
-
   @override
-  Future<List<ReviewModel>> fetchReviews(int id) async {
-    final rawReviews = await client.fetchReview(id);
-    reviews = rawReviews.map((e) => ReviewModel.fromJson(e)).toList();
+  Future<List<ReviewModel>> fetchReviews(int productId) async {
+    final rawReviews = await client.fetchReview(productId);
+    final reviews = rawReviews.map((e) => ReviewModel.fromJson(e)).toList();
+
+    final box = Hive.box<ReviewModel>("reviews");
+    await box.clear();
+    await box.addAll(reviews);
+
     return reviews;
   }
 
@@ -22,13 +27,17 @@ class ReviewRepositoryRemote implements IReviewRepository {
     required num rating,
     required String comment,
   }) async {
-    final result = await client.fetchCreateReview(
+    return await client.fetchCreateReview(
       ReviewCreateModel(
         productId: productId,
         rating: rating,
         comment: comment,
       ),
     );
-    return result;
+  }
+
+  @override
+  Future<ReviewStatsModel> fetchReviewStats(int productId) async {
+    return await client.fetchReviewStats(productId);
   }
 }

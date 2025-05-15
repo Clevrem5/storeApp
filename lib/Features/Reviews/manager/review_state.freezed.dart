@@ -17,6 +17,8 @@ T _$identity<T>(T value) => value;
 mixin _$ReviewState {
   List<ReviewModel> get reviews;
   ReviewStatus get status;
+  ReviewStatsModel? get stats;
+  ReviewStatus get statsStatus;
 
   /// Create a copy of ReviewState
   /// with the given fields replaced by the non-null parameter values.
@@ -31,16 +33,19 @@ mixin _$ReviewState {
         (other.runtimeType == runtimeType &&
             other is ReviewState &&
             const DeepCollectionEquality().equals(other.reviews, reviews) &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.stats, stats) || other.stats == stats) &&
+            (identical(other.statsStatus, statsStatus) ||
+                other.statsStatus == statsStatus));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(reviews), status);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(reviews), status, stats, statsStatus);
 
   @override
   String toString() {
-    return 'ReviewState(reviews: $reviews, status: $status)';
+    return 'ReviewState(reviews: $reviews, status: $status, stats: $stats, statsStatus: $statsStatus)';
   }
 }
 
@@ -50,7 +55,11 @@ abstract mixin class $ReviewStateCopyWith<$Res> {
           ReviewState value, $Res Function(ReviewState) _then) =
       _$ReviewStateCopyWithImpl;
   @useResult
-  $Res call({List<ReviewModel> reviews, ReviewStatus status});
+  $Res call(
+      {List<ReviewModel> reviews,
+      ReviewStatus status,
+      ReviewStatsModel? stats,
+      ReviewStatus statsStatus});
 }
 
 /// @nodoc
@@ -67,6 +76,8 @@ class _$ReviewStateCopyWithImpl<$Res> implements $ReviewStateCopyWith<$Res> {
   $Res call({
     Object? reviews = null,
     Object? status = null,
+    Object? stats = freezed,
+    Object? statsStatus = null,
   }) {
     return _then(_self.copyWith(
       reviews: null == reviews
@@ -77,6 +88,14 @@ class _$ReviewStateCopyWithImpl<$Res> implements $ReviewStateCopyWith<$Res> {
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as ReviewStatus,
+      stats: freezed == stats
+          ? _self.stats
+          : stats // ignore: cast_nullable_to_non_nullable
+              as ReviewStatsModel?,
+      statsStatus: null == statsStatus
+          ? _self.statsStatus
+          : statsStatus // ignore: cast_nullable_to_non_nullable
+              as ReviewStatus,
     ));
   }
 }
@@ -86,7 +105,9 @@ class _$ReviewStateCopyWithImpl<$Res> implements $ReviewStateCopyWith<$Res> {
 class _ReviewState implements ReviewState {
   const _ReviewState(
       {final List<ReviewModel> reviews = const <ReviewModel>[],
-      this.status = ReviewStatus.initial})
+      this.status = ReviewStatus.initial,
+      this.stats,
+      this.statsStatus = ReviewStatus.initial})
       : _reviews = reviews;
 
   final List<ReviewModel> _reviews;
@@ -101,6 +122,11 @@ class _ReviewState implements ReviewState {
   @override
   @JsonKey()
   final ReviewStatus status;
+  @override
+  final ReviewStatsModel? stats;
+  @override
+  @JsonKey()
+  final ReviewStatus statsStatus;
 
   /// Create a copy of ReviewState
   /// with the given fields replaced by the non-null parameter values.
@@ -116,16 +142,23 @@ class _ReviewState implements ReviewState {
         (other.runtimeType == runtimeType &&
             other is _ReviewState &&
             const DeepCollectionEquality().equals(other._reviews, _reviews) &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.stats, stats) || other.stats == stats) &&
+            (identical(other.statsStatus, statsStatus) ||
+                other.statsStatus == statsStatus));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_reviews), status);
+      runtimeType,
+      const DeepCollectionEquality().hash(_reviews),
+      status,
+      stats,
+      statsStatus);
 
   @override
   String toString() {
-    return 'ReviewState(reviews: $reviews, status: $status)';
+    return 'ReviewState(reviews: $reviews, status: $status, stats: $stats, statsStatus: $statsStatus)';
   }
 }
 
@@ -137,7 +170,11 @@ abstract mixin class _$ReviewStateCopyWith<$Res>
       __$ReviewStateCopyWithImpl;
   @override
   @useResult
-  $Res call({List<ReviewModel> reviews, ReviewStatus status});
+  $Res call(
+      {List<ReviewModel> reviews,
+      ReviewStatus status,
+      ReviewStatsModel? stats,
+      ReviewStatus statsStatus});
 }
 
 /// @nodoc
@@ -154,6 +191,8 @@ class __$ReviewStateCopyWithImpl<$Res> implements _$ReviewStateCopyWith<$Res> {
   $Res call({
     Object? reviews = null,
     Object? status = null,
+    Object? stats = freezed,
+    Object? statsStatus = null,
   }) {
     return _then(_ReviewState(
       reviews: null == reviews
@@ -163,6 +202,14 @@ class __$ReviewStateCopyWithImpl<$Res> implements _$ReviewStateCopyWith<$Res> {
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
+              as ReviewStatus,
+      stats: freezed == stats
+          ? _self.stats
+          : stats // ignore: cast_nullable_to_non_nullable
+              as ReviewStatsModel?,
+      statsStatus: null == statsStatus
+          ? _self.statsStatus
+          : statsStatus // ignore: cast_nullable_to_non_nullable
               as ReviewStatus,
     ));
   }
