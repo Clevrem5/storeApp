@@ -119,49 +119,13 @@ class ProductDetails extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 SizedBox(height: 12.h),
-
-                // Title
                 StoreText(
                   text: state.details!.title,
                   color: AppColors.black,
                   fontSize: 24.sp,
                   fontWeight: FontWeight.w600,
                 ),
-
-
-                SizedBox(height: 13.h),
-
-                // Rating
-                Row(
-                  children: [
-                    StoreIcons(
-                      icons: "assets/icons/star_filled.svg",
-                      color: Colors.amber,
-                      callback: () {},
-                    ),
-                    SizedBox(width: 2.w),
-                    StoreText(
-                      text: state.details!.rating.toStringAsFixed(1),
-                      color: AppColors.black,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    SizedBox(width: 3.h),
-                    StoreText(
-                      text: '(${state.details!.reviewsCount.toString()} reviews)',
-                      color: AppColors.hintText,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 13.h),
-
-                // Description
-
                 SizedBox(
                   height: 13.h,
                 ),
@@ -194,16 +158,13 @@ class ProductDetails extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 13.h),
-
                 StoreText(
                   text: state.details!.description,
                   color: AppColors.hintText,
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
                 ),
-
                 SizedBox(height: 12.h),
-
                 // Choose size
                 StoreText(
                   text: "Choose size",
@@ -211,9 +172,7 @@ class ProductDetails extends StatelessWidget {
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w600,
                 ),
-
                 SizedBox(height: 12.h),
-
                 // Size selector (hardcoded for now)
                 Row(
                   children: List.generate(
@@ -243,7 +202,6 @@ class ProductDetails extends StatelessWidget {
               ],
             ),
           ),
-
           // Bottom nav: price + add to cart
           bottomNavigationBar: Container(
             width: double.infinity.w,
@@ -288,9 +246,9 @@ class ProductDetails extends StatelessWidget {
                       onPressed: () {
                         context.read<DetailsBloc>().add(AddCart(
                           productId: state.details!.id,
-                          sizeId: 1, // Tanlangan o‘lchamga qarab o‘zgartiring
+                          sizeId: 3, // Tanlangan o‘lchamga qarab o‘zgartiring
                         ));
-                        print("ishladi ${state.details!.id}");
+                        print("ishladi ${state.details!.id} --${state.details!.productSizes}");
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

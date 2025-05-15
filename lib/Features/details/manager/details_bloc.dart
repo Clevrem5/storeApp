@@ -20,7 +20,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
 
   Future<void> _addCart(AddCart event, Emitter<DetailsState> emit) async {
     final result = await _repo.fetchAddCart(event.productId, event.sizeId);
-    if (result == true) {
+    if (result) {
       emit(state.copyWith(success: true, status: DetailsStatus.idle));
     } else {
       emit(state.copyWith(success: false, status: DetailsStatus.error));
