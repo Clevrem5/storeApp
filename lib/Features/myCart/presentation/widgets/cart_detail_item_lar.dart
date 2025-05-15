@@ -15,7 +15,7 @@ class CartDetailItemLar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final url="192.168.11.200";
+    // final url="192.168.11.200";
     return SizedBox(
       width: double.infinity,
       height: 355.h,
@@ -40,7 +40,8 @@ class CartDetailItemLar extends StatelessWidget {
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [//!!!
                 CachedNetworkImage(
-                  imageUrl: "http://$url:8888/uploads/${item.image}",
+                  imageUrl:item.image,
+                  // imageUrl: "http://$url:8888/uploads/${item.image}",
                   width: 83.w,
                   height: 79.h,
                   fit: BoxFit.cover,
