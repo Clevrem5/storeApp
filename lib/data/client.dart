@@ -7,7 +7,7 @@ import 'models/review_model/review_stats_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
-    BaseOptions(baseUrl: "http://192.168.11.200:8888/api/v1"),
+    BaseOptions(baseUrl: "http://192.168.10.11:8888/api/v1"),
   )..interceptors.add(AuthInterceptor());
 
   Future<bool> signUp(model) async {
@@ -277,4 +277,15 @@ class ApiClient {
       return false;
     }
   }
+  Future<List<dynamic>>fetchCards()async{
+    final response =await dio.get('/cards/list');
+    if (response.statusCode==200){
+      final List<dynamic>data=List<dynamic>.from(response.data);
+      return data;
+    }
+    else{
+      throw CustomException(message: "xato ketdi");
+    }
+  }
+  
 }

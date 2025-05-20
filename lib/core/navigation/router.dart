@@ -14,8 +14,10 @@ import 'package:store_app/Features/my_details/manager/my_details_bloc.dart';
 import 'package:store_app/Features/my_details/page/my_details_detail.dart';
 import 'package:store_app/Features/my_details/pages/my_detail_view.dart';
 import 'package:store_app/Features/notification_page/manager/notification_bloc.dart';
+import 'package:store_app/Features/payment_methods/manager/card_bloc.dart';
+import 'package:store_app/Features/payment_methods/manager/card_event.dart';
 import 'package:store_app/Features/payment_methods/page/methods_new_card_detail.dart';
-import 'package:store_app/Features/payment_methods/page/payment_methods_detail.dart';
+import 'package:store_app/Features/payment_methods/page/newCart/payment_methods_detail.dart';
 import 'package:store_app/Features/saved_page/manager/saved_event.dart';
 import 'package:store_app/Features/search_page/bloc/search_bloc.dart';
 import 'package:store_app/core/navigation/routes.dart';
@@ -46,8 +48,7 @@ import '../../data/repository/auth/Auth_repository.dart';
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: Routes.login
-  ,
+  initialLocation: Routes.login,
   routes: [
     GoRoute(
       path: Routes.newAddress,
@@ -205,7 +206,11 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.paymentMethods,
-      builder: (context, state) => PaymentMethodsDetail(),
+      builder: (context, state) => BlocProvider(
+          create: (context) => CardBloc(
+                repo: context.read(),
+              )..add(CardLoad()),
+          child: PaymentMethodsDetail()),
     ),
     GoRoute(
       path: Routes.newCard,

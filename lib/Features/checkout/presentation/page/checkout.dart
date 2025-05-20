@@ -13,17 +13,23 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
-  String selectedPayment = 'Card';
+  String selectedPayment = 'Cash';
+  bool select = false;
   final TextEditingController cardNumberController = TextEditingController();
   final TextEditingController expiryDateController = TextEditingController();
   final TextEditingController cvvController = TextEditingController();
+  bool tanlangan = false;
 
-  void _goToAddressSelection() {
-    context.push(Routes.address);
+  bool tanla(bool t) {
+    setState(() {
+      select = t;
+    });
+    return select;
   }
 
   @override
   Widget build(BuildContext context) {
+    final String cardNumber="1212454515412525";
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: StoreAppBar(
@@ -39,20 +45,30 @@ class _CheckoutPageState extends State<CheckoutPage> {
               children: [
                 const Text("Delivery Address", style: TextStyle(fontWeight: FontWeight.bold)),
                 GestureDetector(
-                  onTap: _goToAddressSelection,
+                  onTap: () {
+                    context.push(Routes.address);
+                  },
                   child: const Text("Change", style: TextStyle(color: Colors.blue)),
                 ),
               ],
             ),
             const SizedBox(height: 8),
-            const ListTile(
+            ListTile(
+              onTap: () {
+                setState(() {
+                  select == !select;
+                });
+              },
+               textColor: Colors.black,
+              selected: select,
+              selectedColor: Colors.blue,
               contentPadding: EdgeInsets.zero,
-              leading: Icon(Icons.location_on),
-              title: Text(
+              leading: const Icon(Icons.location_on),
+              title: const Text(
                 "Home",
-                style: TextStyle(color: AppColors.black, fontWeight: FontWeight.w600),
+                style: TextStyle(fontWeight: FontWeight.w600),
               ),
-              subtitle: Text("925 S Chugach St #APT 10, Alaska 99645"),
+              subtitle: const Text("925 S Chugach St #APT 10, Alaska 99645"),
             ),
             const Divider(),
             const SizedBox(height: 8),
@@ -110,6 +126,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               ),
               const SizedBox(height: 16),
             ] else ...[
+              
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
@@ -120,7 +137,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   children: [
                     SizedBox(width: 15),
                     Text(
-                      "VISA **** **** **** 1234",
+                      // "VISA **** **** **** 1234",
+                      "Visa **** **** **** ${cardNumber.substring(cardNumber.length-4)}",
                       style: TextStyle(color: AppColors.black, fontWeight: FontWeight.w600),
                     ),
                     Spacer(),
