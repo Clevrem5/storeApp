@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:store_app/Features/Reviews/manager/review_bloc.dart';
 import 'package:store_app/Features/myCart/manager/my_cart_bloc.dart';
+import 'package:store_app/data/repository/card/card_repository.dart';
 import 'package:store_app/data/repository/mycart/my_cart_repo_local.dart';
 import 'package:store_app/data/repository/mycart/my_cart_repo_remote.dart';
 import 'package:store_app/data/repository/mycart/my_cart_repository.dart';
@@ -15,6 +16,7 @@ import 'package:store_app/data/repository/search/search_interface.dart';
 import 'package:store_app/data/repository/search/search_repository.dart';
 import 'package:store_app/data/repository/search/search_repository_local.dart';
 import 'package:store_app/data/repository/search/search_repository_remote.dart';
+
 import '../../Features/details/manager/details_bloc.dart';
 import '../../Features/home_page/manager/home_bloc.dart';
 import '../../Features/notification_page/manager/notification_bloc.dart';
@@ -206,5 +208,8 @@ final List<SingleChildWidget> providers = [
     create: (context) => SizesRepository(
       client: context.read(),
     ),
+  ),
+  Provider(
+    create: (context) => CardRepository(client: context.read()),
   ),
 ];

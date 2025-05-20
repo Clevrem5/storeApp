@@ -72,6 +72,7 @@ class OngoingOrders extends StatelessWidget {
             size: 'M',
             price: '1,190',
             status: 'In Transit',
+            callback: () {},
           ),
         ],
       ),
@@ -93,6 +94,7 @@ class CompletedOrders extends StatelessWidget {
           size: 'M',
           price: '1,190',
           isRated: false,
+          callback: () {},
         ),
         CompletedOrderItem(
           imageUrl: 'assets/images/image.png',
@@ -101,6 +103,7 @@ class CompletedOrders extends StatelessWidget {
           price: '1,100',
           isRated: true,
           rating: 4.5,
+          callback: () {},
         ),
         CompletedOrderItem(
           imageUrl: 'assets/images/image.png',
@@ -108,6 +111,7 @@ class CompletedOrders extends StatelessWidget {
           size: 'L',
           price: '1,690',
           isRated: false,
+          callback: () {},
         ),
         CompletedOrderItem(
           imageUrl: 'assets/images/image.png',
@@ -115,6 +119,7 @@ class CompletedOrders extends StatelessWidget {
           size: 'S',
           price: '1,290',
           isRated: false,
+          callback: () {},
         ),
         CompletedOrderItem(
           imageUrl: 'assets/images/image.png',
@@ -123,6 +128,7 @@ class CompletedOrders extends StatelessWidget {
           price: '1,341',
           isRated: true,
           rating: 3.5,
+          callback: () {},
         ),
       ],
     );
@@ -131,6 +137,7 @@ class CompletedOrders extends StatelessWidget {
 
 class OrderItem extends StatelessWidget {
   final String imageUrl, title, size, price, status;
+  final VoidCallback callback;
 
   const OrderItem({
     super.key,
@@ -139,6 +146,7 @@ class OrderItem extends StatelessWidget {
     required this.size,
     required this.price,
     required this.status,
+    required this.callback,
   });
 
   @override
@@ -194,7 +202,7 @@ class OrderItem extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
-                onPressed: () {},
+                onPressed: callback,
                 child: Text('Track Order'),
               ),
             ],
@@ -209,6 +217,7 @@ class CompletedOrderItem extends StatelessWidget {
   final String imageUrl, title, size, price;
   final bool isRated;
   final double? rating;
+  final VoidCallback callback;
 
   const CompletedOrderItem({
     super.key,
@@ -217,6 +226,7 @@ class CompletedOrderItem extends StatelessWidget {
     required this.size,
     required this.price,
     required this.isRated,
+    required this.callback,
     this.rating,
   });
 
@@ -282,7 +292,7 @@ class CompletedOrderItem extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       ),
-                      onPressed: () {},
+                      onPressed: callback,
                       child: Text('Leave Review'),
                     ),
             ],

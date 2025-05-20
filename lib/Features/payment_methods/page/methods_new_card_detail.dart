@@ -1,117 +1,137 @@
+// import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:go_router/go_router.dart';
+//
+// import '../../../Core/navigation/routes.dart';
+// import '../../../Core/utils/app_colors.dart';
+// import '../../../data/models/cardModels/card_model.dart';
+// import '../../Common_Widgets/storeAppBar.dart';
+// import '../../Common_Widgets/store_tex.dart';
+// import '../manager/card_bloc.dart';
+// import '../manager/card_state.dart';
+//
+// // Card model
+// // class CardModel {
+// //   final String number;
+// //   final String expiryDate;
+// //   final String securityCode;
+// //   final String cardType; // VISA, MasterCard, etc.
+// //   final bool isDefault;
+// //
+// //   CardModel({
+// //     required this.number,
+// //     required this.expiryDate,
+// //     required this.securityCode,
+// //     required this.cardType,
+// //     this.isDefault = false,
+// //   });
+// //
+// //   String get maskedNumber => '•••• •••• •••• ${number.substring(number.length - 4)}';
+// //
+// //   // Create a copy with modified fields
+// //   CardModel copyWith({
+// //     String? number,
+// //     String? expiryDate,
+// //     String? securityCode,
+// //     String? cardType,
+// //     bool? isDefault,
+// //   }) {
+// //     return CardModel(
+// //       number: number ?? this.number,
+// //       expiryDate: expiryDate ?? this.expiryDate,
+// //       securityCode: securityCode ?? this.securityCode,
+// //       cardType: cardType ?? this.cardType,
+// //       isDefault: isDefault ?? this.isDefault,
+// //     );
+// //   }
+// // }
+//
+// Payment Methods Detail page to display saved cards
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../Core/navigation/routes.dart';
 import '../../../Core/utils/app_colors.dart';
+import '../../../data/models/cardModels/card_model.dart';
 import '../../Common_Widgets/storeAppBar.dart';
 import '../../Common_Widgets/store_tex.dart';
+import '../manager/card_bloc.dart';
+import '../manager/card_state.dart';
 
-// Card model
-class CardModel {
-  final String number;
-  final String expiryDate;
-  final String securityCode;
-  final String cardType; // VISA, MasterCard, etc.
-  final bool isDefault;
-
-  CardModel({
-    required this.number,
-    required this.expiryDate,
-    required this.securityCode,
-    required this.cardType,
-    this.isDefault = false,
-  });
-
-  String get maskedNumber => '•••• •••• •••• ${number.substring(number.length - 4)}';
-
-  // Create a copy with modified fields
-  CardModel copyWith({
-    String? number,
-    String? expiryDate,
-    String? securityCode,
-    String? cardType,
-    bool? isDefault,
-  }) {
-    return CardModel(
-      number: number ?? this.number,
-      expiryDate: expiryDate ?? this.expiryDate,
-      securityCode: securityCode ?? this.securityCode,
-      cardType: cardType ?? this.cardType,
-      isDefault: isDefault ?? this.isDefault,
-    );
-  }
-}
-
-// Payment Methods Detail page to display saved cards
 class PaymentMethodsDetail extends StatefulWidget {
-  const PaymentMethodsDetail({Key? key}) : super(key: key);
+  const PaymentMethodsDetail({super.key});
 
   @override
   State<PaymentMethodsDetail> createState() => _PaymentMethodsDetailState();
 }
 class _PaymentMethodsDetailState extends State<PaymentMethodsDetail> {
-  List<CardModel> _cards = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _loadCards();
-  }
-
-  void _loadCards() {
-    if (_cards.isEmpty) {
-      _cards = [
-        CardModel(
-          number: '4242424242422512',
-          expiryDate: '12/25',
-          securityCode: '123',
-          cardType: 'VISA',
-          isDefault: true,
-        ),
-        CardModel(
-          number: '5555555555555421',
-          expiryDate: '10/26',
-          securityCode: '321',
-          cardType: 'MasterCard',
-          isDefault: false,
-        ),
-      ];
-    }
-
-    setState(() {});
-  }
-
-  void _setDefaultCard(int index) {
-    setState(() {
-      for (int i = 0; i < _cards.length; i++) {
-        _cards[i] = _cards[i].copyWith(isDefault: i == index);
-      }
-    });
-  }
-
-  void _goToAddCardPage() async {
-    final CardModel? newCard = await context.push<CardModel>(Routes.newCard);
-
-    if (newCard != null) {
-      String cardType = 'VISA';
-      final firstDigit = newCard.number[0];
-      if (firstDigit == '5') {
-        cardType = 'MasterCard';
-      } else if (firstDigit == '3') {
-        cardType = 'AmEx';
-      }
-
-      final updatedCard = newCard.copyWith(
-        cardType: cardType,
-        isDefault: _cards.isEmpty,
-      );
-
-      setState(() {
-        _cards.add(updatedCard);
-      });
-    }
-  }
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     _loadCards();
+//   }
+//
+//   void _loadCards() {
+//     if (cards.isEmpty) {
+//       cards = [
+//         CardModel(
+//           // number: '4242424242422512',
+//           // expiryDate: '12/25',
+//           // securityCode: '123',
+//           // cardType: 'VISA',
+//           // isDefault: true,
+//           id: 1,
+//           cardNumber: '4242424242422512',
+//         ),
+//         // CardModel(
+//         //   number: '5555555555555421',
+//         //   expiryDate: '10/26',
+//         //   securityCode: '321',
+//         //   cardType: 'MasterCard',
+//         //   isDefault: false,
+//         // ),
+//       ];
+//     }
+//
+//     setState(() {});
+//   }
+//
+//   void _setDefaultCard(int index) {
+//     setState(() {
+//       for (int i = 0; i < cards.length; i++) {
+//         cards[i] = cards[i].copyWith(: i == index);
+//       }
+//     });
+//   }
+//
+//   void _goToAddCardPage() async {
+//     final CardModel? newCard = await context.push<CardModel>(Routes.newCard);
+//
+//     if (newCard != null) {
+//       String cardType = 'VISA';
+//       final firstDigit = newCard.cardNumber[0];
+//       if (firstDigit == '5') {
+//         cardType = 'MasterCard';
+//       } else if (firstDigit == '3') {
+//         cardType = 'AmEx';
+//       }
+//
+//       final updatedCard = newCard.copyWith(
+//         cardType: cardType,
+//         isDefault: cards.isEmpty,
+//       );
+//
+//       setState(() {
+//         cards.add(updatedCard);
+//       });
+//     }
+//   }
 
   @override
   Widget build(BuildContext context) {
@@ -133,17 +153,28 @@ class _PaymentMethodsDetailState extends State<PaymentMethodsDetail> {
             ),
             SizedBox(height: 16.h),
             Expanded(
-              child: ListView.builder(
-                itemCount: _cards.length + 1,
-                itemBuilder: (context, index) {
-                  if (index < _cards.length) {
-                    final card = _cards[index];
-                    return _buildCardItem(card, index);
-                  } else {
-                    return _buildAddNewCardButton();
-                  }
-                },
-              ),
+              child: BlocBuilder<CardBloc, CardState>(builder: (context, state) {
+                if (state.status == CardStatus.loading) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (state.status == CardStatus.idle) {
+                  final cards = state.cards;
+                  return ListView.builder(
+                    itemCount: cards.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index < cards.length) {
+                        final card = cards[index];
+                        return _buildCardItem(card, index);
+                      } else {
+                        return _buildAddNewCardButton();
+                      }
+                    },
+                  );
+                } else {
+                  return Center(
+                    child: Text("xato"),
+                  );
+                }
+              }),
             ),
           ],
         ),
@@ -152,12 +183,14 @@ class _PaymentMethodsDetailState extends State<PaymentMethodsDetail> {
   }
 
   Widget _buildCardItem(CardModel card, int index) {
-    Widget cardIcon = SvgPicture.asset(
-      card.cardType == 'MasterCard'
-          ? "assets/icons/mastercard.svg"
-          : "assets/icons/visa.svg",
-      width: 32.w,
-    );
+    final String maskedNumber = '•••• •••• •••• ${card.cardNumber.substring(card.cardNumber.length-4)}';
+
+    // Widget cardIcon = SvgPicture.asset(
+    //   card.cardType == 'MasterCard'
+    //       ? "assets/icons/mastercard.svg"
+    //       : "assets/icons/visa.svg",
+    //   width: 32.w,
+    // );
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
       decoration: BoxDecoration(
@@ -166,26 +199,30 @@ class _PaymentMethodsDetailState extends State<PaymentMethodsDetail> {
       ),
       child: ListTile(
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        leading: cardIcon,
+        leading: SvgPicture.asset(
+          'assets/icons/visa.svg',
+          width: 32.w,
+        ),
         title: StoreText(
-          text: card.maskedNumber,
+          text: maskedNumber,
           color: AppColors.black,
           fontSize: 14.sp,
         ),
-        subtitle: card.isDefault
+        subtitle: Text("zor") == Text("d")//isdefault!!!
+            // card.isDefault
             ? StoreText(
           text: "Default",
           color: AppColors.hintText,
           fontSize: 12.sp,
         )
             : null,
-        trailing: Radio(
-          value: true,
-          groupValue: card.isDefault,
-          onChanged: (_) => _setDefaultCard(index),
-          activeColor: AppColors.black,
-        ),
-        onTap: () => _setDefaultCard(index),
+        // trailing: Radio(
+        //   value: true,
+        //   groupValue: true,
+        //   onChanged: (_) => _setDefaultCard(index),
+        //   activeColor: AppColors.black,
+        // ),
+        // onTap: () => _setDefaultCard(index),
       ),
     );
   }
@@ -194,7 +231,9 @@ class _PaymentMethodsDetailState extends State<PaymentMethodsDetail> {
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
       child: OutlinedButton(
-        onPressed: _goToAddCardPage,
+        onPressed: () {
+          context.push(Routes.newCard);
+        },
         style: OutlinedButton.styleFrom(
           side: BorderSide(color: AppColors.buttonBorder),
           shape: RoundedRectangleBorder(

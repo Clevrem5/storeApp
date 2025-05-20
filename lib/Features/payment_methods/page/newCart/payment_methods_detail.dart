@@ -8,8 +8,6 @@ import 'package:store_app/Features/Common_Widgets/storeAppBar.dart';
 import 'package:store_app/Features/Common_Widgets/store_tex.dart';
 import 'package:store_app/core/navigation/routes.dart';
 
-import 'methods_new_card_detail.dart';
-
 
 class MethodsNewCardDetail extends StatefulWidget {
   const MethodsNewCardDetail({super.key});
@@ -52,15 +50,15 @@ class _MethodsNewCardDetailState extends State<MethodsNewCardDetail> {
 
   void _saveCardAndNavigate() {
     if (_formKey.currentState!.validate()) {
-      final card = CardModel(
-        number: _cardNumberController.text.replaceAll(' ', ''),
-        expiryDate: _expiryDateController.text,
-        securityCode: _securityCodeController.text,
-        cardType: 'VISA', // yoki aniqlang
-      );
+      // final card = CardModel(
+      //   number: _cardNumberController.text.replaceAll(' ', ''),
+      //   expiryDate: _expiryDateController.text,
+      //   securityCode: _securityCodeController.text,
+      //   cardType: 'VISA', // yoki aniqlang
+      // );
 
       // Faqat yangi sahifaga yo'naltiramiz:
-      context.push(Routes.paymentMethods, extra: card);
+      context.push(Routes.paymentMethods, );//extra: card);
     }
   }
 
