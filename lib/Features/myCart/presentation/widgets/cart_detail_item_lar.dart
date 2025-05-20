@@ -38,7 +38,7 @@ class CartDetailItemLar extends StatelessWidget {
             child: Row(
               spacing: 10,
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [//!!!
+              children: [ //!!!
                 CachedNetworkImage(
                   imageUrl:item.image,
                   // imageUrl: "http://$url:8888/uploads/${item.image}",
@@ -149,9 +149,10 @@ class CartDetailItemLar extends StatelessWidget {
             ),
           );
         },
-        separatorBuilder: (context, index) => SizedBox(
-          height: 15.h,
-        ),
+        separatorBuilder: (context, index) =>
+            SizedBox(
+              height: 15.h,
+            ),
         itemCount: myCart.items.length,
       ),
     );
