@@ -268,5 +268,16 @@ class ApiClient {
       throw CustomException(message: "xato ketdi");
     }
   }
-  
+
+  Future<bool> fetchCreateCard(String cardNumber, DateTime expiryDate, String securityCode) async {
+    final response = await dio.post(
+      "/cards/create",
+      data: {
+        "cardNumber": cardNumber,
+        "expiryDate": expiryDate,
+        "securityCode": securityCode,
+      },
+    );
+    return response.statusCode == 200 ? true : false;
+  }
 }

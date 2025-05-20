@@ -48,7 +48,7 @@ import '../../data/repository/auth/Auth_repository.dart';
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: Routes.login,
+  initialLocation: Routes.paymentMethods,
   routes: [
     GoRoute(
       path: Routes.newAddress,
