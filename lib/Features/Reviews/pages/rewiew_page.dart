@@ -29,7 +29,10 @@ class ReviewPage extends StatelessWidget {
         },
         child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: StoreAppBar(title: "Reviews"),
+          appBar: StoreAppBar(
+            title: "Reviews",
+            callback: () => context.pop(),
+          ),
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
             child: BlocBuilder<ReviewBloc, ReviewState>(

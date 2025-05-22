@@ -12,7 +12,14 @@ class ProductRepositoryRemote implements IProductRepository {
   List<ProductsModel> products = [];
 
   @override
-  Future<List<ProductsModel>> fetchProducts(int? categoryId, String? title, int? sizeId, double? maxPrise, double? minPrise, String? orderBy) async {
+  Future<List<ProductsModel>> fetchProducts(
+    int? categoryId,
+    String? title,
+    int? sizeId,
+    double? maxPrise,
+    double? minPrise,
+    String? orderBy,
+  ) async {
     final Box<ProductsModel> box = Hive.box("products");
     final rawProducts = await client.fetchHomeProduct({
       "Title": title,

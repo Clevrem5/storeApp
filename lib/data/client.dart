@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:store_app/Core/exceptions/custom_exception.dart';
 import 'package:store_app/Core/inter_septor.dart';
+import 'package:store_app/data/models/cardModels/card_model.dart';
 import 'package:store_app/data/models/review_model/review_model.dart';
 
 import 'models/review_model/review_stats_model.dart';
@@ -287,5 +288,16 @@ class ApiClient {
       throw CustomException(message: "xato ketdi");
     }
   }
-  
+
+  Future<CardCreateModel> fetchCreateCard(CardCreateModel model) async {
+    final response = await dio.post(
+      "/cards/create",
+      data: model.toJson(),
+    );
+    if (response.statusCode==200){
+      return model;
+    }else{
+      throw Exception('xato');
+    }
+  }
 }

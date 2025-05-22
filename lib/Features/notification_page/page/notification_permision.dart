@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/Core/utils/app_colors.dart';
 import 'package:store_app/Features/Common_Widgets/storeAppBar.dart';
+
 import '../../../Core/navigation/routes.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
 
@@ -31,7 +32,10 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: StoreAppBar(title: "Notification"),
+      appBar: StoreAppBar(
+        title: "Notification",
+        callback: () => context.go(Routes.account),
+      ),
       body: ListView(
         children: switches.entries.map((entry) {
           return Column(

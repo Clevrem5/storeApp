@@ -16,7 +16,10 @@ class AccountDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: StoreAppBar(title: "Account",),
+      appBar: StoreAppBar(
+        title: "Account",
+        callback: () => context.pop(),
+      ),
       body: ListView(
         children: [
           ListTile(
@@ -85,7 +88,7 @@ class AccountDetail extends StatelessWidget {
         selectedIndex: 4,
         onTap: (index) {
           switch (index) {
-            case 0:
+            case 0://
               context.push(Routes.home);
               break;
             case 1:

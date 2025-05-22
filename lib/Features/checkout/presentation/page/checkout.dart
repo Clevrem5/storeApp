@@ -34,6 +34,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
       backgroundColor: Colors.white,
       appBar: StoreAppBar(
         title: "Checkout",
+        callback: () => context.pop(),
+        //context.go(Routes.cart),
         actions: [],
       ),
       body: Padding(

@@ -21,6 +21,7 @@ import 'package:store_app/Features/payment_methods/page/newCart/payment_methods_
 import 'package:store_app/Features/saved_page/manager/saved_event.dart';
 import 'package:store_app/Features/search_page/bloc/search_bloc.dart';
 import 'package:store_app/core/navigation/routes.dart';
+import 'package:store_app/data/models/cardModels/card_model.dart';
 import 'package:store_app/data/repository/search/search_repository_remote.dart';
 import 'package:store_app/features/home_page/page/home_page_detail.dart';
 import 'package:store_app/features/notification_page/page/notification_detail.dart';
@@ -48,7 +49,7 @@ import '../../data/repository/auth/Auth_repository.dart';
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: Routes.login,
+  initialLocation: Routes.home,
   routes: [
     GoRoute(
       path: Routes.newAddress,
@@ -202,19 +203,31 @@ final router = GoRouter(
           create: (context) => MyDetailsBloc(
                 repo: context.read(),
               ),
-          child: MyDetailsDetail()),
+          child: MyDetailView()),
     ),
     GoRoute(
       path: Routes.paymentMethods,
-      builder: (context, state) => BlocProvider(
-          create: (context) => CardBloc(
-                repo: context.read(),
-              )..add(CardLoad()),
-          child: PaymentMethodsDetail()),
+      builder: (context, state) {
+        // final CardCreateModel card = state.extra as CardCreateModel;
+        return BlocProvider(
+          create: (context) {
+            return CardBloc(
+              repo: context.read(),
+            )..add(CardLoad());
+          },
+          child: PaymentMethodsDetail(
+
+          ),
+        );
+      },
     ),
     GoRoute(
       path: Routes.newCard,
-      builder: (context, state) => MethodsNewCardDetail(),
+      builder: (context, state) => BlocProvider(
+          create: (context) => CardBloc(
+                repo: context.read(),
+              ),
+          child: MethodsNewCardDetail()),
     ),
     GoRoute(
       path: Routes.review,

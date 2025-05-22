@@ -1,14 +1,46 @@
-class CardModel {
-  final int id;
-  final String cardNumber;
+// class CardModel {
+//   final int id;
+//   final String cardNumber;
+//
+//   CardModel({
+//     required this.id,
+//     required this.cardNumber,
+//   });
+//
+//   factory CardModel.fromJson(Map<String, dynamic> json) {
+//     return CardModel(
+//       id: json['id'],
+//       cardNumber: json['cardNumber'],
+//     );
+//   }
+//
+//   Map<String, dynamic> toJson() {
+//     return {
+//       "id": id,
+//       "cardNumber": cardNumber,
+//     };
+//   }
+//
+//   CardModel copyWith({int? id ,String? cardnum}){
+//     return CardModel(id: id??this.id, cardNumber: cardnum??cardNumber);
+//   }
+// }
 
-  CardModel({
-    required this.id,
+class CardCreateModel {
+  final int? id;
+  final String cardNumber;
+  final DateTime? expiryDate;
+  final String? securityCode;
+
+  CardCreateModel({
+     this.id,
     required this.cardNumber,
+    this.expiryDate,
+    this.securityCode,
   });
 
-  factory CardModel.fromJson(Map<String, dynamic> json) {
-    return CardModel(
+  factory CardCreateModel.fromJson(Map<String, dynamic> json) {
+    return CardCreateModel(
       id: json['id'],
       cardNumber: json['cardNumber'],
     );
@@ -16,12 +48,9 @@ class CardModel {
 
   Map<String, dynamic> toJson() {
     return {
-      "id": id,
       "cardNumber": cardNumber,
+      "expiryDate": expiryDate!.toIso8601String().split('T')[0], // "2025-05-21",
+      "securityCode": securityCode,
     };
-  }
-
-  CardModel copyWith({int? id ,String? cardnum}){
-    return CardModel(id: id??this.id, cardNumber: cardnum??cardNumber);
   }
 }

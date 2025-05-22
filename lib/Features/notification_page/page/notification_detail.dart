@@ -29,6 +29,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
       appBar: StoreAppBar(
         actions: [],
         title: "Notifications",
+        callback: () => context.pop(),
       ),
       body: Padding(
         padding: EdgeInsets.only(left: 24),

@@ -32,6 +32,7 @@ class _ResetPasswordEmailDetailState extends State<ResetPasswordEmailDetail> {
       extendBody: true,
       appBar: StoreAppBar(
         title: "",
+        callback: () => context.pop(),
         actions: [],
       ),
       body: Padding(

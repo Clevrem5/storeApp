@@ -10,6 +10,7 @@ import 'package:store_app/Features/my_details/manager/my_details_state.dart';
 import 'package:store_app/Features/my_details/pages/store_app_text_field_string.dart';
 import 'package:store_app/Features/my_details/widgets/my_detail_data.dart';
 import 'package:store_app/Features/my_details/widgets/mydetailNumber.dart';
+
 import '../../../Core/navigation/routes.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
 
@@ -26,7 +27,10 @@ class MyDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: StoreAppBar(title: "My Details"),
+      appBar: StoreAppBar(
+        title: "My Details",
+        callback: () => context.go(Routes.account),
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 24.w,

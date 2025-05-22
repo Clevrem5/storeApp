@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
@@ -10,6 +11,7 @@ import 'package:store_app/Core/utils/app_colors.dart';
 import 'package:store_app/Features/Common_Widgets/storeAppBar.dart';
 import 'package:store_app/Features/Common_Widgets/store_tex.dart';
 
+import '../../../Core/navigation/routes.dart';
 import '../../Common_Widgets/store_icons.dart';
 
 class NewAddressDetail extends StatefulWidget {
@@ -115,6 +117,7 @@ class _NewAddressDetailState extends State<NewAddressDetail> {
       backgroundColor: AppColors.white,
       appBar: StoreAppBar(
         title: "NewAddress",
+          callback: () => context.go(Routes.address),
       ),
       body: Stack(
         children: [
