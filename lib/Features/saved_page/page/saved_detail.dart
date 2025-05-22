@@ -23,6 +23,7 @@ class SavedDetail extends StatelessWidget {
       backgroundColor: AppColors.white,
       appBar: StoreAppBar(
         title: "Saved",
+        callback: () => context.pop(),
       ),
       body: BlocBuilder<SavedBloc, SavedState>(builder: (context, state) {
         if (state.status == SavedStatus.loading) {

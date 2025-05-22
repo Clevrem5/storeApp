@@ -14,12 +14,14 @@ class StoreAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.bottom,
     this.toolbarHeight=60,
+    required this.callback,
   });
 
   final String title;
   final List<Widget>? actions;
   final double toolbarHeight;
   final PreferredSizeWidget? bottom;
+  final VoidCallback callback;
 
 
   @override
@@ -37,9 +39,7 @@ class StoreAppBar extends StatelessWidget implements PreferredSizeWidget {
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.white,
         leading: IconButton(
-          onPressed: () {
-            context.pop();
-          },
+          onPressed: callback,
           padding: EdgeInsets.zero,
           icon: Icon(
             Icons.arrow_back,

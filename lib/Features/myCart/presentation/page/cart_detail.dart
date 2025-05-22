@@ -34,7 +34,10 @@ class _CartDetailState extends State<CartDetail> {
             ),
           MyCartStatus.idle => Scaffold(
               extendBody: true,
-              appBar: StoreAppBar(title: "My Cart"),
+              appBar: StoreAppBar(
+                title: "My Cart",
+                callback: () => context.pop(),
+              ),
               backgroundColor: AppColors.white,
               body: isNotEmpty == true
                   ? CartDetailItems(

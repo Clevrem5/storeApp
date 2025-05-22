@@ -1,4 +1,4 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
+ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:store_app/data/models/home_models/home_page_model.dart';
 import 'package:store_app/data/repository/product/product_repository_interface.dart';
 import 'package:store_app/data/repository/product/product_repository_local.dart';

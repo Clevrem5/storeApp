@@ -64,7 +64,9 @@ import '../manager/card_bloc.dart';
 import '../manager/card_state.dart';
 
 class PaymentMethodsDetail extends StatefulWidget {
-  const PaymentMethodsDetail({super.key});
+  final CardCreateModel? card;
+
+  const PaymentMethodsDetail({super.key, this.card});
 
   @override
   State<PaymentMethodsDetail> createState() => _PaymentMethodsDetailState();
@@ -102,13 +104,14 @@ class _PaymentMethodsDetailState extends State<PaymentMethodsDetail> {
 //     setState(() {});
 //   }
 //
+// final List<CardModel>cards= [];
 //   void _setDefaultCard(int index) {
 //     setState(() {
 //       for (int i = 0; i < cards.length; i++) {
-//         cards[i] = cards[i].copyWith(: i == index);
+//         cards[i] = cards[i].copyWith(id:i);
 //       }
 //     });
-//   }
+
 //
 //   void _goToAddCardPage() async {
 //     final CardModel? newCard = await context.push<CardModel>(Routes.newCard);
@@ -139,19 +142,22 @@ class _PaymentMethodsDetailState extends State<PaymentMethodsDetail> {
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.white,
       extendBody: true,
-      appBar: StoreAppBar(title: "Payment Methods"),
+      appBar: StoreAppBar(
+        title: "Payment Methods",
+        callback: () => context.go(Routes.checkout),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             StoreText(
-              text: "Cards",
+              text: "Saved Cards",
               color: AppColors.black,
-              fontSize: 18.sp,
+              fontSize: 16.sp,
               fontWeight: FontWeight.w600,
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: 14.h),
             Expanded(
               child: BlocBuilder<CardBloc, CardState>(builder: (context, state) {
                 if (state.status == CardStatus.loading) {
@@ -182,22 +188,43 @@ class _PaymentMethodsDetailState extends State<PaymentMethodsDetail> {
     );
   }
 
-  Widget _buildCardItem(CardModel card, int index) {
+  Widget _buildCardItem(CardCreateModel card, int index) {
     final String maskedNumber = '•••• •••• •••• ${card.cardNumber.substring(card.cardNumber.length-4)}';
-
-    // Widget cardIcon = SvgPicture.asset(
-    //   card.cardType == 'MasterCard'
-    //       ? "assets/icons/mastercard.svg"
-    //       : "assets/icons/visa.svg",
-    //   width: 32.w,
-    // );
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.buttonBorder),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: ListTile(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SvgPicture.asset(
+            'assets/icons/visa.svg',
+            width: 32.w,
+          ),
+          StoreText(
+            text: maskedNumber,
+            color: AppColors.black,
+            fontSize: 14.sp,
+          ),
+          InkWell(
+            onTap: () {},
+            child: Radio(
+              value: true,
+              groupValue: true,
+              onChanged: (value) => index,
+              activeColor: AppColors.black,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+/*
+ListTile(
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         leading: SvgPicture.asset(
           'assets/icons/visa.svg',
@@ -223,10 +250,8 @@ class _PaymentMethodsDetailState extends State<PaymentMethodsDetail> {
         //   activeColor: AppColors.black,
         // ),
         // onTap: () => _setDefaultCard(index),
-      ),
-    );
-  }
-
+      )
+      */
   Widget _buildAddNewCardButton() {
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),

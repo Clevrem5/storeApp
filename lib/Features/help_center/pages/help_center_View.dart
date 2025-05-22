@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/Core/utils/app_colors.dart';
 import 'package:store_app/Features/Common_Widgets/storeAppBar.dart';
+
 import '../../../Core/navigation/routes.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
 import '../widgets/help_center_tile.dart';
@@ -13,7 +14,10 @@ class HelpCenterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: StoreAppBar(title: "Help Center"),
+      appBar: StoreAppBar(
+        title: "Help Center",
+        callback: () => context.go(Routes.account),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

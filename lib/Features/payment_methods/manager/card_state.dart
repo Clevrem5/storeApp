@@ -1,41 +1,44 @@
 import 'package:equatable/equatable.dart';
-
 import '../../../data/models/cardModels/card_model.dart';
 
 enum CardStatus { idle, loading, error }
 
 class CardState extends Equatable {
   final CardStatus status;
-  final List<CardModel> cards;
-  final bool isSuccess;
+  final List<CardCreateModel> cards;
+  final CardCreateModel card;
 
   const CardState({
     required this.cards,
     required this.status,
-    required this.isSuccess,
+    required this.card,
   });
 
   factory CardState.initial() {
     return CardState(
       cards: [],
+      card: CardCreateModel(
+        id: null,
+        cardNumber: '',
+        expiryDate: DateTime.now(),
+        securityCode: '',
+      ),
       status: CardStatus.loading,
-      isSuccess: false,
     );
   }
 
-  CardState copyWith({List<CardModel>? card, CardStatus? status, bool? isSuccess}) {
+  CardState copyWith({
+    List<CardCreateModel>? cards,
+    CardStatus? status,
+    CardCreateModel? cardModel,
+  }) {
     return CardState(
-      cards: card ?? cards,
+      cards: cards ?? this.cards,
+      card: cardModel ?? this.card,
       status: status ?? this.status,
-      isSuccess: isSuccess ?? this.isSuccess,
     );
   }
-
 
   @override
-  List<Object> get props => [
-        cards,
-        status,
-        isSuccess,
-      ];
+  List<Object> get props => [cards, status, card];
 }

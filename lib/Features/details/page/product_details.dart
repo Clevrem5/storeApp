@@ -63,7 +63,8 @@ class ProductDetails extends StatelessWidget {
         return Scaffold(
           backgroundColor: AppColors.white,
           extendBody: true,
-          appBar: StoreAppBar(title: "Details"),
+          appBar: StoreAppBar(title: "Details",
+              callback: () => context.pop(),),
           body: Padding(
             padding: const EdgeInsets.only(top: 20, left: 24, right: 24),
             child: Column(

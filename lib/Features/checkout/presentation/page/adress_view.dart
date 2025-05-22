@@ -38,6 +38,7 @@ class _AddressViewState extends State<AddressView> {
       backgroundColor: Colors.white,
       appBar: StoreAppBar(
         title: "Address",
+          callback: () => context.go(Routes.checkout)
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),

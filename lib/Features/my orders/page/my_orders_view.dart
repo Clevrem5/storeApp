@@ -18,6 +18,7 @@ class MyOrdersPage extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: StoreAppBar(
           title: "My Orders",
+            callback: () => context.go(Routes.account),
           bottom:  MyOrdersAppBarBottom(),
         ),
         body: TabBarView(
