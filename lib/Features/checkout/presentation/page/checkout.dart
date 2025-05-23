@@ -34,7 +34,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
       backgroundColor: Colors.white,
       appBar: StoreAppBar(
         title: "Checkout",
-        callback: () => context.pop(),
+        callback: () => context.go(Routes.cart
+        ),
         //context.go(Routes.cart),
         actions: [],
       ),
@@ -146,7 +147,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     Spacer(),
                     IconButton(
                       onPressed: () {
-                        context.push(Routes.paymentMethods);
+                        context.push(Routes.paymentMethods,extra:  {'source':'checkout'});
                       },
                       icon: Icon(Icons.edit),
                     ),

@@ -54,6 +54,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:store_app/Features/payment_methods/page/payment_methods_detail_button.dart';
 
 import '../../../Core/navigation/routes.dart';
 import '../../../Core/utils/app_colors.dart';
@@ -63,79 +64,12 @@ import '../../Common_Widgets/store_tex.dart';
 import '../manager/card_bloc.dart';
 import '../manager/card_state.dart';
 
-class PaymentMethodsDetail extends StatefulWidget {
-  final CardCreateModel? card;
+class PaymentMethodsDetail extends StatelessWidget {
+  final String source;
 
-  const PaymentMethodsDetail({super.key, this.card});
-
-  @override
-  State<PaymentMethodsDetail> createState() => _PaymentMethodsDetailState();
-}
-class _PaymentMethodsDetailState extends State<PaymentMethodsDetail> {
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     _loadCards();
-//   }
-//
-//   void _loadCards() {
-//     if (cards.isEmpty) {
-//       cards = [
-//         CardModel(
-//           // number: '4242424242422512',
-//           // expiryDate: '12/25',
-//           // securityCode: '123',
-//           // cardType: 'VISA',
-//           // isDefault: true,
-//           id: 1,
-//           cardNumber: '4242424242422512',
-//         ),
-//         // CardModel(
-//         //   number: '5555555555555421',
-//         //   expiryDate: '10/26',
-//         //   securityCode: '321',
-//         //   cardType: 'MasterCard',
-//         //   isDefault: false,
-//         // ),
-//       ];
-//     }
-//
-//     setState(() {});
-//   }
-//
-// final List<CardModel>cards= [];
-//   void _setDefaultCard(int index) {
-//     setState(() {
-//       for (int i = 0; i < cards.length; i++) {
-//         cards[i] = cards[i].copyWith(id:i);
-//       }
-//     });
+  const PaymentMethodsDetail({super.key, required this.source});
 
 //
-//   void _goToAddCardPage() async {
-//     final CardModel? newCard = await context.push<CardModel>(Routes.newCard);
-//
-//     if (newCard != null) {
-//       String cardType = 'VISA';
-//       final firstDigit = newCard.cardNumber[0];
-//       if (firstDigit == '5') {
-//         cardType = 'MasterCard';
-//       } else if (firstDigit == '3') {
-//         cardType = 'AmEx';
-//       }
-//
-//       final updatedCard = newCard.copyWith(
-//         cardType: cardType,
-//         isDefault: cards.isEmpty,
-//       );
-//
-//       setState(() {
-//         cards.add(updatedCard);
-//       });
-//     }
-//   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,7 +78,13 @@ class _PaymentMethodsDetailState extends State<PaymentMethodsDetail> {
       extendBody: true,
       appBar: StoreAppBar(
         title: "Payment Methods",
-        callback: () => context.go(Routes.checkout),
+        callback: () async {
+          if (source == 'checkout') {
+            context.go(Routes.checkout);
+          } else if (source == 'account') {
+            context.go(Routes.account);
+          }
+        },
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -159,7 +99,8 @@ class _PaymentMethodsDetailState extends State<PaymentMethodsDetail> {
             ),
             SizedBox(height: 14.h),
             Expanded(
-              child: BlocBuilder<CardBloc, CardState>(builder: (context, state) {
+              child:
+                  BlocBuilder<CardBloc, CardState>(builder: (context, state) {
                 if (state.status == CardStatus.loading) {
                   return Center(child: CircularProgressIndicator());
                 } else if (state.status == CardStatus.idle) {
@@ -189,7 +130,8 @@ class _PaymentMethodsDetailState extends State<PaymentMethodsDetail> {
   }
 
   Widget _buildCardItem(CardCreateModel card, int index) {
-    final String maskedNumber = '•••• •••• •••• ${card.cardNumber.substring(card.cardNumber.length-4)}';
+    final String maskedNumber =
+        '•••• •••• •••• ${card.cardNumber.substring(card.cardNumber.length - 4)}';
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -255,30 +197,7 @@ ListTile(
   Widget _buildAddNewCardButton() {
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
-      child: OutlinedButton(
-        onPressed: () {
-          context.push(Routes.newCard);
-        },
-        style: OutlinedButton.styleFrom(
-          side: BorderSide(color: AppColors.buttonBorder),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          padding: EdgeInsets.symmetric(vertical: 16),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.add, color: AppColors.black),
-            SizedBox(width: 8.w),
-            StoreText(
-              text: "Add New Card",
-              color: AppColors.black,
-              fontSize: 14.sp,
-            ),
-          ],
-        ),
-      ),
+      child: PaymentMethodsDetailButton(),
     );
   }
 }

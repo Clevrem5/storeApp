@@ -66,8 +66,8 @@ class _MethodsNewCardDetailState extends State<MethodsNewCardDetail> {
             context: context,
             builder: (context) => StoreAppDialog(
               callback: () async {
-                context.go(
-                  Routes.paymentMethods,
+                context.pushReplacement(
+                  Routes.paymentMethods, extra: {'source':'checkout'}
                 ); //extra: state.card);
               },
               title: "Congratulations!",
@@ -89,8 +89,8 @@ class _MethodsNewCardDetailState extends State<MethodsNewCardDetail> {
           backgroundColor: AppColors.white,
           appBar: StoreAppBar(
             title: "New Card",
-            callback: () => context.go(
-              Routes.paymentMethods,
+            callback: () => context.pushReplacement(
+              Routes.paymentMethods,extra: {'source':'checkout'}
             ),
           ),
           body: Padding(
@@ -210,10 +210,21 @@ class _MethodsNewCardDetailState extends State<MethodsNewCardDetail> {
                                 ],
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Muddatini kiriting !';
+                                    return 'Iltimos, amal qilish muddatini kiriting';
                                   }
                                   if (!RegExp(r'^(0[1-9]|1[0-2])\/([0-9]{2})$').hasMatch(value)) {
-                                    return 'MM/YY formatida';
+                                    return 'MM/YY formatida kiriting';
+                                  }
+                                  // Amal qilish muddati tugaganini tekshirish (hozirgi oy bilan solishtirib)
+                                  final parts = value.split('/');
+                                  final inputMonth = int.parse(parts[0]);
+                                  final inputYear = int.parse('20${parts[1]}');
+
+                                  final now = DateTime.now();
+                                  final inputDate = DateTime(inputYear, inputMonth + 1);
+
+                                  if (inputDate.isBefore(now)) {
+                                    return 'Karta muddati tugagan';
                                   }
                                   return null;
                                 },

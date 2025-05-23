@@ -45,7 +45,7 @@ class AccountDetail extends StatelessWidget {
             leading: const Icon(Icons.credit_card_outlined),
             title: const Text('Payment Methods'),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-            onTap: () => context.push(Routes.checkout),
+            onTap: () => context.push(Routes.paymentMethods, extra: {'source':'account'}),
           ),
           ListTile(
             leading: const Icon(Icons.notifications_none),
@@ -88,7 +88,7 @@ class AccountDetail extends StatelessWidget {
         selectedIndex: 4,
         onTap: (index) {
           switch (index) {
-            case 0://
+            case 0:
               context.push(Routes.home);
               break;
             case 1:
