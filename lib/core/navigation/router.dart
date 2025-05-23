@@ -11,7 +11,6 @@ import 'package:store_app/Features/home_page/manager/home_bloc.dart';
 import 'package:store_app/Features/map_page/page/new_adress_detail.dart';
 import 'package:store_app/Features/myCart/manager/my_cart_bloc.dart';
 import 'package:store_app/Features/my_details/manager/my_details_bloc.dart';
-import 'package:store_app/Features/my_details/page/my_details_detail.dart';
 import 'package:store_app/Features/my_details/pages/my_detail_view.dart';
 import 'package:store_app/Features/notification_page/manager/notification_bloc.dart';
 import 'package:store_app/Features/payment_methods/manager/card_bloc.dart';
@@ -21,7 +20,6 @@ import 'package:store_app/Features/payment_methods/page/newCart/payment_methods_
 import 'package:store_app/Features/saved_page/manager/saved_event.dart';
 import 'package:store_app/Features/search_page/bloc/search_bloc.dart';
 import 'package:store_app/core/navigation/routes.dart';
-import 'package:store_app/data/models/cardModels/card_model.dart';
 import 'package:store_app/data/repository/search/search_repository_remote.dart';
 import 'package:store_app/features/home_page/page/home_page_detail.dart';
 import 'package:store_app/features/notification_page/page/notification_detail.dart';
@@ -208,7 +206,10 @@ final router = GoRouter(
     GoRoute(
       path: Routes.paymentMethods,
       builder: (context, state) {
-        // final CardCreateModel card = state.extra as CardCreateModel;
+        final extra = state.extra as Map<String, dynamic>?;
+        final source = extra != null && extra['source'] != null
+            ? extra['source'] as String
+            : 'account'; // Default value
         return BlocProvider(
           create: (context) {
             return CardBloc(
@@ -216,11 +217,12 @@ final router = GoRouter(
             )..add(CardLoad());
           },
           child: PaymentMethodsDetail(
-
+            source: source,
           ),
         );
       },
     ),
+
     GoRoute(
       path: Routes.newCard,
       builder: (context, state) => BlocProvider(
