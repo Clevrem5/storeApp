@@ -9,7 +9,7 @@ part 'my_cart_model.g.dart';
 @JsonSerializable()
 class MyCartModel {
   @MyCartItemsConvertor()
-  final List<MyCartItemsModel> items;
+  List<MyCartItemsModel> items;
   final num subTotal;
   final num vat;
   final num shippingFee;

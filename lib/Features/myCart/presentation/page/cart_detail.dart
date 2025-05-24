@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/Features/Common_Widgets/storeAppBar.dart';
 import 'package:store_app/Features/myCart/manager/my_cart_bloc.dart';
 import 'package:store_app/Features/myCart/manager/my_cart_state.dart';
-import 'package:store_app/Features/myCart/presentation/page/cart_detail_empty.dart';
+import 'package:store_app/Features/myCart/presentation/page/card_items.dart';
+import 'package:store_app/Features/myCart/presentation/page/cart_detail_calculate.dart';
+import 'package:store_app/Features/myCart/presentation/page/store_new_navigation_bar.dart';
 import 'package:store_app/core/utils/app_colors.dart';
 
-import '../../../../Core/navigation/routes.dart';
-import '../../../Common_Widgets/store_bottom_navigation_bar.dart';
-import '../widgets/cart_detail_items.dart';
+import 'cart_detail_empty.dart';
 
 class CartDetail extends StatefulWidget {
   const CartDetail({super.key});
@@ -23,59 +24,59 @@ class _CartDetailState extends State<CartDetail> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MyCartBloc, MyCartState>(
-      builder: (context, state) {
-        return switch (state.status) {
-          MyCartStatus.error => Center(
-              child: Text("Xato chiqdi!!!"),
-            ),
-          MyCartStatus.loading => Center(
-              child: CircularProgressIndicator(),
-            ),
-          MyCartStatus.idle => Scaffold(
-              extendBody: true,
-              appBar: StoreAppBar(
-                title: "My Cart",
-                callback: () => context.pop(),
-              ),
-              backgroundColor: AppColors.white,
-              body: isNotEmpty == true
-                  ? CartDetailItems(
-                      myCart: state.data!,
-                    )
-                  : StoreAppPageEmpty(
-                      text: "Your Cart is empty!",
-              bio: "When you added product they'll\n "
-                  "appear here.",
-              icon: Icons.shopping_cart,
-            ),
-              bottomNavigationBar: StoreBottomNavigationBar(
-                selectedIndex: 3, // Dynamically set index
-                onTap: (index) {
-                  switch (index) {
-                    case 0:
-                      context.push(Routes.home);
-                      break;
-                    case 1:
-                      context.push(Routes.search);
-                      break;
-                    case 2:
-                      context.push(Routes.saved);
-                      break;
-                    case 3:
-                      context.push(Routes.cart);
-                      break;
-                    case 4:
-                      context.push(Routes.account);
-                      break;
-                    default:
-                      break;
-                  }
-                },
-              ),
-            ),
-        };
-      },
+    return Scaffold(
+      extendBody: true,
+      appBar: StoreAppBar(
+        title: "My Cart",
+        callback: () => context.pop(),
+      ),
+      backgroundColor: AppColors.white,
+      body: BlocBuilder<MyCartBloc, MyCartState>(builder: (context, state) {
+        final myCart = state.data;
+        if (state.status == MyCartStatus.loading) {
+          return Center(child: CircularProgressIndicator());
+        } else if (state.status == MyCartStatus.idle) {
+          return isNotEmpty == true
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 10,
+                  ),
+                  child: Column(
+                    spacing: 10,
+                    children: [
+                      // CartDetailItemLar(myCart: state.data!),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 355.h,
+                        child: ListView.separated(
+                          separatorBuilder: (context, index) => SizedBox(
+                            height: 15.h,
+                          ),
+                          itemCount: state.data!.items.length,
+                          itemBuilder: (context, index) {
+                            final item = state.data!.items[index];
+                            return CardItems(item: item);
+                          },
+                        ),
+                      ),
+                      CartDetailCalculate(myCart: myCart!),
+                    ],
+                  ),
+                )
+              : StoreAppPageEmpty(
+                  text: "Your Cart is empty!",
+                  bio: "When you added product they'll\n "
+                      "appear here.",
+                  icon: Icons.shopping_cart,
+                );
+        } else {
+          return Center(child: Text("Xato chiqdi!!!"));
+        }
+      }),
+      bottomNavigationBar: StoreNewNavigationBar(
+        index: 3,
+      ),
     );
   }
 }

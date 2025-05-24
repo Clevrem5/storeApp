@@ -20,4 +20,15 @@ class MyCartRepository implements IMyCartRepository {
       return await local.fetchMyCart();
     }
   }
+  @override
+  Future<bool> fetchCardDelete(int id) async{
+    return true;
+    // final result = await Connectivity().checkConnectivity();
+    // final isOnline = result.contains(ConnectivityResult.mobile) || result.contains(ConnectivityResult.wifi);
+    // if (isOnline) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+  }
 }

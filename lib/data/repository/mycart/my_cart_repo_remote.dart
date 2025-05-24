@@ -18,4 +18,11 @@ class MyCartRepositoryRemote implements IMyCartRepository {
     await box.put("myCart",myCart);
     return myCart;
   }
-}
+
+  @override
+  Future<bool> fetchCardDelete(int id) async {
+    final success=await client.fetchMyCartDelete(id);
+    return success;
+    }
+  }
+

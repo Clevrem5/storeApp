@@ -182,6 +182,7 @@ final List<SingleChildWidget> providers = [
   BlocProvider<MyCartBloc>(
     create: (context) => MyCartBloc(
       repo: context.read(),
+      remote: context.read(),
     ),
   ),
 
