@@ -16,7 +16,6 @@ import 'package:store_app/Features/notification_page/manager/notification_bloc.d
 import 'package:store_app/Features/payment_methods/manager/card_bloc.dart';
 import 'package:store_app/Features/payment_methods/manager/card_event.dart';
 import 'package:store_app/Features/payment_methods/page/methods_new_card_detail.dart';
-import 'package:store_app/Features/payment_methods/page/newCart/payment_methods_detail.dart';
 import 'package:store_app/Features/saved_page/manager/saved_event.dart';
 import 'package:store_app/Features/search_page/bloc/search_bloc.dart';
 import 'package:store_app/core/navigation/routes.dart';
@@ -40,6 +39,7 @@ import '../../Features/checkout/presentation/page/checkout.dart';
 import '../../Features/details/page/product_details.dart';
 import '../../Features/my orders/page/my_orders_view.dart';
 import '../../Features/myCart/presentation/page/cart_detail.dart';
+import '../../Features/newCart/payment_methods_detail.dart';
 import '../../Features/notification_page/page/notification_permision.dart';
 import '../../Features/saved_page/manager/saved_bloc.dart';
 import '../../Features/search_page/page/search_detai.dart';
