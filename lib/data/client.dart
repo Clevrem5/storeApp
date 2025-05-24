@@ -300,4 +300,31 @@ class ApiClient {
       throw Exception('xato');
     }
   }
+
+  Future<bool> fetchMyCartDelete(int id) async {
+    final response = await dio.delete('/my-cart/delete/$id');
+    if (response.statusCode == 204) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> fetchCardsDelete(int id) async {
+    final response = await dio.delete('/cards/delete/$id');
+    if (response.statusCode == 204) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> fetchOrdersDelete(int id) async {
+    final response = await dio.delete('/orders/delete/$id');
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

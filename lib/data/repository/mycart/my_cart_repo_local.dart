@@ -16,6 +16,12 @@ class MyCartRepositoryLocal implements IMyCartRepository{
       throw CustomException(message: e.toString());
     }
   }
+
+  @override
+  Future<bool> fetchCardDelete(int id) async{
+    box.deleteAt(id);
+    return true;
+    }
   
   
 }

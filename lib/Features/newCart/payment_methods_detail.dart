@@ -7,13 +7,13 @@ import 'package:go_router/go_router.dart';
 import 'package:store_app/Core/utils/app_colors.dart';
 import 'package:store_app/Features/Common_Widgets/storeAppBar.dart';
 import 'package:store_app/Features/Common_Widgets/store_tex.dart';
+import 'package:store_app/Features/newCart/store_app_dialog.dart';
 import 'package:store_app/Features/payment_methods/manager/card_bloc.dart';
 import 'package:store_app/Features/payment_methods/manager/card_event.dart';
-import 'package:store_app/Features/payment_methods/page/newCart/store_app_dialog.dart';
 import 'package:store_app/data/models/cardModels/card_model.dart';
 
 import '../../../../Core/navigation/routes.dart';
-import '../../manager/card_state.dart';
+import '../payment_methods/manager/card_state.dart';
 
 class MethodsNewCardDetail extends StatefulWidget {
   const MethodsNewCardDetail({super.key});
@@ -74,9 +74,6 @@ class _MethodsNewCardDetailState extends State<MethodsNewCardDetail> {
               subtitle: "Your new card added has been added.",
             ),
           );
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   const SnackBar(content: Text("Karta muvaffaqiyatli qo'shildi")),
-          // );
         } else if (state.status == CardStatus.error) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Karta qo'shilmadi")),

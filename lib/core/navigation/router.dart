@@ -47,7 +47,7 @@ import '../../data/repository/auth/Auth_repository.dart';
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: Routes.home,
+  initialLocation: Routes.login,
   routes: [
     GoRoute(
       path: Routes.newAddress,
@@ -162,6 +162,7 @@ final router = GoRouter(
       path: Routes.cart,
       builder: (context, state) => BlocProvider(
           create: (context) => MyCartBloc(
+                remote: context.read(),
                 repo: context.read(),
               ),
           child: CartDetail()),

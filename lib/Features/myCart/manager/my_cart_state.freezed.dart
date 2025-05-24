@@ -17,6 +17,7 @@ T _$identity<T>(T value) => value;
 mixin _$MyCartState {
   MyCartModel? get data;
   MyCartStatus get status;
+  List<MyCartItemsModel> get items;
 
   /// Create a copy of MyCartState
   /// with the given fields replaced by the non-null parameter values.
@@ -31,15 +32,17 @@ mixin _$MyCartState {
         (other.runtimeType == runtimeType &&
             other is MyCartState &&
             (identical(other.data, data) || other.data == data) &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.status, status) || other.status == status) &&
+            const DeepCollectionEquality().equals(other.items, items));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, data, status);
+  int get hashCode => Object.hash(
+      runtimeType, data, status, const DeepCollectionEquality().hash(items));
 
   @override
   String toString() {
-    return 'MyCartState(data: $data, status: $status)';
+    return 'MyCartState(data: $data, status: $status, items: $items)';
   }
 }
 
@@ -49,7 +52,8 @@ abstract mixin class $MyCartStateCopyWith<$Res> {
           MyCartState value, $Res Function(MyCartState) _then) =
       _$MyCartStateCopyWithImpl;
   @useResult
-  $Res call({MyCartModel? data, MyCartStatus status});
+  $Res call(
+      {MyCartModel? data, MyCartStatus status, List<MyCartItemsModel> items});
 }
 
 /// @nodoc
@@ -66,6 +70,7 @@ class _$MyCartStateCopyWithImpl<$Res> implements $MyCartStateCopyWith<$Res> {
   $Res call({
     Object? data = freezed,
     Object? status = null,
+    Object? items = null,
   }) {
     return _then(_self.copyWith(
       data: freezed == data
@@ -76,6 +81,10 @@ class _$MyCartStateCopyWithImpl<$Res> implements $MyCartStateCopyWith<$Res> {
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as MyCartStatus,
+      items: null == items
+          ? _self.items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<MyCartItemsModel>,
     ));
   }
 }
@@ -83,12 +92,23 @@ class _$MyCartStateCopyWithImpl<$Res> implements $MyCartStateCopyWith<$Res> {
 /// @nodoc
 
 class _MyCartState implements MyCartState {
-  const _MyCartState({required this.data, required this.status});
+  const _MyCartState(
+      {required this.data,
+      required this.status,
+      required final List<MyCartItemsModel> items})
+      : _items = items;
 
   @override
   final MyCartModel? data;
   @override
   final MyCartStatus status;
+  final List<MyCartItemsModel> _items;
+  @override
+  List<MyCartItemsModel> get items {
+    if (_items is EqualUnmodifiableListView) return _items;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_items);
+  }
 
   /// Create a copy of MyCartState
   /// with the given fields replaced by the non-null parameter values.
@@ -104,15 +124,17 @@ class _MyCartState implements MyCartState {
         (other.runtimeType == runtimeType &&
             other is _MyCartState &&
             (identical(other.data, data) || other.data == data) &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.status, status) || other.status == status) &&
+            const DeepCollectionEquality().equals(other._items, _items));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, data, status);
+  int get hashCode => Object.hash(
+      runtimeType, data, status, const DeepCollectionEquality().hash(_items));
 
   @override
   String toString() {
-    return 'MyCartState(data: $data, status: $status)';
+    return 'MyCartState(data: $data, status: $status, items: $items)';
   }
 }
 
@@ -124,7 +146,8 @@ abstract mixin class _$MyCartStateCopyWith<$Res>
       __$MyCartStateCopyWithImpl;
   @override
   @useResult
-  $Res call({MyCartModel? data, MyCartStatus status});
+  $Res call(
+      {MyCartModel? data, MyCartStatus status, List<MyCartItemsModel> items});
 }
 
 /// @nodoc
@@ -141,6 +164,7 @@ class __$MyCartStateCopyWithImpl<$Res> implements _$MyCartStateCopyWith<$Res> {
   $Res call({
     Object? data = freezed,
     Object? status = null,
+    Object? items = null,
   }) {
     return _then(_MyCartState(
       data: freezed == data
@@ -151,6 +175,10 @@ class __$MyCartStateCopyWithImpl<$Res> implements _$MyCartStateCopyWith<$Res> {
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as MyCartStatus,
+      items: null == items
+          ? _self._items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<MyCartItemsModel>,
     ));
   }
 }
