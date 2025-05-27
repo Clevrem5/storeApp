@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:store_app/Core/utils/app_colors.dart';
 import 'package:store_app/Features/Common_Widgets/storeAppBar.dart';
 import 'package:store_app/Features/Common_Widgets/store_tex.dart';
-import 'package:store_app/Features/newCart/store_app_dialog.dart';
+import 'package:store_app/Features/newCard/store_app_dialog.dart';
 import 'package:store_app/Features/payment_methods/manager/card_bloc.dart';
 import 'package:store_app/Features/payment_methods/manager/card_event.dart';
 import 'package:store_app/data/models/cardModels/card_model.dart';
@@ -36,6 +36,7 @@ class _MethodsNewCardDetailState extends State<MethodsNewCardDetail> {
 
   void _saveCard() {
     final cardModel = CardCreateModel(
+      id: -1,
       cardNumber: _cardNumberController.text.replaceAll(' ', ''),
       expiryDate: _parseExpiryDate(_expiryDateController.text),
       securityCode: _securityCodeController.text,
@@ -49,7 +50,6 @@ class _MethodsNewCardDetailState extends State<MethodsNewCardDetail> {
 
   DateTime _parseExpiryDate(String value) {
     final parts = value.split('/');
-    print(parts);
     final month = int.parse(parts[0]);
     final year = int.parse('20${parts[1]}');
     return DateTime(year, month, 1);
@@ -59,19 +59,21 @@ class _MethodsNewCardDetailState extends State<MethodsNewCardDetail> {
   Widget build(BuildContext context) {
     return BlocConsumer<CardBloc, CardState>(
       listener: (context, state) async {
-        if (state.status == CardStatus.idle && state.card != null) {
+        if (state.status == CardStatus.idle) {
           showDialog(
             barrierColor: Colors.black.withValues(alpha: 0.45),
             barrierDismissible: false,
             context: context,
-            builder: (context) => StoreAppDialog(
-              callback: () async {
-                context.pushReplacement(
-                  Routes.paymentMethods, extra: {'source':'checkout'}
-                ); //extra: state.card);
-              },
-              title: "Congratulations!",
-              subtitle: "Your new card added has been added.",
+            builder: (context) => Material(
+              color: Colors.transparent,
+              shadowColor: Colors.transparent,
+              child: StoreAppDialog(
+                callback: () async {
+                  context.pushReplacement(Routes.paymentMethods, extra: {'source': 'checkout'}); //extra: state.card);
+                },
+                title: "Congratulations!",
+                subtitle: "Your new card added has been added.",
+              ),
             ),
           );
         } else if (state.status == CardStatus.error) {

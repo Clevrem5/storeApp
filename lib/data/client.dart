@@ -321,10 +321,11 @@ class ApiClient {
 
   Future<bool> fetchOrdersDelete(int id) async {
     final response = await dio.delete('/orders/delete/$id');
-    if (response.statusCode == 200) {
+    if (response.statusCode == 204) {
       return true;
     } else {
       return false;
     }
   }
+
 }

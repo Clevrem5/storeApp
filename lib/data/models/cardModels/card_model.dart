@@ -27,13 +27,13 @@
 // }
 
 class CardCreateModel {
-  final int? id;
+ late final int id;
   final String cardNumber;
   final DateTime? expiryDate;
   final String? securityCode;
 
   CardCreateModel({
-     this.id,
+     required this.id,
     required this.cardNumber,
     this.expiryDate,
     this.securityCode,

@@ -10,6 +10,11 @@ final class CreateCard extends CardEvent {
 
   CreateCard({
     required this.card,
-
   });
+}
+
+final class CardDeleteEvent extends CardEvent {
+  final int id;
+
+  CardDeleteEvent({required this.id});
 }
