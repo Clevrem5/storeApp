@@ -14,6 +14,8 @@ import 'package:store_app/Features/myCart/manager/my_cart_bloc.dart';
 import 'package:store_app/Features/myCart/manager/my_cart_event.dart';
 import 'package:store_app/Features/my_details/manager/my_details_bloc.dart';
 import 'package:store_app/Features/my_details/pages/my_detail_view.dart';
+import 'package:store_app/Features/my_orders/manager/my_orders_bloc.dart';
+import 'package:store_app/Features/my_orders/page/my_orders_view.dart';
 import 'package:store_app/Features/notification_page/manager/notification_bloc.dart';
 import 'package:store_app/Features/payment_methods/manager/card_bloc.dart';
 import 'package:store_app/Features/payment_methods/manager/card_event.dart';
@@ -39,7 +41,6 @@ import '../../Features/account_page/page/account_detail.dart';
 import '../../Features/checkout/presentation/page/adress_view.dart';
 import '../../Features/checkout/presentation/page/checkout.dart';
 import '../../Features/details/page/product_details.dart';
-import '../../Features/my orders/page/my_orders_view.dart';
 import '../../Features/myCart/presentation/page/cart_detail.dart';
 import '../../Features/newCard/new_card_view.dart';
 import '../../Features/notification_page/page/notification_permision.dart';
@@ -49,7 +50,9 @@ import '../../data/repository/auth/Auth_repository.dart';
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: Routes.newAddress,
+
+  initialLocation: Routes.home,
+
   routes: [
     GoRoute(
       path: Routes.newAddress,
@@ -156,7 +159,7 @@ final router = GoRouter(
       path: Routes.search,
       builder: (context, state) => BlocProvider(
           create: (context) => SearchBloc(
-                repo: context.read<SearchRepositoryRemote>() ,
+                repo: context.read<SearchRepositoryRemote>(),
               ),
           child: SearchDetail()),
     ),
@@ -200,7 +203,12 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.myOrders,
-      builder: (context, state) => MyOrdersPage(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => MyOrdersBloc(
+          repository: context.read(),
+        ),
+        child: MyOrdersPage(),
+      ),
     ),
     GoRoute(
       path: Routes.faqs,
@@ -218,9 +226,7 @@ final router = GoRouter(
       path: Routes.paymentMethods,
       builder: (context, state) {
         final extra = state.extra as Map<String, dynamic>?;
-        final source = extra != null && extra['source'] != null
-            ? extra['source'] as String
-            : 'account'; // Default value
+        final source = extra != null && extra['source'] != null ? extra['source'] as String : 'account'; // Default value
         return BlocProvider(
           create: (context) {
             return CardBloc(
@@ -233,7 +239,6 @@ final router = GoRouter(
         );
       },
     ),
-
     GoRoute(
       path: Routes.newCard,
       builder: (context, state) => BlocProvider(

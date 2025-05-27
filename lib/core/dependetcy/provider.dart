@@ -3,10 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:store_app/Features/Reviews/manager/review_bloc.dart';
 import 'package:store_app/Features/myCart/manager/my_cart_bloc.dart';
+import 'package:store_app/Features/my_orders/manager/my_orders_bloc.dart';
 import 'package:store_app/data/repository/card/card_repository.dart';
 import 'package:store_app/data/repository/mycart/my_cart_repo_local.dart';
 import 'package:store_app/data/repository/mycart/my_cart_repo_remote.dart';
 import 'package:store_app/data/repository/mycart/my_cart_repository.dart';
+import 'package:store_app/data/repository/orders/orders_repository.dart';
 import 'package:store_app/data/repository/product/product_repository_local.dart';
 import 'package:store_app/data/repository/review/review_repository.dart';
 import 'package:store_app/data/repository/review/review_repository_interface.dart';
@@ -185,6 +187,11 @@ final List<SingleChildWidget> providers = [
       remote: context.read(),
     ),
   ),
+  BlocProvider<MyOrdersBloc>(
+    create: (context) => MyOrdersBloc(
+      repository: context.read(),
+    ),
+  ),
 
   // Provider'lar
   Provider<AuthRepository>(
@@ -195,6 +202,11 @@ final List<SingleChildWidget> providers = [
 
   Provider<SavedRepository>(
     create: (context) => SavedRepository(
+      client: context.read(),
+    ),
+  ),
+  Provider<OrdersRepository>(
+    create: (context) => OrdersRepository(
       client: context.read(),
     ),
   ),
