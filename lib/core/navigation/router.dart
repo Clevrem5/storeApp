@@ -10,8 +10,10 @@ import 'package:store_app/Features/details/manager/details_bloc.dart';
 import 'package:store_app/Features/faqs/page/faqs_detail.dart';
 import 'package:store_app/Features/help_center/pages/help_center_View.dart';
 import 'package:store_app/Features/home_page/manager/home_bloc.dart';
-import 'package:store_app/Features/map_page/page/new_adress_detail.dart';
+import 'package:store_app/Features/map_page/bloc/new_address_bloc.dart';
+import 'package:store_app/Features/map_page/page/map_view.dart';
 import 'package:store_app/Features/myCart/manager/my_cart_bloc.dart';
+import 'package:store_app/Features/myCart/manager/my_cart_event.dart';
 import 'package:store_app/Features/my_details/manager/my_details_bloc.dart';
 import 'package:store_app/Features/my_details/pages/my_detail_view.dart';
 import 'package:store_app/Features/my_orders/manager/my_orders_bloc.dart';
@@ -19,7 +21,7 @@ import 'package:store_app/Features/my_orders/page/my_orders_view.dart';
 import 'package:store_app/Features/notification_page/manager/notification_bloc.dart';
 import 'package:store_app/Features/payment_methods/manager/card_bloc.dart';
 import 'package:store_app/Features/payment_methods/manager/card_event.dart';
-import 'package:store_app/Features/payment_methods/page/methods_new_card_detail.dart';
+import 'package:store_app/Features/payment_methods/page/payment_methods_view.dart';
 import 'package:store_app/Features/saved_page/manager/saved_event.dart';
 import 'package:store_app/Features/search_page/bloc/search_bloc.dart';
 import 'package:store_app/core/navigation/routes.dart';
@@ -42,7 +44,7 @@ import '../../Features/checkout/presentation/page/adress_view.dart';
 import '../../Features/checkout/presentation/page/checkout.dart';
 import '../../Features/details/page/product_details.dart';
 import '../../Features/myCart/presentation/page/cart_detail.dart';
-import '../../Features/newCart/payment_methods_detail.dart';
+import '../../Features/newCard/new_card_view.dart';
 import '../../Features/notification_page/page/notification_permision.dart';
 import '../../Features/saved_page/manager/saved_bloc.dart';
 import '../../Features/search_page/page/search_detai.dart';
@@ -50,11 +52,16 @@ import '../../data/repository/auth/Auth_repository.dart';
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
+
   initialLocation: Routes.home,
+
   routes: [
     GoRoute(
       path: Routes.newAddress,
-      builder: (context, state) => NewAddressDetail(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => NewAddressBloc(),
+        child: NewAddressPage(),
+      ),
     ),
     GoRoute(
       path: Routes.resetPasswordEmail,
@@ -115,7 +122,12 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.checkout,
-      builder: (context, state) => CheckoutPage(),
+      builder: (context, state) => BlocProvider(
+          create: (context) => MyCartBloc(repo: context.read(), remote: context.read())
+            ..add(
+              MyCartLoad(),
+            ),
+          child: CheckoutPage()),
     ),
     GoRoute(
       path: Routes.onboardingStarted,

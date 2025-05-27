@@ -30,7 +30,7 @@ class CartDetailCalculate extends StatelessWidget {
               fontSize: 16.sp,
             ),
             StoreText(
-              text: "\$ ${myCart!.subTotal}",
+              text: "\$ ${myCart.subTotal}",
               color: Colors.black,
               fontWeight: FontWeight.w500,
               fontSize: 16.sp,
