@@ -10,7 +10,6 @@ class StoreAppDialog extends StatelessWidget {
     required this.subtitle,
     required this.callback,
   });
-
   final VoidCallback callback;
   final String title;
   final String subtitle;

@@ -18,7 +18,7 @@ class CardState extends Equatable {
     return CardState(
       cards: [],
       card: CardCreateModel(
-        id: null,
+        id: 0,
         cardNumber: '',
         expiryDate: DateTime.now(),
         securityCode: '',

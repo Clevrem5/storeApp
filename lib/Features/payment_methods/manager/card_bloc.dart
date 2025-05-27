@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:store_app/Core/exceptions/custom_exception.dart';
 
 import '../../../data/repository/card/card_repository.dart';
 import 'card_event.dart';
@@ -13,6 +14,7 @@ class CardBloc extends Bloc<CardEvent, CardState> {
         super(CardState.initial()) {
     on<CardLoad>(_load);
     on<CreateCard>(_createCard);
+    on<CardDeleteEvent>(_delete);
   }
 
   Future<void> _load(CardLoad event, Emitter<CardState> emit) async {
@@ -24,15 +26,25 @@ class CardBloc extends Bloc<CardEvent, CardState> {
 
   Future<void> _createCard(CreateCard event, Emitter<CardState> emit) async {
     final result = await _repository.fetchCreateCard(event.card);
-    if (result != null) {
-      return emit(
-        state.copyWith(
-          status: CardStatus.idle,
-          cardModel: result,
-        ),
-      );
-    } else {
-      emit(state.copyWith(status: CardStatus.error));
+    return emit(
+      state.copyWith(
+        status: CardStatus.idle,
+        cardModel: result,
+      ),
+    );
+  }
+
+  Future<void> _delete(CardDeleteEvent event, Emitter<CardState> emit) async {
+    final result = await _repository.fetchDeleteCard(event.id);
+    if (result) {
+      state.cards
+          .where(
+            (element) => element.id != event.id,
+          )
+          .toList();
+      emit(state.copyWith(status: CardStatus.idle));
+    }else{
+      throw CustomException(message: "xato ketdi");
     }
   }
 }

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../Core/navigation/routes.dart';
-import '../../../Core/utils/app_colors.dart';
+import '../../../../Core/navigation/routes.dart';
+import '../../../../Core/utils/app_colors.dart';
 import '../../Common_Widgets/store_tex.dart';
 
 class PaymentMethodsDetailButton extends StatelessWidget {

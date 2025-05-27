@@ -18,4 +18,12 @@ class CardRepository {
     return result;
   }
 
+  Future<bool> fetchDeleteCard(int id) async {
+    final result = await client.fetchCardsDelete(id);
+    if (result) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
