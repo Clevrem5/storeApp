@@ -19,6 +19,7 @@ class Routes {
   static const String myDetails = "/myDetails";
   static const String review = "/review/:productId";
   static const String helpCenter = "/helpCenter";
+  static const String customerService = "/customer-Service";
   static const String address = "/address";
   static const String myOrders = "/myOrders";
   static const String faqs = "/faqs";

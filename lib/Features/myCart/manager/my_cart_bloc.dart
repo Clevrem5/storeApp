@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:store_app/Features/myCart/manager/my_cart_event.dart';
 import 'package:store_app/Features/myCart/manager/my_cart_state.dart';
 import 'package:store_app/data/repository/mycart/my_cart_repo_remote.dart';
-import '../../../data/models/mycart/my_cart_model.dart';
+
 import '../../../data/repository/mycart/my_cart_interface.dart';
 
 class MyCartBloc extends Bloc<MyCartEvent, MyCartState> {
