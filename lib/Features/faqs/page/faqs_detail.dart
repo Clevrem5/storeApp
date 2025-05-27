@@ -145,7 +145,7 @@ class FaqsDetail extends StatelessWidget {
                       height: 14.h,
                     ),
                     CustomExpansionTile(
-                      title: "How do I track my orders?",
+                      title: "How do I track my_orders?",
                       description:
                       'When you find a product you want to purchase, tap on it to view the product details. '
                           'Check the price, description, and available options (if applicable), and then tap the '

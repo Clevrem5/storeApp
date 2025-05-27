@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/Features/Common_Widgets/storeAppBar.dart';
 
 import '../../../Core/navigation/routes.dart';
 import '../../Common_Widgets/store_bottom_navigation_bar.dart';
+import '../manager/my_orders_bloc.dart';
+import '../manager/my_orders_state.dart';
 import '../widgets/my_orders_app_bar_bottom.dart';
 
 class MyOrdersPage extends StatelessWidget {
@@ -18,13 +21,19 @@ class MyOrdersPage extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: StoreAppBar(
           title: "My Orders",
-            callback: () => context.go(Routes.account),
-          bottom:  MyOrdersAppBarBottom(),
+          callback: () => context.go(Routes.account),
+          bottom: MyOrdersAppBarBottom(),
         ),
         body: TabBarView(
           children: [
-            OngoingOrders(),
-            CompletedOrders(),
+            BlocProvider.value(
+              value: BlocProvider.of<MyOrdersBloc>(context)..add(FetchOngoingOrders()),
+              child: const OngoingOrders(),
+            ),
+            BlocProvider.value(
+              value: BlocProvider.of<MyOrdersBloc>(context)..add(FetchCompletedOrders()),
+              child: const CompletedOrders(),
+            ),
           ],
         ),
         bottomNavigationBar: StoreBottomNavigationBar(
@@ -59,24 +68,36 @@ class OngoingOrders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: 5,
-      separatorBuilder: (context, index) => SizedBox(
-        height: 10,
-      ),
-      padding: EdgeInsets.all(12),
-      itemBuilder: (context, index) => Column(
-        children: [
-          OrderItem(
-            imageUrl: 'assets/images/image.png',
-            title: 'Regular Fit Slogan',
-            size: 'M',
-            price: '1,190',
-            status: 'In Transit',
-            callback: () {},
-          ),
-        ],
-      ),
+    return BlocBuilder<MyOrdersBloc, MyOrdersState>(
+      builder: (context, state) {
+        if (state.status == MyOrdersStatus.loading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state.status == MyOrdersStatus.error) {
+          return const Center(child: Text('Error loading ongoing orders.'));
+        } else if (state.orders.isEmpty) {
+          return const Center(child: Text('No ongoing orders.'));
+        }
+
+        return ListView.separated(
+          itemCount: state.orders.length,
+          separatorBuilder: (context, index) => const SizedBox(height: 10),
+          padding: const EdgeInsets.all(12),
+          itemBuilder: (context, index) {
+            final order = state.orders[index];
+            return OrderItem(
+              imageUrl: order.image,
+              // You can replace with actual imageUrl from model
+              title: order.title ?? 'Product',
+              size: order.size ?? 'M',
+              price: order.price.toString(),
+              status: order.status ?? 'In Transit',
+              callback: () {
+                // Example: navigate to track page
+              },
+            );
+          },
+        );
+      },
     );
   }
 }
@@ -86,52 +107,36 @@ class CompletedOrders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.all(20),
-      children: [
-        CompletedOrderItem(
-          imageUrl: 'assets/images/image.png',
-          title: 'Regular Fit Slogan',
-          size: 'M',
-          price: '1,190',
-          isRated: false,
-          callback: () {},
-        ),
-        CompletedOrderItem(
-          imageUrl: 'assets/images/image.png',
-          title: 'Regular Fit Polo',
-          size: 'L',
-          price: '1,100',
-          isRated: true,
-          rating: 4.5,
-          callback: () {},
-        ),
-        CompletedOrderItem(
-          imageUrl: 'assets/images/image.png',
-          title: 'Regular Fit Black',
-          size: 'L',
-          price: '1,690',
-          isRated: false,
-          callback: () {},
-        ),
-        CompletedOrderItem(
-          imageUrl: 'assets/images/image.png',
-          title: 'Regular Fit V-Neck',
-          size: 'S',
-          price: '1,290',
-          isRated: false,
-          callback: () {},
-        ),
-        CompletedOrderItem(
-          imageUrl: 'assets/images/image.png',
-          title: 'Regular Fit Pink',
-          size: 'M',
-          price: '1,341',
-          isRated: true,
-          rating: 3.5,
-          callback: () {},
-        ),
-      ],
+    return BlocBuilder<MyOrdersBloc, MyOrdersState>(
+      builder: (context, state) {
+        if (state.status == MyOrdersStatus.loading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state.status == MyOrdersStatus.error) {
+          return const Center(child: Text('Error loading completed orders.'));
+        } else if (state.orders.isEmpty) {
+          return const Center(child: Text('No completed orders.'));
+        }
+
+        return ListView.separated(
+          padding: const EdgeInsets.all(20),
+          itemCount: state.orders.length,
+          separatorBuilder: (context, index) => const SizedBox(height: 12),
+          itemBuilder: (context, index) {
+            final order = state.orders[index];
+            return CompletedOrderItem(
+              rating: null,
+              isRated: false,
+              imageUrl: order.image,
+              title: order.title ?? 'Product',
+              size: order.size ?? 'M',
+              price: order.price.toString(),
+              callback: () {
+                // Navigate to review
+              },
+            );
+          },
+        );
+      },
     );
   }
 }
@@ -163,7 +168,7 @@ class OrderItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Image(image: AssetImage(imageUrl)),
+          Image(image: NetworkImage(imageUrl)),
           SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -243,7 +248,7 @@ class CompletedOrderItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Image.asset(imageUrl, width: 60, height: 60),
+          Image.network(imageUrl, width: 60, height: 60),
           SizedBox(width: 12),
           Expanded(
             child: Column(
