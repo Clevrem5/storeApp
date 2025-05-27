@@ -8,7 +8,7 @@ import 'models/review_model/review_stats_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
-    BaseOptions(baseUrl: "http://192.168.10.11:8888/api/v1"),
+    BaseOptions(baseUrl: "http://192.168.11.227:8888/api/v1"),
   )..interceptors.add(AuthInterceptor());
 
   Future<bool> signUp(model) async {
@@ -71,9 +71,7 @@ class ApiClient {
     }
   }
 
-  Future<bool> postResetEmailCodeReset(String email,
-      String code,
-      String password,) async {
+  Future<bool> postResetEmailCodeReset(String email, String code, String password) async {
     try {
       var response = await dio.post(
         "/auth/reset-password/reset",
@@ -109,6 +107,7 @@ class ApiClient {
       throw CustomException(message: "API xatosi: ${e.toString()}");
     }
   }
+
   Future<List<dynamic>> fetchSearch(String? title) async {
     try {
       final response = await dio.get(
@@ -278,13 +277,23 @@ class ApiClient {
       return false;
     }
   }
-  Future<List<dynamic>>fetchCards()async{
-    final response =await dio.get('/cards/list');
-    if (response.statusCode==200){
-      final List<dynamic>data=List<dynamic>.from(response.data);
+
+  Future<List<dynamic>> fetchCards() async {
+    final response = await dio.get('/cards/list');
+    if (response.statusCode == 200) {
+      final List<dynamic> data = List<dynamic>.from(response.data);
       return data;
+    } else {
+      throw CustomException(message: "xato ketdi");
     }
-    else{
+  }
+
+  Future<List<dynamic>> fetchOrders() async {
+    final response = await dio.get('/orders/list');
+    if (response.statusCode == 200) {
+      final List<dynamic> data = List<dynamic>.from(response.data);
+      return data;
+    } else {
       throw CustomException(message: "xato ketdi");
     }
   }
@@ -294,9 +303,9 @@ class ApiClient {
       "/cards/create",
       data: model.toJson(),
     );
-    if (response.statusCode==200){
+    if (response.statusCode == 200) {
       return model;
-    }else{
+    } else {
       throw Exception('xato');
     }
   }
