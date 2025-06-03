@@ -50,9 +50,7 @@ import '../../data/repository/auth/Auth_repository.dart';
 
 final router = GoRouter(
   navigatorKey: navigatorKey,
-
-  initialLocation: Routes.home,
-
+  initialLocation: Routes.newAddress,
   routes: [
     GoRoute(
       path: Routes.newAddress,
@@ -195,6 +193,7 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.address,
+      name: Routes.address,
       builder: (context, state) => AddressView(),
     ),
     GoRoute(

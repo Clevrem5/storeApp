@@ -38,7 +38,7 @@ class _AddressViewState extends State<AddressView> {
       backgroundColor: Colors.white,
       appBar: StoreAppBar(
         title: "Address",
-          callback: () => context.go(Routes.checkout)
+          callback: () => context.pop()
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
@@ -111,7 +111,7 @@ class _AddressViewState extends State<AddressView> {
                             });
                           },
                           activeColor: Colors.black,
-                        )
+                        ),
                       ],
                     ),
                   );
@@ -124,15 +124,16 @@ class _AddressViewState extends State<AddressView> {
             StoreAppElevatedButton(
               text: "+ Add New Address",
               callback: () {
-                setState(() {
-                  final index=address.length+1;
-                  address.add(
-                    Address(
-                      title: "yangi adres $index",
-                      bio: 'zor',
-                    ),
-                  );
-                });
+                context.push(Routes.newAddress);
+                // setState(() {
+                //   final index=address.length+1;
+                //   address.add(
+                //     Address(
+                //       title: "yangi adres $index",
+                //       bio: 'zor',
+                //     ),
+                //   );
+                // });
               },
               backRoundColor: Colors.white,
               radius: 15,
@@ -143,7 +144,6 @@ class _AddressViewState extends State<AddressView> {
       bottomNavigationBar: StoreAppElevatedButton(
         text: "Apply",
         callback: () {
-          context.push(Routes.newAddress);
           // if (isSelected != null) {
           //   setState(() {
           //     address.removeAt(isSelected!);
