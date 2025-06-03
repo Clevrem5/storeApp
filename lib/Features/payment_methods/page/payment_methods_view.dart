@@ -40,7 +40,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:store_app/Features/myCart/manager/my_cart_event.dart';
 import 'package:store_app/Features/payment_methods/manager/card_event.dart';
 
 import '../../../Core/navigation/routes.dart';
@@ -74,22 +73,22 @@ class _PaymentMethodsDetailState extends State<PaymentMethodsDetail> {
         title: "Payment Methods",
         callback: () async {
           if (widget.source == 'checkout') {
-            final state = context.read<CardBloc>().state;
-            final cards = state.cards;
-
-            if (selectedCardIndex != null && selectedCardIndex! < cards.length) {
-              final selectedCard = cards[selectedCardIndex!];
-              context.pop(selectedCard);
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Iltimos, karta tanlang")),
-              );
+              context.go(Routes.checkout );
+              // final state = context.read<CardBloc>().state;
+              // final cards = state.cards;
+              //
+              // if (selectedCardIndex != null && selectedCardIndex! < cards.length) {
+              //   final selectedCard = cards[selectedCardIndex!];
+              //   context.pop(selectedCard);
+              //   } else {
+              //     ScaffoldMessenger.of(context).showSnackBar(
+              //       const SnackBar(content: Text("Iltimos, karta tanlang")),
+              //     );
+              //   }
+            } else if (widget.source == 'account') {
+              context.go(Routes.account);
             }
-          } else if (widget.source == 'account') {
-            context.go(Routes.account);
-          }
-        },
-      ),
+          }),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: Column(

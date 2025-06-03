@@ -8,7 +8,7 @@ import 'models/review_model/review_stats_model.dart';
 
 class ApiClient {
   final Dio dio = Dio(
-    BaseOptions(baseUrl: "http://192.168.11.227:8888/api/v1"),
+    BaseOptions(baseUrl: "http://192.168.10.11:8888/api/v1"),
   )..interceptors.add(AuthInterceptor());
 
   Future<bool> signUp(model) async {

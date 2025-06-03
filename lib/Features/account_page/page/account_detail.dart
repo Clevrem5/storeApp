@@ -39,7 +39,7 @@ class AccountDetail extends StatelessWidget {
             leading: const Icon(Icons.home_outlined),
             title: const Text('Address Book'),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-            onTap: () => context.push(Routes.address),
+            onTap: () => context.pushNamed(Routes.address),
           ),
           ListTile(
             leading: const Icon(Icons.credit_card_outlined),
