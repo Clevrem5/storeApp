@@ -22,10 +22,15 @@ class HelpCenterScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            HelpCenterTile(
-              iconPath: 'assets/icons/headphones.svg',
-              title: 'Customer Service',
+          children: [
+            GestureDetector(
+              onTap: () {
+                context.push(Routes.customerService);
+              },
+              child: HelpCenterTile(
+                iconPath: 'assets/icons/headphones.svg',
+                title: 'Customer Service',
+              ),
             ),
             SizedBox(height: 12),
             HelpCenterTile(

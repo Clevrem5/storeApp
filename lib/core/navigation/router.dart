@@ -4,6 +4,8 @@ import 'package:store_app/Features/Auth/login/manger/login_bloc.dart';
 import 'package:store_app/Features/Auth/reset_password/manager/reset_bloc.dart';
 import 'package:store_app/Features/Auth/sign_up/manager/sign_up_bloc.dart';
 import 'package:store_app/Features/Reviews/manager/review_bloc.dart';
+import 'package:store_app/Features/customer_service/managers/customer_service_bloc.dart';
+import 'package:store_app/Features/customer_service/pages/customer_service.dart';
 import 'package:store_app/Features/details/manager/details_bloc.dart';
 import 'package:store_app/Features/faqs/page/faqs_detail.dart';
 import 'package:store_app/Features/help_center/pages/help_center_View.dart';
@@ -212,6 +214,13 @@ final router = GoRouter(
     GoRoute(
       path: Routes.faqs,
       builder: (context, state) => FaqsDetail(),
+    ),
+    GoRoute(
+      path: Routes.customerService,
+      builder: (context, state) => BlocProvider(
+        create: (context) => CustomerServiceBloc(),
+        child: CustomerServicePage(),
+      ),
     ),
     GoRoute(
       path: Routes.myDetails,

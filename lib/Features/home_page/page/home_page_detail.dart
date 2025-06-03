@@ -57,7 +57,7 @@ class HomePageDetail extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 16, right: 24, left: 24),
+        padding: const EdgeInsets.only(top: 16, right: 24, left: 24, bottom: 100),
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             if (state.status == HomeStatus.loading) {
